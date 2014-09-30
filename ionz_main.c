@@ -76,11 +76,12 @@ main()
   fscanf(inp,"%d%d%d%f",&N1,&N2,&N3,&box);
     
   fclose(inp);
- /* data read-------------------------------------------------------*/
+ 
   LL = box/(vhh*N1); // grid size in Mpc
 
   printf("scale factor= %f\n",vaa);
 
+  // Allocating memory to different arrays
   Setting_Up_Memory_For_ionz(Nnion);
   
  
@@ -90,6 +91,9 @@ main()
   //the begining of the file, which represents the grid size N1xN2xN3
   //After that the density array of size N1xN2xN3 is written in row-major order (C order), each value is of size float (float32 in python) 
 
+
+  //To avoid confusion we take input the density and the source data in same units
+  
   strcpy(file1,"/disk/dawn-1/smaju/halo_test/114Mpc/density_haloin_256_C/");
   sprintf(num,"%2.3f",zval);
   strcpy(file2,"_den.cbin");
