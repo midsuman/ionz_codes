@@ -13,3 +13,5 @@ You need to install FFTW 2.x.x with following flags:
 '--enable-float' and '--enable-type-prefix' 
 to compile this set of codes.
 
+Please acknowledge this paper (http://arxiv.org/abs/1403.0941), if you are using this code.
+
