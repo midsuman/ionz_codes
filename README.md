@@ -9,5 +9,7 @@ make ionz_main
 
 It will create the executable 'ionz_main'
 
-You need to install FFTW 2.x.x with following flags '--enable-float' and '--enable-type-prefix' to compile this set of codes.
+You need to install FFTW 2.x.x with following flags: 
+'--enable-float' and '--enable-type-prefix' 
+to compile this set of codes.
 
