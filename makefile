@@ -1,14 +1,6 @@
-# for Sun
 
 LINKLIB=  -L/usr/local/lib/  -lsrfftw -lsfftw -lm
-
-#LINKLIB= -lm -lc -L/usr/local/lib/ -lsfftw  -lsrfftw
-
 INCLUDE=-I/usr/local/include/
-
-# CFLAGS=-parallel -xP
-# CC=icc
-
 CFLAGS=-g
 CC=gcc
 
