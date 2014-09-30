@@ -55,6 +55,7 @@ main()
   /* get parameters for reion simulation */
   fscanf(inp,"%d",&Nnion);
   //Nnion is the number of nion values for which we will run the simulation
+  //You will get a x_HI map for each value of nion
   //Allocating memory for some variables
   nion=(float*)calloc(Nnion,sizeof(float));
   vion=(double*)calloc(Nnion,sizeof(double));
@@ -89,7 +90,7 @@ main()
   //the begining of the file, which represents the grid size N1xN2xN3
   //After that the density array of size N1xN2xN3 is written in row-major order (C order), each value is of size float (float32 in python) 
 
-  strcpy(file1,"/disk/dawn-1/smaju/500Mpc/density_C/");
+  strcpy(file1,"/disk/dawn-1/smaju/halo_test/114Mpc/density_haloin_256_C/");
   sprintf(num,"%2.3f",zval);
   strcpy(file2,"_den.cbin");
   strcat(file1,num);
@@ -99,6 +100,7 @@ main()
   fread(&N1,sizeof(int),1,inp);
   fread(&N2,sizeof(int),1,inp);
   fread(&N3,sizeof(int),1,inp);
+  printf("N1=%d\n",N1);
   for(ii=0;ii<N1;ii++)
     for(jj=0;jj<N2;jj++)
       for(kk=0;kk<N3;kk++)
@@ -131,22 +133,22 @@ main()
   //Reading the source density data
   //This is also in the same unit as the dark matter density field (in C^2-Ray simulation unit)
   //This file is in ascii
-  //Total no. of sources are written in the beginning of the file
+  //Total no. of filled grid points with sources are written in the beginning of the file
   //Total 5 or 6 columns of data is written after that
   // First 3 columns are three FORTRAN indices of the array (need to subtract 1 from each to convert them into C indices)
   // Next 2 columns are low mass and high mass source contribution to that grid
   // There could be another column in the file which we don't need
 
   robarhalo=0.;
-  strcpy(file1,"/disk/dawn-1/smaju/500Mpc/sources_1e8/");
+  strcpy(file1,"/disk/dawn-1/garrelt/Reionization/C2Ray_WMAP5/114Mpc_WMAP5/sources_2.2e9/");
   sprintf(num,"%2.3f",zval);
-  strcpy(file2,"-coarser_sources.dat");
+  strcpy(file2,"-coarsest_sources.dat");
   strcat(file1,num);
   strcat(file1,file2);
   inp=fopen(file1,"r");
   
   fscanf(inp,"%d",&nhalo);
-
+  //Total number of filled grid points with sources
   printf("nhalo =%d\n",nhalo);
   
  
@@ -251,6 +253,7 @@ main()
   	   for(jj=0;jj<N2;jj++)
   	     for(kk=0;kk<N3;kk++)
 	       {
+		 //Checking the ionization condition
 		 if(nhs[ii][jj][kk]<nion[jk]*ngammas[ii][jj][kk])
 		   {
 		     nxion[jk][ii][jj][kk]=1.;
@@ -276,7 +279,7 @@ main()
       // Defining the ionization map output file name
       // This is based on the value of nion assigned to it
 
-      strcpy(file2,"xion_map_");
+      strcpy(file2,"xHI_map_");
       sprintf(num,"%4.2f",nion[jk]);
       strcat(file2,num);
 

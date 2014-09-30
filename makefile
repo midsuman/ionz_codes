@@ -1,6 +1,6 @@
 # for Sun
 
-LINKLIB=  -L/usr/local/lib/  -lsrfftw -lsfftw -lm -lgsl -lgslcblas
+LINKLIB=  -L/usr/local/lib/  -lsrfftw -lsfftw -lm
 
 #LINKLIB= -lm -lc -L/usr/local/lib/ -lsfftw  -lsrfftw
 
