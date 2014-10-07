@@ -414,11 +414,12 @@ main(int argc, char **argv)
   printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask[ThisTask]);
   for(ii=0;ii<NjobsperTask[ThisTask];ii++)
     {
-      printf("Task: %d do the job %d\n",ThisTask,JobsTask[ii]);
+      printf("Task: %d finish job %d\n",ThisTask,JobsTask[ii]);
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
-    }  // system("date");
-  
+      printf("Task: %d finish job %d\n",ThisTask,JobsTask[ii]);
+    }  
 
+  
   pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Reduce(buffer,buffer_final,Nnion*N1*N2*N3,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);
