@@ -72,6 +72,8 @@ void read_sources(char *filename, int N1, int N2, int N3, float ***ngamma_p, dou
   int ii,jj,kk,ll;
   int nhalo;
   float mass1,mass2;
+  mass1 = 0.;
+  mass2 = 0.;
   /* Clear out the array before reading source density ******/
   for (ii=0;ii<N1;ii++)
     for (jj=0;jj<N2;jj++)
@@ -102,8 +104,8 @@ void read_sources(char *filename, int N1, int N2, int N3, float ***ngamma_p, dou
       //If there are 6 columns in the file 
 
       //fscanf(inp,"%d%d%d%f%f%f",&ii,&jj,&kk,&mass1,&mass2,&dump);   
-      //If there are 5 columns in the file 
-      fscanf(inp,"%d%d%d%f%f",&ii,&jj,&kk,&mass1,&mass2);
+      //If there are 4 columns in the file 
+      fscanf(inp,"%d%d%d%f",&ii,&jj,&kk,&mass1);
    
       //You can treat both mass ranges similarly
       //Or one can use different weights or functional response for each mass range
@@ -170,6 +172,7 @@ main()
   Setting_Up_Memory_For_ionz(Nnion);
   
   read_density("/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/7.859n_all.dat",&N1,&N2,&N3,nh,&robar);
+  read_sources("/research/prace/47Mpc_RT/47Mpc_f2_gs_306/sources/7.859-coarsest_sources_used_wfgamma.dat",N1,N2,N3,ngamma,&robarhalo);
   exit(0);
 
   //calculating max and min radius for smoothing in units of grid size
