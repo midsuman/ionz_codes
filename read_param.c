@@ -17,7 +17,7 @@ void read_params(char filename[2048])
     //Reading nion values from the input file
     //nion is the efficiency paramter for ionization (a combination of f_esc,f_star etc)
     // We try with variuos values of nion
-    for(ii=0;ii<Nnion;ii++)
+    for(ii=0;ii<input_param.Nnion;ii++)
       {
 	fscanf(inp,"%f",&(input_param.nion[ii]));
       }
