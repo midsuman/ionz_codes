@@ -2,7 +2,7 @@
 
 #include <mpi.h>
 
-extern int Ntask;
+extern int NTask;
 extern int ThisTask;
 
 #define IONZ_MPI_H
