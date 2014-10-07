@@ -329,7 +329,7 @@ main(int argc, char **argv)
   
   // system("date");
   /* smoothing */
-  printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask);
+  printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask[ThisTask]);
   for(ii=0;ii<NjobsperTask[ThisTask];ii++)
     {
       printf("Task: %d do the job %d\n",ThisTask,JobsTask[ii]);
