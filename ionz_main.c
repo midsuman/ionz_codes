@@ -1,10 +1,4 @@
-#include "srfftw.h"
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
 #include "ion.h"
-
-#include<string.h>
 
 #define  min(x,y)  ((x)<(y) ?(x):(y))
 #define  max(x,y)  ((x)>(y) ?(x):(y))

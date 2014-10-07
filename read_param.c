@@ -1,3 +1,5 @@
+#include "ion.h"
+
 struct params input_param;
 void read_params(char filename[2048])
   {

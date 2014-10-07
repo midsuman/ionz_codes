@@ -1,8 +1,13 @@
 #ifndef ION_H
 
+#include "srfftw.h"
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include<string.h>
+
 #ifdef PARALLEL
 #include <mpi.h>
-#include "ionz_mpi.h"
 #endif
 
 /* in allotarrays.c */
