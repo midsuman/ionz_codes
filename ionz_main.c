@@ -69,6 +69,7 @@ void read_sources(char *filename, int N1, int N2, int N3, float ***ngamma_p, dou
   FILE *inp;
   int ii,jj,kk,ll;
   int nhalo;
+  float mass1,mass2;
   /* Clear out the array before reading source density ******/
   for (ii=0;ii<N1;ii++)
     for (jj=0;jj<N2;jj++)
