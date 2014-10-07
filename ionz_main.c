@@ -31,6 +31,88 @@ rfftwnd_plan q_ro; // for FFT
 
 fftw_real ***nh,***nhs,***ngamma,***ngammas,***rosp,****nxion;
 
+
+  //Reading the Nbody dark matter density field 
+  //Density are in c^2ray simulation unit (raw)
+  //Density files are in binary format with three integers written in
+  //the begining of the file, which represents the grid size N1xN2xN3
+  //After that the density array of size N1xN2xN3 is written in row-major order (C order), each value is of size float (float32 in python) 
+
+ 
+  //To avoid confusion we take input the density and the source data in same units
+
+void read_density(char* filename,int *N1_p, int *N2_p, int *N3, float ***nh_p, double *robar_p)
+{  
+  int ii,jj,kk;
+  FILE *inp;
+  inp=fopen(filename,"r");
+  *robar_p=0.;
+  fread(N1_p,sizeof(int),1,inp);
+  fread(N2_p,sizeof(int),1,inp);
+  fread(N3_p,sizeof(int),1,inp);
+  printf("N1=%d\n",*N1_p);
+  for(ii=0;ii<*N1_p;ii++)
+    for(jj=0;jj<*N2_p;jj++)
+      for(kk=0;kk<*N3_p;kk++)
+	{
+	  fread(&nh_p[ii][jj][kk],sizeof(float),1,inp);
+	  robar += nh_p[ii][jj][kk];
+	}
+  fclose(inp);
+  robar /= (1.*(*N1)*(*N2)*(*N3));
+  printf("ok with density\n");
+}
+
+
+void read_sources(char *filename, int N1, int N2, int N3, float ***ngamma_p, double *robarhalo_p)
+{
+  FILE *inp;
+  int ii,jj,kk,ll;
+  int nhalo;
+  /* Clear out the array before reading source density ******/
+  for (ii=0;ii<N1;ii++)
+    for (jj=0;jj<N2;jj++)
+      for (kk=0;kk<N3;kk++)
+	ngamma_p[ii][jj][kk] = 0.0;
+  
+
+  /********************************/
+  // Reading the source density data
+  // This is also in the same unit as the dark matter density field (in C^2-Ray simulation unit)
+  // This file is in ascii
+  // Total no. of filled grid points with sources are written in the beginning of the file
+  // Total 5 or 6 columns of data is written after that
+  // First 3 columns are three FORTRAN indices of the array (need to subtract 1 from each to convert them into C indices)
+  // Next 2 columns are low mass and high mass source contribution to that grid
+  // There could be another column in the file which we don't need
+  
+  *robarhalo_p=0.;
+  inp=fopen(filename,"r");
+  
+  fscanf(inp,"%d",&nhalo;
+  //Total number of filled grid points with sources
+  printf("nhalo =%d\n",nhalo);
+  
+  
+  for(ll=0;ll<nhalo;ll++)
+    {
+      //If there are 6 columns in the file 
+
+      //fscanf(inp,"%d%d%d%f%f%f",&ii,&jj,&kk,&mass1,&mass2,&dump);   
+      //If there are 5 columns in the file 
+      fscanf(inp,"%d%d%d%f%f",&ii,&jj,&kk,&mass1,&mass2);
+   
+      //You can treat both mass ranges similarly
+      //Or one can use different weights or functional response for each mass range
+      //We show the simplest case here, treating both of them similarly
+      ngamma_p[ii-1][jj-1][kk-1] = mass1+mass2;     
+      *robarhalo_p += ngamma_p[ii-1][jj-1][kk-1]; 
+    }
+    
+  fclose(inp);
+  //Avg. source density
+  *robarhalo_p/=(1.*N1*N2*N3);
+}
 main()
 {
   FILE  *inp,*outpp;
@@ -84,101 +166,18 @@ main()
   // Allocating memory to different arrays
   Setting_Up_Memory_For_ionz(Nnion);
   
- 
-  //Reading the Nbody dark matter density field 
-  //Density are in c^2ray simulation unit (raw)
-  //Density files are in binary format with three integers written in
-  //the begining of the file, which represents the grid size N1xN2xN3
-  //After that the density array of size N1xN2xN3 is written in row-major order (C order), each value is of size float (float32 in python) 
-
-
-  //To avoid confusion we take input the density and the source data in same units
+  read_density("",&N1,&N2,&N3,nh);
   
-  strcpy(file1,"/disk/dawn-1/smaju/halo_test/114Mpc/density_haloin_256_C/");
-  sprintf(num,"%2.3f",zval);
-  strcpy(file2,"_den.cbin");
-  strcat(file1,num);
-  strcat(file1,file2);
-  inp=fopen(file1,"r");
-  robar=0.;
-  fread(&N1,sizeof(int),1,inp);
-  fread(&N2,sizeof(int),1,inp);
-  fread(&N3,sizeof(int),1,inp);
-  printf("N1=%d\n",N1);
-  for(ii=0;ii<N1;ii++)
-    for(jj=0;jj<N2;jj++)
-      for(kk=0;kk<N3;kk++)
-	{
-	  fread(&nh[ii][jj][kk],sizeof(float),1,inp);
-	  robar += nh[ii][jj][kk];
-	}
-  fclose(inp);
-  robar /= (1.*N1*N2*N3);
-  printf("ok with density\n");
+
   //calculating max and min radius for smoothing in units of grid size
   r_min=1.;
   r_max=pow((1.*N1*N2*N3),(1./3.))/2.;
-  //The max smoothing radius here is set as half of the diagonal of the box
-  //This can be changed, one can choose a redshift dependent function instead
-  //Or one can choose a model for redshift evolution of the mean free path of the UV photons
-  //We are showing the most simple case here
-  
-  
- 
 
-  /* Clear out the array before reading source density******/
-  for (ii=0;ii<N1;ii++)
-    for (jj=0;jj<N2;jj++)
-      for (kk =0;kk<N3;kk++)
-	  ngamma[ii][jj][kk] = 0.0;
+  // The max smoothing radius here is set as half of the diagonal of the box
+  // This can be changed, one can choose a redshift dependent function instead
+  // Or one can choose a model for redshift evolution of the mean free path of the UV photons
+  // We are showing the most simple case here
   
-  /********************************/
-  
-  //Reading the source density data
-  //This is also in the same unit as the dark matter density field (in C^2-Ray simulation unit)
-  //This file is in ascii
-  //Total no. of filled grid points with sources are written in the beginning of the file
-  //Total 5 or 6 columns of data is written after that
-  // First 3 columns are three FORTRAN indices of the array (need to subtract 1 from each to convert them into C indices)
-  // Next 2 columns are low mass and high mass source contribution to that grid
-  // There could be another column in the file which we don't need
-
-  robarhalo=0.;
-  strcpy(file1,"/disk/dawn-1/garrelt/Reionization/C2Ray_WMAP5/114Mpc_WMAP5/sources_2.2e9/");
-  sprintf(num,"%2.3f",zval);
-  strcpy(file2,"-coarsest_sources.dat");
-  strcat(file1,num);
-  strcat(file1,file2);
-  inp=fopen(file1,"r");
-  
-  fscanf(inp,"%d",&nhalo);
-  //Total number of filled grid points with sources
-  printf("nhalo =%d\n",nhalo);
-  
- 
-  for(ll=0;ll<nhalo;ll++)
-    {
-      //If there are 6 columns in the file 
-      //fscanf(inp,"%d%d%d%f%f%f",&ii,&jj,&kk,&mass1,&mass2,&dump);
-
-      //If there are 5 columns in the file 
-      fscanf(inp,"%d%d%d%f%f",&ii,&jj,&kk,&mass1,&mass2);
-
-      //You can treat both mass ranges similarly
-      //Or one can use different weights or functional response for each mass range
-      //We show the simplest case here, treating both of them similarly
-
-      ngamma[ii-1][jj-1][kk-1] = mass1+mass2;
-     
-      robarhalo += ngamma[ii-1][jj-1][kk-1]; 
-
-    }
-    
-  fclose(inp);
-  
-  //Avg. source density
-  robarhalo/=(1.*N1*N2*N3);
-
   printf("robar=%e  robarhalo=%e ratio= %e\n",robar,robarhalo,robar/robarhalo);
 
   //subgrid re-ionization
@@ -197,7 +196,7 @@ main()
 	      
   	      else
   		{
-  		nxion[jk][ii][jj][kk]=1.;
+		  nxion[jk][ii][jj][kk]=1.;
   		}
   	    }
     }
