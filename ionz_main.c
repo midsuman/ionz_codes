@@ -388,7 +388,7 @@ main(int argc, char **argv)
   
   // system("date");
   /* smoothing */
-  printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask[ThisTask]);
+  // printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask[ThisTask]);
   for(ii=0;ii<NjobsperTask[ThisTask];ii++)
     {
       printf("Task: %d start job %d\n",ThisTask,JobsTask[ii]);
@@ -398,6 +398,8 @@ main(int argc, char **argv)
 
   
   pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
+  if(ThisTask == 0)
+    printf("Finish packing data\n");
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
     {
