@@ -41,7 +41,7 @@ fftw_real ***nh,***nhs,***ngamma,***ngammas,***rosp,****nxion;
  
   //To avoid confusion we take input the density and the source data in same units
 
-void read_density(char* filename,int *N1_p, int *N2_p, int *N3, float ***nh_p, double *robar_p)
+void read_density(char* filename,int *N1_p, int *N2_p, int *N3_p, float ***nh_p, double *robar_p)
 {  
   int ii,jj,kk;
   FILE *inp;
@@ -56,10 +56,10 @@ void read_density(char* filename,int *N1_p, int *N2_p, int *N3, float ***nh_p, d
       for(kk=0;kk<*N3_p;kk++)
 	{
 	  fread(&nh_p[ii][jj][kk],sizeof(float),1,inp);
-	  robar += nh_p[ii][jj][kk];
+	  *robar_p += nh_p[ii][jj][kk];
 	}
   fclose(inp);
-  robar /= (1.*(*N1)*(*N2)*(*N3));
+  *robar_p /= (1.*(*N1)*(*N2)*(*N3));
   printf("ok with density\n");
 }
 
