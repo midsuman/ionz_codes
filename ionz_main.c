@@ -259,7 +259,7 @@ main(int argc, char **argv)
   n_radii = make_radii_list(Radii_list,r_min,r_max);
   
   NjobsperTask = n_radii/NTask;
-  if(ThisTask < mod(n_radii,NTask))
+  if(ThisTask < n_radii%NTask)
     NjobsperTask++;
   JobsTask = malloc(sizeof(int)*NjobsperTask);
   for(ii=0;ii<NjobsperTask;ii++)
