@@ -59,7 +59,7 @@ void read_density(char* filename,int *N1_p, int *N2_p, int *N3_p, float ***nh_p,
 	  *robar_p += nh_p[ii][jj][kk];
 	}
   fclose(inp);
-  *robar_p /= (1.*(*N1)*(*N2)*(*N3));
+  *robar_p /= (1.*(*N1_p)*(*N2_p)*(*N3_p));
   printf("ok with density\n");
 }
 
