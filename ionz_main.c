@@ -367,6 +367,7 @@ main(int argc, char **argv)
 	}
       else if(ThisTask == 0)
 	{
+	  printf("Transfer from Task %d\n",mm);
 	  MPI_Recv(buffer, N1*N2*N3*Nnion, MPI_FLOAT, mm, mm, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 	  unpack_array_mpi_transfer(buffer, nxion_buffer, N1, N2, N3,Nnion);
 	  for(jk=0;jk<Nnion;jk++)
@@ -374,6 +375,7 @@ main(int argc, char **argv)
 	      for(jj=0;jj<N2;jj++)
 		for(kk=0;kk<N3;kk++)
 		  nxion[jk][ii][jj][kk]=max(nxion[jk][ii][jj][kk],nxion_buffer[jk][ii][jj][kk]);
+	  printf("Finish transfer from Task %d\n",mm);
 	}
       MPI_Barrier(MPI_COMM_WORLD);
     }
