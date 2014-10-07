@@ -324,6 +324,7 @@ main(int argc, char **argv)
   
   // system("date");
   /* smoothing */
+  printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask);
   for(ii=0;ii<NjobsperTask;ii++)
     {
       printf("Task: %d do the job %d\n",ThisTask,JobsTask[ii]);
