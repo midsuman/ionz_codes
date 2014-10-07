@@ -25,7 +25,7 @@ void read_params(char filename[2048])
     //Reading cosmological parameters values
     //vaa initially scans the redshift of the Nbody simulation
     input_param.a_expansion = 1/(1+input_param.z);// converts it into scale factor
-    fscanf(inp,"%d%d%d%f",&input_param.N1,&input_param.N2,&input_param.N3,&box);
+    fscanf(inp,"%d%d%d%f",&input_param.N1,&input_param.N2,&input_param.N3,&input_param.boxsize);
     
     fclose(inp);
  
