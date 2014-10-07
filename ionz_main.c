@@ -396,7 +396,7 @@ main(int argc, char **argv)
       printf("Task: %d finish job %d\n",ThisTask,JobsTask[ii]);
     }  
 
-  
+  MPI_Barrier(MPI_COMM_WORLD);
   pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
   if(ThisTask == 0)
     printf("Finish packing data\n");
