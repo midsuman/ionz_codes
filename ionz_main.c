@@ -10,7 +10,12 @@
 #endif
 
 #include<string.h>
+
+#define  min(x,y)  ((x)<(y) ?(x):(y))
+#define  max(x,y)  ((x)>(y) ?(x):(y))
  /*  GLOBAL VARIABLES  */
+
+
 
 // cosmological parameters read from input file  "input.ionz"
 
@@ -35,7 +40,7 @@ rfftwnd_plan q_ro; // for FFT
 
 //end of declaration of global variables for output binary file
 
-fftw_real ***nh,***nhs,***ngamma,***ngammas,***rosp,****nxion;
+fftw_real ***nh,***nhs,***ngamma,***ngammas,***rosp,****nxion, ****nxion_buffer;
 
 
   //Reading the Nbody dark matter density field 
@@ -100,11 +105,23 @@ int make_radii_list(float *radii_p, float r_min, float r_max)
   radii_p = realloc(radii_p,sizeof(float)*i);
   return i;
 }
-void pack_array_mpi_transfer(fftw_real ***input, float *output, int n1, int n2, int n3)
+void pack_array_mpi_transfer(fftw_real ****input, float *output, int n1, int n2, int n3, int n_nion)
 { 
+  int ii,jj,kk,jk;
+  for(jk=0;jk<n_nion;jk++)
+    for(ii=0;ii<n1;ii++)
+      for(jj=0;jj<n2;jj++)
+	for(kk=0;kk<n3;kk++)
+	  output[jk*n1*n2*n3 + ii*n2*n3 + jj*n3 + kk] = input[jk][ii][jj][kk];
 }
-void unpack_array_mpi_transfer(float *input, fftw_real ***output, int n1, int n2, int n3)
+void unpack_array_mpi_transfer(float *input, fftw_real ****output, int n1, int n2, int n3, int n_nion)
 {
+  int ii,jj,kk,jk;
+  for(jk=0;jk<n_nion;jk++)
+    for(ii=0;ii<n1;ii++)
+      for(jj=0;jj<n2;jj++)
+	for(kk=0;kk<n3;kk++)
+	  input[jk][ii][jj][kk]=output[jk*n1*n2*n3 + ii*n2*n3 + jj*n3 + kk];
 }
 void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real ***nh_p, double *robar_p)
 {  
@@ -201,7 +218,7 @@ main(int argc, char **argv)
   int n_radii;
   int *NjobsperTask;
   int *JobsTask;
-
+  float *buffer;
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);
@@ -272,7 +289,7 @@ main(int argc, char **argv)
 	    }
 	}
     }
-
+  buffer = malloc(sizeof(float)*N1*N2*N3);
   // The max smoothing radius here is set as half of the diagonal of the box
   // This can be changed, one can choose a redshift dependent function instead
   // Or one can choose a model for redshift evolution of the mean free path of the UV photons
@@ -336,53 +353,79 @@ main(int argc, char **argv)
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
     }
   // system("date");
+  
+  pack_array_mpi_transfer(nxion,buffer, N1, N2, N3,Nnion);
   MPI_Barrier(MPI_COMM_WORLD);
 
   /* Transfer to Master node */
-  
-  for(jk=0;jk<Nnion;++jk)
+
+  for(mm=1;mm<NTask;mm++)
     {
+      if(ThisTask == mm)
+	{
+	  MPI_Send(buffer, N1*N2*N3*Nnion, MPI_FLOAT, 0, mm, MPI_COMM_WORLD);
+	}
+      else if(ThisTask == 0)
+	{
+	  MPI_Recv(buffer, N1*N2*N3*Nnion, MPI_FLOAT, mm, mm, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+	  unpack_array_mpi_transfer(buffer, nxion_buffer, N1, N2, N3,Nnion);
+	  for(jk=0;jk<n_nion;jk++)
+	    for(ii=0;ii<n1;ii++)
+	      for(jj=0;jj<n2;jj++)
+		for(kk=0;kk<n3;kk++)
+		  nxion[jk][ii][jj][kk]=max(nxion[jk][ii][jj][kk],nxion_buffer[jk][ii][jj][kk]);
+	}
+      MPI_Barrier(MPI_COMM_WORLD);
+    }
+  exit(1);
+
+  MPI_Barrier(MPI_COMM_WORLD);
+  if(ThisTask == 0)
+    {
+      for(jk=0;jk<Nnion;++jk)
+	{
       
-      //calculating avg. ionization frction
-      vion[jk]=0.0;
-      roion[jk]=0.0;
+	  //calculating avg. ionization frction
+	  vion[jk]=0.0;
+	  roion[jk]=0.0;
       
-      // Defining the ionization map output file name
-      // This is based on the value of nion assigned to it
+	  // Defining the ionization map output file name
+	  // This is based on the value of nion assigned to it
 
-      strcpy(file2,"xHI_map_");
-      sprintf(num,"%4.2f",nion[jk]);
-      strcat(file2,num);
+	  strcpy(file2,"xHI_map_");
+	  sprintf(num,"%4.2f",nion[jk]);
+	  strcat(file2,num);
 
-      // Writing the x_HI map in binary
-      // In the begining 3 integers are written which defines the size
-      // of the x_HI array
+	  // Writing the x_HI map in binary
+	  // In the begining 3 integers are written which defines the size
+	  // of the x_HI array
 
-      inp=fopen(file2,"w");
-      fwrite(&N1,sizeof(int),1,inp);
-      fwrite(&N2,sizeof(int),1,inp);
-      fwrite(&N3,sizeof(int),1,inp);
-      for(ii=0;ii<N1;ii++)
-	for(jj=0;jj<N2;jj++)
-	  for(kk=0;kk<N3;kk++)
-	    {
-	      xh1=(1.-nxion[jk][ii][jj][kk]);
-	      xh1=(xh1 >0.0)? xh1: 0.0;
-	      vion[jk]+=xh1;
-	      nxion[jk][ii][jj][kk]=xh1; // store x_HI instead of x_ion
-	      nhs[ii][jj][kk]=xh1*nh[ii][jj][kk]; // ro_HI on grid
-	      roion[jk]+=nhs[ii][jj][kk];
-	      fwrite(&nxion[jk][ii][jj][kk],sizeof(float),1,inp);
+	  inp=fopen(file2,"w");
+	  fwrite(&N1,sizeof(int),1,inp);
+	  fwrite(&N2,sizeof(int),1,inp);
+	  fwrite(&N3,sizeof(int),1,inp);
+	  for(ii=0;ii<N1;ii++)
+	    for(jj=0;jj<N2;jj++)
+	      for(kk=0;kk<N3;kk++)
+		{
+		  xh1=(1.-nxion[jk][ii][jj][kk]);
+		  xh1=(xh1 >0.0)? xh1: 0.0;
+		  vion[jk]+=xh1;
+		  nxion[jk][ii][jj][kk]=xh1; // store x_HI instead of x_ion
+		  nhs[ii][jj][kk]=xh1*nh[ii][jj][kk]; // ro_HI on grid
+		  roion[jk]+=nhs[ii][jj][kk];
+		  fwrite(&nxion[jk][ii][jj][kk],sizeof(float),1,inp);
 	      
-	    }
+		}
 	    
-      fclose(inp);
-      roion[jk]/=(N1*N2*N3); // mean HI density in grid units
+	  fclose(inp);
+	  roion[jk]/=(N1*N2*N3); // mean HI density in grid units
       
-      vion[jk]/=(1.*N1*N2*N3); // volume avg xHI
-      roion[jk]/=(float)robar; // divide by H density to get mass avg. xHI
-      printf("nion = %f obtained vol. avg. x_HI=%e mass avg. x_HI=%e\n",nion[jk],vion[jk],roion[jk]);
-      system("date");
+	  vion[jk]/=(1.*N1*N2*N3); // volume avg xHI
+	  roion[jk]/=(float)robar; // divide by H density to get mass avg. xHI
+	  printf("nion = %f obtained vol. avg. x_HI=%e mass avg. x_HI=%e\n",nion[jk],vion[jk],roion[jk]);
+	  system("date");
+	}
     }
  system("date");            
 } /* END OF MAIN */

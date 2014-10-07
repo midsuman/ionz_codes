@@ -8,7 +8,6 @@
 #include <mpi.h>
 #include "ionz_mpi.h"
 #endif
-
 /*  GLOBAL VARIABLES  */
 
 // cosmological parameters read from input file  "input.ionz"
@@ -34,7 +33,7 @@ extern fftw_real ***ro;
 extern  rfftwnd_plan p_ro; // for FFT
 extern   rfftwnd_plan q_ro; // for FFT
 
-extern fftw_real ***nh,***nhs,***ngamma,***ngammas,***rosp,****nxion;
+extern fftw_real ***nh,***nhs,***ngamma,***ngammas,***rosp,****nxion,****nxion_buffer;
 
 //end of declaration of global variables for output binary file
 
@@ -50,11 +49,11 @@ void Setting_Up_Memory_For_ionz(int Nnion)
   ngammas=allocate_fftw_real_3d(N1,N2,N3+2);
   rosp = allocate_fftw_real_3d(N1,N2,N3+2);
   nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
-    
+  nxion_buffer=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
     
   for(jk=0;jk<Nnion;++jk)
     {
-      
+      nxion_buffer[jk]=allocate_fftw_real_3d(N1,N2,N3+2);
       nxion[jk]=allocate_fftw_real_3d(N1,N2,N3+2);
     }
   // allocate area for storing densities  DONE
