@@ -394,9 +394,9 @@ main(int argc, char **argv)
   t_start = MPI_Wtime();
   for(ii=0;ii<NjobsperTask[ThisTask];ii++)
     {
-      printf("Task: %d start job %d\n",ThisTask,JobsTask[ii]);
+      // printf("Task: %d start job %d\n",ThisTask,JobsTask[ii]);
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
-      printf("Task: %d finish job %d\n",ThisTask,JobsTask[ii]);
+      // printf("Task: %d finish job %d\n",ThisTask,JobsTask[ii]);
     }  
   t_stop = MPI_Wtime();
   MPI_Barrier(MPI_COMM_WORLD);
@@ -416,7 +416,10 @@ main(int argc, char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
     {
+      t_start = MPI_Wtime();
       unpack_4d_array_mpi_transfer(buffer_final, nxion, Nnion, N1, N2, N3);
+      t_stop = MPI_Wtime();
+      printf("Finish unpacking data %lf s\n",t_stop-t_start);
       for(jk=0;jk<Nnion;++jk)
 	{
 	  //calculating avg. ionization frction
