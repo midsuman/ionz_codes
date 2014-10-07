@@ -230,6 +230,7 @@ main(int argc, char **argv)
   int n_radii;
   int *NjobsperTask;
   int *JobsTask;
+  double t_start, t_stop;
   float *buffer, *buffer_final;
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
@@ -259,6 +260,7 @@ main(int argc, char **argv)
 
   // Allocating memory to different arrays
   Setting_Up_Memory_For_ionz(Nnion);
+  t_start = MPI_Wtime();
   /* if(ThisTask == 0) */
   /*   { */
   /*     system("date"); */
@@ -303,12 +305,12 @@ main(int argc, char **argv)
   /*   }  */
   /* free(buffer); */
   MPI_Barrier(MPI_COMM_WORLD);
-
+  t_stop = MPI_Wtime();
   /* Sanity MPI check */
   if(ThisTask == 1)
     printf("N1=%d N2=%d N3=%d\n",N1,N2,N3);
   if(ThisTask == 0)
-    system("date");
+    printf("reading in data %lf s\n",t_stop-t_start);
   //calculating max and min radius for smoothing in units of grid size
   r_min=1.;
   r_max=pow((1.*N1*N2*N3),(1./3.))/2.;
@@ -389,28 +391,28 @@ main(int argc, char **argv)
   // system("date");
   /* smoothing */
   // printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask[ThisTask]);
+  t_start = MPI_Wtime();
   for(ii=0;ii<NjobsperTask[ThisTask];ii++)
     {
       printf("Task: %d start job %d\n",ThisTask,JobsTask[ii]);
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
       printf("Task: %d finish job %d\n",ThisTask,JobsTask[ii]);
     }  
-
+  t_stop = MPI_Wtime();
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
-    printf("Finish reionizing process\n");
+    printf("Finish reionizing process %lf s\n",t_stop-t_start);
+  t_start = MPI_Wtime();
   pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
+  t_stop = MPI_Wtime();
   if(ThisTask == 0)
-    printf("Finish packing data\n");
+    printf("Finish packing data %lf s\n",t_stop-t_start);
   MPI_Barrier(MPI_COMM_WORLD);
-  if(ThisTask == 0)
-    system("date");
+  t_start = MPI_Wtime();
   MPI_Reduce(buffer,buffer_final,Nnion*N1*N2*N3,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);
+  t_stop = MPI_Wtime();
   if(ThisTask == 0)
-    {
-      system("date");
-      printf("finish finding max\n");
-    }
+    printf("Finish finding max %lf s\n",t_stop-t_start); 
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
     {
