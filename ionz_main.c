@@ -141,7 +141,8 @@ void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real
   fread(N1_p,sizeof(int),1,inp);
   fread(N2_p,sizeof(int),1,inp);
   fread(N3_p,sizeof(int),1,inp);
-  printf("N1=%d\n",*N1_p);
+  if(ThisTask == 0)
+    printf("N1=%d\n",*N1_p);
   for(ii=0;ii<*N1_p;ii++)
     for(jj=0;jj<*N2_p;jj++)
       for(kk=0;kk<*N3_p;kk++)
@@ -187,7 +188,8 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
   
   fscanf(inp,"%d",&nhalo);
   //Total number of filled grid points with sources
-  printf("nhalo =%d\n",nhalo);
+  if(ThisTask == 0)
+    printf("nhalo =%d\n",nhalo);
   
   
   for(ll=0;ll<nhalo;ll++)
@@ -255,7 +257,7 @@ main(int argc, char **argv)
 
 
   // Allocating memory to different arrays
-  /* Setting_Up_Memory_For_ionz(Nnion); */
+  Setting_Up_Memory_For_ionz(Nnion);
   /* if(ThisTask == 0) */
   /*   { */
   /*     system("date"); */
