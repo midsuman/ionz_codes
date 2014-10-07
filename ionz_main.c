@@ -167,8 +167,8 @@ main()
   // Allocating memory to different arrays
   Setting_Up_Memory_For_ionz(Nnion);
   
-  read_density("",&N1,&N2,&N3,nh);
-  
+  read_density("/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/7.859n_all.dat",&N1,&N2,&N3,nh,&robar);
+  exit(0);
 
   //calculating max and min radius for smoothing in units of grid size
   r_min=1.;
