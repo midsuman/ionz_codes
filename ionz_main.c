@@ -326,8 +326,8 @@ main(int argc, char **argv)
   /* smoothing */
   for(ii=0;ii<NjobsperTask;ii++)
     {
+      printf("Task: %d do the job %d\n",JobsTask[ii]);
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
-      system("date");
     }
   system("date");
   exit(0);
