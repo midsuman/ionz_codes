@@ -105,6 +105,23 @@ int make_radii_list(float *radii_p, float r_min, float r_max)
   radii_p = realloc(radii_p,sizeof(float)*i);
   return i;
 }
+void pack_3d_array_mpi_transfer(fftw_real ***input, float *output, int n1, int n2, int n3)
+{ 
+  int ii,jj,kk;
+  for(ii=0;ii<n1;ii++)
+    for(jj=0;jj<n2;jj++)
+      for(kk=0;kk<n3;kk++)
+	output[ii*n2*n3 + jj*n3 + kk] = input[ii][jj][kk];
+}
+
+void unpack_3d_array_mpi_transfer(float *input, fftw_real ***output, int n1, int n2, int n3)
+{
+  int ii,jj,kk;
+  for(ii=0;ii<n1;ii++)
+   for(jj=0;jj<n2;jj++)
+     for(kk=0;kk<n3;kk++)
+       output[ii][jj][kk]=input[ii*n2*n3 + jj*n3 + kk];
+}
 void pack_4d_array_mpi_transfer(fftw_real ****input, float *output, int n_nion, int n1, int n2, int n3)
 { 
   int ii,jj,kk,jk;
@@ -114,6 +131,7 @@ void pack_4d_array_mpi_transfer(fftw_real ****input, float *output, int n_nion, 
 	for(kk=0;kk<n3;kk++)
 	  output[jk*n1*n2*n3 + ii*n2*n3 + jj*n3 + kk] = input[jk][ii][jj][kk];
 }
+
 void unpack_4d_array_mpi_transfer(float *input, fftw_real ****output, int n_nion,int n1, int n2, int n3)
 {
   int ii,jj,kk,jk;
@@ -266,6 +284,8 @@ main(int argc, char **argv)
   Setting_Up_Memory_For_ionz(Nnion);
   
   read_density("/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/7.859n_all.dat",&N1,&N2,&N3,nh,&robar);
+  
+  pack_array_mpi_transfer();
   read_sources("/research/prace/47Mpc_RT/47Mpc_f2_gs_306/sources/7.859-coarsest_sources_used_wfgamma.dat",N1,N2,N3,ngamma,&robarhalo);
   
 
