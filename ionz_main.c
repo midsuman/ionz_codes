@@ -358,7 +358,8 @@ main(int argc, char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
 
   /* Transfer to Master node */
-
+  if(ThisTask==0)
+    printf("Start Transfering to Master node\n");
   for(mm=1;mm<NTask;mm++)
     {
       if(ThisTask == mm)
