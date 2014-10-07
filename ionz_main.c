@@ -184,7 +184,7 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
   //Avg. source density
   *robarhalo_p/=(1.*N1*N2*N3);
 }
-main()
+main(int argc, char **argv)
 {
   FILE  *inp,*outpp;
   int ii, jj, kk,ll,jk,sfac;
