@@ -284,6 +284,7 @@ main(int argc, char **argv)
   Setting_Up_Memory_For_ionz(Nnion);
   if(ThisTask == 0)
     {
+      system("date");
       read_density("/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/7.859n_all.dat",&N1,&N2,&N3,nh,&robar);
       buffer = malloc(sizeof(float)*N1*N2*N3);
       pack_3d_array_mpi_transfer(nh,buffer,N1,N2,N3);
@@ -307,6 +308,7 @@ main(int argc, char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
     {
+      system("date");
       read_sources("/research/prace/47Mpc_RT/47Mpc_f2_gs_306/sources/7.859-coarsest_sources_used_wfgamma.dat",N1,N2,N3,ngamma,&robarhalo);  
       buffer = malloc(sizeof(float)*N1*N2*N3);
       pack_3d_array_mpi_transfer(ngamma,buffer,N1,N2,N3);
@@ -325,7 +327,11 @@ main(int argc, char **argv)
   free(buffer);
   MPI_Barrier(MPI_COMM_WORLD);
 
-
+  /* Sanity MPI check */
+  if(ThisTask == 1)
+    printf("N1=%d N2=%d N3=%d\n",N1,N2,N3);
+  if(ThisTask == 0)
+    system("date");
   //calculating max and min radius for smoothing in units of grid size
   r_min=1.;
   r_max=pow((1.*N1*N2*N3),(1./3.))/2.;
