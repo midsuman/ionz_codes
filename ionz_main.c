@@ -45,6 +45,7 @@ void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, float ***
 {  
   int ii,jj,kk;
   FILE *inp;
+  printf("start read_density\n");
   inp=fopen(filename,"r");
   *robar_p=0.;
   fread(N1_p,sizeof(int),1,inp);
@@ -55,6 +56,7 @@ void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, float ***
     for(jj=0;jj<*N2_p;jj++)
       for(kk=0;kk<*N3_p;kk++)
 	{
+	  printf("reading %d %d %d\n", ii,jj,kk);
 	  fread(&nh_p[ii][jj][kk],sizeof(float),1,inp);
 	  *robar_p += nh_p[ii][jj][kk];
 	}
