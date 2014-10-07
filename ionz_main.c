@@ -3,6 +3,7 @@
 #include<math.h>
 #include<stdlib.h>
 #include"ion.h"
+#include <mpi.h>
 #include<string.h>
  /*  GLOBAL VARIABLES  */
 
@@ -41,7 +42,66 @@ fftw_real ***nh,***nhs,***ngamma,***ngammas,***rosp,****nxion;
  
   //To avoid confusion we take input the density and the source data in same units
 
-void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, float ***nh_p, double *robar_p)
+
+void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int n1, int n2, int n3 )
+{
+  int ii,jj,kk,jk;
+     
+  for(ii=0;ii<n1;ii++)
+    for(jj=0;jj<n2;jj++)
+      for(kk=0;kk<n3;kk++)
+	{
+	  //Filling smoothing arrays with the dark matter and source density data
+	  nhs[ii][jj][kk]=nh_p[ii][jj][kk];
+	  ngammas[ii][jj][kk]=ngamma_p[ii][jj][kk];
+	     
+	}
+      
+  printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
+
+  //Smoothing with real space spherical filter
+
+  smooth(nhs,Radii);
+  smooth(ngammas,Radii); 
+
+  for(jk=0;jk<Nnion;++jk)
+    {
+	 
+      for(ii=0;ii<n1;ii++)
+	for(jj=0;jj<n2;jj++)
+	  for(kk=0;kk<n3;kk++)
+	    {
+	      //Checking the ionization condition
+	      if(nhs[ii][jj][kk]<nion_p[jk]*ngammas[ii][jj][kk])
+		{
+		  nxion_p[jk][ii][jj][kk]=1.;
+		}
+	    }
+    }
+
+}
+int make_radii_list(float *radii_p, float r_min, float r_max)
+{
+  float r,dr;
+  int i = 0;
+  r = r_min;
+  while (r < r_max)
+    {
+      radii_p[i] = r;
+      dr = (r*.1) < 2.0 ? (r*.1):2.0;
+      r += dr;
+      i++;
+    }
+  radii_p = realloc(radii_p,sizeof(float)*i);
+  return i;
+}
+void pack_array_mpi_transfer(fftw_real ***input, float *output, int n1, int n2, int n3)
+{ 
+}
+void unpack_array_mpi_transfer(float *input, fftw_real ***output, int n1, int n2, int n3)
+{
+}
+void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real ***nh_p, double *robar_p)
 {  
   int ii,jj,kk;
   FILE *inp;
@@ -67,7 +127,7 @@ void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, float ***
 }
 
 
-void read_sources(char *filename, int N1, int N2, int N3, float ***ngamma_p, double *robarhalo_p)
+void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p, double *robarhalo_p)
 {
   FILE *inp;
   int ii,jj,kk,ll;
@@ -132,11 +192,11 @@ main()
   float Radii,his_z,zval;
   double robar,robarhalo,vfac,*vion,*roion;
   float **rra,**vva,**halo,**data,*dummy,junk1=1.0,junk2=0.0;
-  
-
+  float *Radii_list;
+  int n_radii;
  
   pi=4.0*atan(1.0);
-
+  
   system("date");
   //Reading the input simulation parameter file
   inp=fopen("input.ionz","r");
@@ -179,7 +239,9 @@ main()
   //calculating max and min radius for smoothing in units of grid size
   r_min=1.;
   r_max=pow((1.*N1*N2*N3),(1./3.))/2.;
-
+  Radii_list = malloc(sizeof(float)*1000); // max is 1000
+  n_radii = make_radii_list(Radii_list,r_min,r_max);
+  
   // The max smoothing radius here is set as half of the diagonal of the box
   // This can be changed, one can choose a redshift dependent function instead
   // Or one can choose a model for redshift evolution of the mean free path of the UV photons
@@ -236,45 +298,10 @@ main()
   Radii=r_min;
   
   system("date");
-  while(Radii<r_max)
+  /* smoothing */
+  for(ii=0;ii<n_radii;ii++)
     {
-     
-      for(ii=0;ii<N1;ii++)
-  	for(jj=0;jj<N2;jj++)
-  	 for(kk=0;kk<N3;kk++)
-  	   {
-	     //Filling smoothing arrays with the dark matter and source density data
-  	     nhs[ii][jj][kk]=nh[ii][jj][kk];
-  	     ngammas[ii][jj][kk]=ngamma[ii][jj][kk];
-	     
-  	   }
-      
-     printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
-
-     //Smoothing with real space spherical filter
-
-     smooth(nhs,Radii);
-     smooth(ngammas,Radii); 
-
-     for(jk=0;jk<Nnion;++jk)
-       {
-	 
-  	 for(ii=0;ii<N1;ii++)
-  	   for(jj=0;jj<N2;jj++)
-  	     for(kk=0;kk<N3;kk++)
-	       {
-		 //Checking the ionization condition
-		 if(nhs[ii][jj][kk]<nion[jk]*ngammas[ii][jj][kk])
-		   {
-		     nxion[jk][ii][jj][kk]=1.;
-		   }
-	       }
-       }
-     //increment of the smoothing radius
-
-
-     dr=(Radii*.1) < 2.0 ? (Radii*.1) : 2.0;
-     Radii += dr;
+      reionization(Radii_list[ii], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );      
     }
   system("date");
   
