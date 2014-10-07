@@ -273,7 +273,7 @@ main(int argc, char **argv)
   // Or one can choose a model for redshift evolution of the mean free path of the UV photons
   // We are showing the most simple case here
   
-  printf("robar=%e  robarhalo=%e ratio= %e\n",robar,robarhalo,robar/robarhalo);
+  // printf("robar=%e  robarhalo=%e ratio= %e\n",robar,robarhalo,robar/robarhalo);
 
   //subgrid re-ionization
 
@@ -312,7 +312,7 @@ main(int argc, char **argv)
   	    }
       vion[jk]/=(1.*N1*N2*N3);
       roion[jk]/=(float)(robar*N1*N2*N3);
-      printf("obtained vol. avg. x_ion=%e mass avg. x_ion=%e\n",vion[jk],roion[jk]);
+      // printf("obtained vol. avg. x_ion=%e mass avg. x_ion=%e\n",vion[jk],roion[jk]);
     }
 
 
