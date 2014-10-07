@@ -301,7 +301,8 @@ main()
   /* smoothing */
   for(ii=0;ii<n_radii;ii++)
     {
-      reionization(Radii_list[ii], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );      
+      reionization(Radii_list[ii], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
+      system("date");
     }
   system("date");
   
