@@ -1,13 +1,8 @@
-#include"srfftw.h"
-#include<stdio.h>
-#include<math.h>
-#include<stdlib.h>
-#include"ion.h"
-
-#ifdef PARALLEL
-#include <mpi.h>
-#include "ionz_mpi.h"
-#endif
+#include "srfftw.h"
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include "ion.h"
 
 #include<string.h>
 
@@ -27,6 +22,7 @@ float  vhh, // Hubble parameter
   vnn; // Spectral index of primordial Power spectrum
 
 int N1,N2,N3;// box dimension (grid) 
+int Nnion;
 
 float   LL; // grid spacing in Mpc
 
@@ -219,12 +215,14 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
   //Avg. source density
   *robarhalo_p/=(1.*N1*N2*N3);
 }
+
+
 main(int argc, char **argv)
 {
   FILE  *inp,*outpp;
   int ii, jj, kk,ll,jk,mm,sfac;
-  float  vaa,epsilon,box;
-  int  Nnion,temp,flag_sup;
+  float  Nnion,vaa,epsilon,box;
+  int  temp,flag_sup;
   float dr,r_min,r_max;
   char file1[300],file2[300],num[50];
   float *nion,xh1,dump,mass1,mass2;  
@@ -238,7 +236,7 @@ main(int argc, char **argv)
   int *JobsTask;
   float *buffer, *buffer_final;
 #ifdef PARALLEL
-  MPI_Init(&argc, &argv);
+  MPI_Init(&argc, argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);
   MPI_Comm_size(MPI_COMM_WORLD, &NTask);
 #else
@@ -247,38 +245,20 @@ main(int argc, char **argv)
 #endif //PARALLEL
 
   pi=4.0*atan(1.0);
-  
+  read_params("input.ionz");
+  Nnion = input_param.Nion;
   system("date");
-  //Reading the input simulation parameter file
-  inp=fopen("input.ionz","r");
-  /* get parameters for reion simulation */
-  fscanf(inp,"%d",&Nnion);
-  //Nnion is the number of nion values for which we will run the simulation
-  //You will get a x_HI map for each value of nion
-  //Allocating memory for some variables
   nion=(float*)calloc(Nnion,sizeof(float));
   vion=(double*)calloc(Nnion,sizeof(double));
   roion=(double*)calloc(Nnion,sizeof(double));
-  //Reading nion values from the input file
-  //nion is the efficiency paramter for ionization (a combination of f_esc,f_star etc)
-  // We try with variuos values of nion
-  for(ii=0;ii<Nnion;ii++)
-    {
-      fscanf(inp,"%f",&nion[ii]);
-    }
+  N1 = input_param.N1;
+  N2 = input_param.N2;
+  N3 = input_param.N3;
+  omegam = input_param.omegam;
+  omegalam = input_param.omegalam;
+  omegab = input_param.omegab;
   
-  fscanf(inp,"%f%f%f%f%f",&vaa,&vomegam,&vomegalam,&vhh,&vomegab);
-  //Reading cosmological parameters values
-  //vaa initially scans the redshift of the Nbody simulation
-  zval = vaa; //value of z stored
-  vaa = 1/(1+vaa);// converts it into scale factor
-  fscanf(inp,"%d%d%d%f",&N1,&N2,&N3,&box);
-    
-  fclose(inp);
- 
-  LL = box/(vhh*N1); // grid size in Mpc
 
-  printf("scale factor= %f\n",vaa);
 
   // Allocating memory to different arrays
   Setting_Up_Memory_For_ionz(Nnion);
@@ -414,7 +394,7 @@ main(int argc, char **argv)
   printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask[ThisTask]);
   for(ii=0;ii<NjobsperTask[ThisTask];ii++)
     {
-      printf("Task: %d finish job %d\n",ThisTask,JobsTask[ii]);
+      printf("Task: %d start job %d\n",ThisTask,JobsTask[ii]);
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
       printf("Task: %d finish job %d\n",ThisTask,JobsTask[ii]);
     }  
