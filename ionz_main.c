@@ -199,7 +199,7 @@ main(int argc, char **argv)
   float **rra,**vva,**halo,**data,*dummy,junk1=1.0,junk2=0.0;
   float *Radii_list;
   int n_radii;
-  int NjobsperTask;
+  int *NjobsperTask;
   int *JobsTask;
 
 #ifdef PARALLEL
@@ -256,17 +256,22 @@ main(int argc, char **argv)
   r_min=1.;
   r_max=pow((1.*N1*N2*N3),(1./3.))/2.;
   Radii_list = malloc(sizeof(float)*1000); // max is 1000
+  NjobsperTask = malloc(sizeof(float)*NTask);
   n_radii = make_radii_list(Radii_list,r_min,r_max);
-  
-  NjobsperTask = n_radii/NTask;
-  if(ThisTask < n_radii%NTask)
-    NjobsperTask++;
-  JobsTask = malloc(sizeof(int)*NjobsperTask);
-  for(ii=0;ii<NjobsperTask;ii++)
+  for(jj=0;jj<NTask;jj++)
     {
-      JobsTask[ii] = ii*NTask+ThisTask;
+      NjobsperTask[jj] = n_radii/NTask;
+      if(jj < n_radii%NTask)
+	NjobsperTask[jj]++;
+      if(jj == ThisTask)
+	{
+	  JobsTask = malloc(sizeof(int)*NjobsperTask[jj]);
+	  for(ii=0;ii<NjobsperTask[jj];ii++)
+	    {
+	      JobsTask[ii] = ii*NTask+ThisTask;
+	    }
+	}
     }
-  
 
   // The max smoothing radius here is set as half of the diagonal of the box
   // This can be changed, one can choose a redshift dependent function instead
@@ -325,14 +330,15 @@ main(int argc, char **argv)
   // system("date");
   /* smoothing */
   printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask);
-  for(ii=0;ii<NjobsperTask;ii++)
+  for(ii=0;ii<NjobsperTask[ThisTask];ii++)
     {
       printf("Task: %d do the job %d\n",ThisTask,JobsTask[ii]);
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
     }
   // system("date");
   MPI_Barrier(MPI_COMM_WORLD);
-  exit(0);
+
+  /* Transfer to Master node */
   
   for(jk=0;jk<Nnion;++jk)
     {
