@@ -3,7 +3,12 @@
 #include<math.h>
 #include<stdlib.h>
 #include"ion.h"
+
+#ifdef PARALLEL
 #include <mpi.h>
+#include "ionz_mpi.h"
+#endif
+
 #include<string.h>
  /*  GLOBAL VARIABLES  */
 
@@ -194,7 +199,16 @@ main()
   float **rra,**vva,**halo,**data,*dummy,junk1=1.0,junk2=0.0;
   float *Radii_list;
   int n_radii;
- 
+
+#ifdef PARALLEL
+  MPI_Init(&argc, &argv);
+  MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);
+  MPI_Comm_size(MPI_COMM_WORLD, &NTask);
+#else
+  NTask = 1;
+  ThisTask = 0;
+#endif //PARALLEL
+
   pi=4.0*atan(1.0);
   
   system("date");
@@ -295,7 +309,6 @@ main()
  
   //smoothing loop 
   //done for a range of length scales from r_min to r_max (in units of grid size)
-  Radii=r_min;
   
   system("date");
   /* smoothing */

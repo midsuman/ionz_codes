@@ -3,6 +3,12 @@
 #include<math.h>
 #include<srfftw.h>
 #include"ion.h"
+
+#ifdef PARALLEL
+#include <mpi.h>
+#include "ionz_mpi.h"
+#endif
+
 /*  GLOBAL VARIABLES  */
 
 // cosmological parameters read from input file  "input.ionz"
