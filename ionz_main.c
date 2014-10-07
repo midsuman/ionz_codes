@@ -331,6 +331,7 @@ main(int argc, char **argv)
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
     }
   // system("date");
+  MPI_Barrier(MPI_COMM_WORLD);
   exit(0);
   
   for(jk=0;jk<Nnion;++jk)
