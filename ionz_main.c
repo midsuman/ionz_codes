@@ -199,6 +199,8 @@ main(int argc, char **argv)
   float **rra,**vva,**halo,**data,*dummy,junk1=1.0,junk2=0.0;
   float *Radii_list;
   int n_radii;
+  int NjobsperTask;
+  int *JobsTask;
 
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
@@ -256,6 +258,16 @@ main(int argc, char **argv)
   Radii_list = malloc(sizeof(float)*1000); // max is 1000
   n_radii = make_radii_list(Radii_list,r_min,r_max);
   
+  NjobsperTask = n_radii/NTask;
+  if(ThisTask < mod(n_radii,NTask))
+    NjobsperTask++;
+  JobsTask = malloc(sizeof(int)*NjobsperTask);
+  for(ii=0;ii<NjobsperTask;ii++)
+    {
+      JobsTask[ii] = ii*NTask+ThisTask;
+    }
+  
+
   // The max smoothing radius here is set as half of the diagonal of the box
   // This can be changed, one can choose a redshift dependent function instead
   // Or one can choose a model for redshift evolution of the mean free path of the UV photons
@@ -312,13 +324,13 @@ main(int argc, char **argv)
   
   system("date");
   /* smoothing */
-  for(ii=0;ii<n_radii;ii++)
+  for(ii=0;ii<NjobsperTask;ii++)
     {
-      reionization(Radii_list[ii], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
+      reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
       system("date");
     }
   system("date");
-  
+  exit(0);
   
   for(jk=0;jk<Nnion;++jk)
     {
