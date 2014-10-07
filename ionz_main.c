@@ -218,7 +218,7 @@ main(int argc, char **argv)
   int n_radii;
   int *NjobsperTask;
   int *JobsTask;
-  float *buffer;
+  float *buffer, *buffer_final;
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);
@@ -289,7 +289,9 @@ main(int argc, char **argv)
 	    }
 	}
     }
-  buffer = malloc(sizeof(float)*N1*N2*N3);
+  buffer = malloc(sizeof(float)*Nnion*N1*N2*N3);
+  if(ThisTask == 0)
+    buffer_final = malloc(sizeof(float)*Nnion*N1*N2*N3);
   // The max smoothing radius here is set as half of the diagonal of the box
   // This can be changed, one can choose a redshift dependent function instead
   // Or one can choose a model for redshift evolution of the mean free path of the UV photons
@@ -351,37 +353,15 @@ main(int argc, char **argv)
     {
       printf("Task: %d do the job %d\n",ThisTask,JobsTask[ii]);
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
-    }
-  // system("date");
+    }  // system("date");
   
+
   pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
   MPI_Barrier(MPI_COMM_WORLD);
-
-  /* Transfer to Master node */
-  if(ThisTask==0)
-    printf("Start Transfering to Master node\n");
-  for(mm=1;mm<NTask;mm++)
-    {
-      if(ThisTask == mm)
-	{
-	  MPI_Send(buffer, N1*N2*N3*Nnion, MPI_FLOAT, 0, mm, MPI_COMM_WORLD);
-	}
-      else if(ThisTask == 0)
-	{
-	  printf("Transfer from Task %d\n",mm);
-	  MPI_Recv(buffer, N1*N2*N3*Nnion, MPI_FLOAT, mm, mm, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-	  unpack_4d_array_mpi_transfer(buffer, nxion_buffer,Nnion, N1, N2, N3);
-	  for(jk=0;jk<Nnion;jk++)
-	    for(ii=0;ii<N1;ii++)
-	      for(jj=0;jj<N2;jj++)
-		for(kk=0;kk<N3;kk++)
-		  nxion[jk][ii][jj][kk]=max(nxion[jk][ii][jj][kk],nxion_buffer[jk][ii][jj][kk]);
-	  printf("Finish transfer from Task %d\n",mm);  
-	}
-      MPI_Barrier(MPI_COMM_WORLD);
-    }
+  MPI_Reduce(buffer,buffer_final,Nnion*N1*N2*N3,MPI_FlOAT,MPI_MAX,0,MPI_COMM_WORLD);
+  if(ThisTask == 0)
+    printf("finish finding max\n");
   exit(1);
-
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
     {
