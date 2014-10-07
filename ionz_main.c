@@ -89,7 +89,7 @@ void read_sources(char *filename, int N1, int N2, int N3, float ***ngamma_p, dou
   *robarhalo_p=0.;
   inp=fopen(filename,"r");
   
-  fscanf(inp,"%d",&nhalo;
+  fscanf(inp,"%d",&nhalo);
   //Total number of filled grid points with sources
   printf("nhalo =%d\n",nhalo);
   
