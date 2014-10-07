@@ -204,7 +204,7 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
 main(int argc, char **argv)
 {
   FILE  *inp,*outpp;
-  int ii, jj, kk,ll,jk,sfac;
+  int ii, jj, kk,ll,jk,mm,sfac;
   float  vaa,epsilon,box;
   int  Nnion,temp,flag_sup;
   float dr,r_min,r_max;
