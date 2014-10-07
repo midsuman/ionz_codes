@@ -236,7 +236,7 @@ main(int argc, char **argv)
   int *JobsTask;
   float *buffer, *buffer_final;
 #ifdef PARALLEL
-  MPI_Init(&argc, argv);
+  MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);
   MPI_Comm_size(MPI_COMM_WORLD, &NTask);
 #else
@@ -246,7 +246,7 @@ main(int argc, char **argv)
 
   pi=4.0*atan(1.0);
   read_params("input.ionz");
-  Nnion = input_param.Nion;
+  Nnion = input_param.Nnion;
   system("date");
   nion=(float*)calloc(Nnion,sizeof(float));
   vion=(double*)calloc(Nnion,sizeof(double));
