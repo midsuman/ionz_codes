@@ -254,9 +254,9 @@ main(int argc, char **argv)
   N1 = input_param.N1;
   N2 = input_param.N2;
   N3 = input_param.N3;
-  omegam = input_param.omegam;
-  omegalam = input_param.omegalam;
-  omegab = input_param.omegab;
+  vomegam = input_param.omegam;
+  vomegalam = input_param.omegalam;
+  vomegab = input_param.omegab;
   
 
 
