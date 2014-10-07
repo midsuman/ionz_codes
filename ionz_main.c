@@ -361,13 +361,12 @@ main(int argc, char **argv)
   MPI_Reduce(buffer,buffer_final,Nnion*N1*N2*N3,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);
   if(ThisTask == 0)
     printf("finish finding max\n");
-  exit(1);
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
     {
+      unpack_4d_array_mpi_transfer(buffer_final, nxion, Nnion, N1, N2, N3);
       for(jk=0;jk<Nnion;++jk)
 	{
-      
 	  //calculating avg. ionization frction
 	  vion[jk]=0.0;
 	  roion[jk]=0.0;
