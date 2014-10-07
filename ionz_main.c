@@ -58,6 +58,7 @@ void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, float ***
 	{
 	  // printf("reading %d %d %d\n", ii,jj,kk);
 	  fread(&nh_p[ii][jj][kk],sizeof(float),1,inp);
+	  
 	  *robar_p += nh_p[ii][jj][kk];
 	}
   fclose(inp);
@@ -173,7 +174,7 @@ main()
   
   read_density("/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/7.859n_all.dat",&N1,&N2,&N3,nh,&robar);
   read_sources("/research/prace/47Mpc_RT/47Mpc_f2_gs_306/sources/7.859-coarsest_sources_used_wfgamma.dat",N1,N2,N3,ngamma,&robarhalo);
-  exit(0);
+  
 
   //calculating max and min radius for smoothing in units of grid size
   r_min=1.;
