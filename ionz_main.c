@@ -422,9 +422,17 @@ main(int argc, char **argv)
   
   pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
   MPI_Barrier(MPI_COMM_WORLD);
+  if(ThisTask == 0)
+    {
+      system("date");
+      printf("finish finding max\n");
+    }
   MPI_Reduce(buffer,buffer_final,Nnion*N1*N2*N3,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);
   if(ThisTask == 0)
-    printf("finish finding max\n");
+    {
+      system("date");
+      printf("finish finding max\n");
+    }
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
     {
