@@ -1,4 +1,4 @@
-#ifudef IONZ_MPI_H
+#ifndef IONZ_MPI_H
 
 #include <mpi.h>
 
