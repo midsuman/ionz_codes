@@ -121,7 +121,7 @@ void unpack_array_mpi_transfer(float *input, fftw_real ****output, int n1, int n
     for(ii=0;ii<n1;ii++)
       for(jj=0;jj<n2;jj++)
 	for(kk=0;kk<n3;kk++)
-	  input[jk][ii][jj][kk]=output[jk*n1*n2*n3 + ii*n2*n3 + jj*n3 + kk];
+	  output[jk][ii][jj][kk]=input[jk*n1*n2*n3 + ii*n2*n3 + jj*n3 + kk];
 }
 void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real ***nh_p, double *robar_p)
 {  
@@ -369,10 +369,10 @@ main(int argc, char **argv)
 	{
 	  MPI_Recv(buffer, N1*N2*N3*Nnion, MPI_FLOAT, mm, mm, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 	  unpack_array_mpi_transfer(buffer, nxion_buffer, N1, N2, N3,Nnion);
-	  for(jk=0;jk<n_nion;jk++)
-	    for(ii=0;ii<n1;ii++)
-	      for(jj=0;jj<n2;jj++)
-		for(kk=0;kk<n3;kk++)
+	  for(jk=0;jk<Nnion;jk++)
+	    for(ii=0;ii<N1;ii++)
+	      for(jj=0;jj<N2;jj++)
+		for(kk=0;kk<N3;kk++)
 		  nxion[jk][ii][jj][kk]=max(nxion[jk][ii][jj][kk],nxion_buffer[jk][ii][jj][kk]);
 	}
       MPI_Barrier(MPI_COMM_WORLD);
