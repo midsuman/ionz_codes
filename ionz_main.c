@@ -67,7 +67,7 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
 	     
 	}
       
-  printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
+  // printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
 
   //Smoothing with real space spherical filter
 
@@ -105,7 +105,7 @@ int make_radii_list(float *radii_p, float r_min, float r_max)
   radii_p = realloc(radii_p,sizeof(float)*i);
   return i;
 }
-void pack_array_mpi_transfer(fftw_real ****input, float *output, int n1, int n2, int n3, int n_nion)
+void pack_4d_array_mpi_transfer(fftw_real ****input, float *output, int n_nion, int n1, int n2, int n3)
 { 
   int ii,jj,kk,jk;
   for(jk=0;jk<n_nion;jk++)
@@ -114,7 +114,7 @@ void pack_array_mpi_transfer(fftw_real ****input, float *output, int n1, int n2,
 	for(kk=0;kk<n3;kk++)
 	  output[jk*n1*n2*n3 + ii*n2*n3 + jj*n3 + kk] = input[jk][ii][jj][kk];
 }
-void unpack_array_mpi_transfer(float *input, fftw_real ****output, int n1, int n2, int n3, int n_nion)
+void unpack_4d_array_mpi_transfer(float *input, fftw_real ****output, int n_nion,int n1, int n2, int n3)
 {
   int ii,jj,kk,jk;
   for(jk=0;jk<n_nion;jk++)
@@ -127,7 +127,7 @@ void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real
 {  
   int ii,jj,kk;
   FILE *inp;
-  printf("start read_density\n");
+  // printf("start read_density\n");
   inp=fopen(filename,"r");
   *robar_p=0.;
   fread(N1_p,sizeof(int),1,inp);
@@ -145,7 +145,7 @@ void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real
 	}
   fclose(inp);
   *robar_p /= (1.*(*N1_p)*(*N2_p)*(*N3_p));
-  printf("ok with density\n");
+  // printf("ok with density\n");
 }
 
 
@@ -354,7 +354,7 @@ main(int argc, char **argv)
     }
   // system("date");
   
-  pack_array_mpi_transfer(nxion,buffer, N1, N2, N3,Nnion);
+  pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
   MPI_Barrier(MPI_COMM_WORLD);
 
   /* Transfer to Master node */
@@ -369,13 +369,13 @@ main(int argc, char **argv)
 	{
 	  printf("Transfer from Task %d\n",mm);
 	  MPI_Recv(buffer, N1*N2*N3*Nnion, MPI_FLOAT, mm, mm, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-	  unpack_array_mpi_transfer(buffer, nxion_buffer, N1, N2, N3,Nnion);
+	  unpack_4d_array_mpi_transfer(buffer, nxion_buffer,Nnion, N1, N2, N3);
 	  for(jk=0;jk<Nnion;jk++)
 	    for(ii=0;ii<N1;ii++)
 	      for(jj=0;jj<N2;jj++)
 		for(kk=0;kk<N3;kk++)
 		  nxion[jk][ii][jj][kk]=max(nxion[jk][ii][jj][kk],nxion_buffer[jk][ii][jj][kk]);
-	  printf("Finish transfer from Task %d\n",mm);
+	  printf("Finish transfer from Task %d\n",mm);  
 	}
       MPI_Barrier(MPI_COMM_WORLD);
     }
