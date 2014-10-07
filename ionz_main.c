@@ -243,7 +243,8 @@ main(int argc, char **argv)
   pi=4.0*atan(1.0);
   read_params("input.ionz");
   Nnion = input_param.Nnion;
-  system("date");
+  if(ThisTask ==0)
+    system("date");
   nion=(float*)calloc(Nnion,sizeof(float));
   vion=(double*)calloc(Nnion,sizeof(double));
   roion=(double*)calloc(Nnion,sizeof(double));
