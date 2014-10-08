@@ -421,7 +421,7 @@ main(int argc, char **argv)
       
       cur_mpi_buffer_size = min(mpi_buffer_size,Nnion*N1*N2*N3-(ii*mpi_buffer_size)-1);
       MPI_Barrier(MPI_COMM_WORLD);
-      MPI_Reduce(&buffer[ii*mpi_buffer_size],buffer_final[ii*mpi_buffer_size],cur_mpi_buffer_size,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);
+      MPI_Reduce(&buffer[ii*mpi_buffer_size],&buffer_final[ii*mpi_buffer_size],cur_mpi_buffer_size,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);
       ii++;
     }
   MPI_Barrier(MPI_COMM_WORLD);
