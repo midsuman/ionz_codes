@@ -242,12 +242,10 @@ main(int argc, char **argv)
   NTask = 1;
   ThisTask = 0;
 #endif //PARALLEL
-
+  
   pi=4.0*atan(1.0);
   read_params("input.ionz");
   Nnion = input_param.Nnion;
-  if(ThisTask ==0)
-    system("date");
   nion=(float*)calloc(Nnion,sizeof(float));
   vion=(double*)calloc(Nnion,sizeof(double));
   roion=(double*)calloc(Nnion,sizeof(double));
@@ -390,7 +388,7 @@ main(int argc, char **argv)
   //smoothing loop 
   //done for a range of length scales from r_min to r_max (in units of grid size)
   
-  // system("date");
+
   /* smoothing */
   // printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask[ThisTask]);
   MPI_Barrier(MPI_COMM_WORLD);
