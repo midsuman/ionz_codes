@@ -431,7 +431,7 @@ main(int argc, char **argv)
     printf("Finish finding max:split %lf s\n",t_stop-t_start); 
   MPI_Barrier(MPI_COMM_WORLD);
   t_start = MPI_Wtime();
-  MPI_Reduce(buffer, buffer_final, MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);      
+  MPI_Reduce(buffer, buffer_final, Nnion*N1*N2*N3, MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);      
   MPI_Barrier(MPI_COMM_WORLD);
   t_stop = MPI_Wtime();
   if(ThisTask == 0)
