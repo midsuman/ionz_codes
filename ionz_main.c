@@ -235,9 +235,13 @@ main(int argc, char **argv)
   int *JobsTask;
   double t_start, t_stop;
   float *buffer, *buffer_final;
-  printf("Start semi-numerical reionization process\n");
+
+
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
+
+  printf("Start semi-numerical reionization process\n");
+
   MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);
   MPI_Comm_size(MPI_COMM_WORLD, &NTask);
 #else
