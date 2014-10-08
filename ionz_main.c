@@ -412,10 +412,10 @@ main(int argc, char **argv)
   t_stop = MPI_Wtime();
   if(ThisTask == 0)
     printf("Finish packing data %lf s\n",t_stop-t_start);
-  t_start = MPI_Wtime();
   if(ThisTask == 0)
     buffer_final = malloc(sizeof(float)*Nnion*N1*N2*N3);
   MPI_Barrier(MPI_COMM_WORLD);
+  t_start = MPI_Wtime();
   ii = 0;
   while (ii*mpi_buffer < Nnion*N1*N2*N3)
     {
@@ -428,7 +428,14 @@ main(int argc, char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   t_stop = MPI_Wtime();
   if(ThisTask == 0)
-    printf("Finish finding max %lf s\n",t_stop-t_start); 
+    printf("Finish finding max:split %lf s\n",t_stop-t_start); 
+  MPI_Barrier(MPI_COMM_WORLD);
+  t_start = MPI_Wtime();
+  MPI_Reduce(buffer, buffer_final, MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);      
+  MPI_Barrier(MPI_COMM_WORLD);
+  t_stop = MPI_Wtime();
+  if(ThisTask == 0)
+    printf("Finish finding max:whole %lf s\n",t_stop-t_start); 
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
     {
