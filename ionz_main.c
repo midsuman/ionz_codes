@@ -337,6 +337,7 @@ main(int argc, char **argv)
   buffer = malloc(sizeof(float)*Nnion*N1*N2*N3);
   if(ThisTask == 0)
     buffer_final = malloc(sizeof(float)*Nnion*N1*N2*N3);
+
   // The max smoothing radius here is set as half of the diagonal of the box
   // This can be changed, one can choose a redshift dependent function instead
   // Or one can choose a model for redshift evolution of the mean free path of the UV photons
@@ -395,12 +396,11 @@ main(int argc, char **argv)
   // system("date");
   /* smoothing */
   // printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask[ThisTask]);
+  MPI_Barrier(MPI_COMM_WORLD);
   t_start = MPI_Wtime();
   for(ii=0;ii<NjobsperTask[ThisTask];ii++)
     {
-      // printf("Task: %d start job %d\n",ThisTask,JobsTask[ii]);
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
-      // printf("Task: %d finish job %d\n",ThisTask,JobsTask[ii]);
     }  
   MPI_Barrier(MPI_COMM_WORLD);
   t_stop = MPI_Wtime();
