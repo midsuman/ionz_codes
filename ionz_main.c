@@ -233,6 +233,7 @@ main(int argc, char **argv)
   float *buffer, *buffer_final;
   int mpi_buffer_size = 1000000;
   int cur_mpi_buffer_size;
+
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);

@@ -5,6 +5,8 @@ void read_params(char filename[2048])
   {
     FILE *inp;
     int ii;
+    if(ThisTask == 0)
+      printf("Start reading input file: %s\n",filename);
     //Reading the input simulation parameter file
     inp=fopen(filename,"r");
     /* get parameters for reion simulation */
