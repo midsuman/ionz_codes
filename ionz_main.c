@@ -264,49 +264,47 @@ main(int argc, char **argv)
   // Allocating memory to different arrays
   Setting_Up_Memory_For_ionz(Nnion);
   t_start = MPI_Wtime();
-  /* if(ThisTask == 0) */
-  /*   { */
-  /*     system("date"); */
+  if(ThisTask == 0)
+    {
       read_density("/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/7.859n_all.dat",&N1,&N2,&N3,nh,&robar);
-  /*     buffer = malloc(sizeof(float)*N1*N2*N3); */
-  /*     pack_3d_array_mpi_transfer(nh,buffer,N1,N2,N3); */
-  /*   } */
-  /* MPI_Barrier(MPI_COMM_WORLD); */
-  /* MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD); */
-  /* MPI_Bcast(&N1, 1, MPI_INT, 0, MPI_COMM_WORLD); */
-  /* MPI_Bcast(&N2, 1, MPI_INT, 0, MPI_COMM_WORLD); */
-  /* MPI_Bcast(&N3, 1, MPI_INT, 0, MPI_COMM_WORLD); */
-  /* if(ThisTask > 0) */
-  /*   { */
-  /*     buffer = malloc(sizeof(float)*N1*N2*N3); */
-  /*   } */
-  /* MPI_Barrier(MPI_COMM_WORLD); */
-  /* MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD); */
-  /* if(ThisTask > 0) */
-  /*   { */
-  /*     unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3); */
-  /*   }  */
-  /* free(buffer); */
-  /* MPI_Barrier(MPI_COMM_WORLD); */
-  /* if(ThisTask == 0) */
-  /*   { */
-  /*     system("date"); */
+      buffer = malloc(sizeof(float)*N1*N2*N3);
+      pack_3d_array_mpi_transfer(nh,buffer,N1,N2,N3);
+    }
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&N1, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&N2, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&N3, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  if(ThisTask > 0)
+    {
+      buffer = malloc(sizeof(float)*N1*N2*N3);
+    }
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  if(ThisTask > 0)
+    {
+      unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
+    }
+  free(buffer);
+  MPI_Barrier(MPI_COMM_WORLD);
+  if(ThisTask == 0)
+    {
       read_sources("/research/prace/47Mpc_RT/47Mpc_f2_gs_306/sources/7.859-coarsest_sources_used_wfgamma.dat",N1,N2,N3,ngamma,&robarhalo);  
-  /*     buffer = malloc(sizeof(float)*N1*N2*N3); */
-  /*     pack_3d_array_mpi_transfer(ngamma,buffer,N1,N2,N3); */
-  /*   } */
-  /* if(ThisTask > 0) */
-  /*   { */
-  /*     buffer = malloc(sizeof(float)*N1*N2*N3); */
-  /*   } */
-  /* MPI_Barrier(MPI_COMM_WORLD); */
-  /* MPI_Bcast(&robarhalo, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD); */
-  /* MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD); */
-  /* if(ThisTask > 0) */
-  /*   { */
-  /*     unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3); */
-  /*   }  */
-  /* free(buffer); */
+      buffer = malloc(sizeof(float)*N1*N2*N3);
+      pack_3d_array_mpi_transfer(ngamma,buffer,N1,N2,N3);
+    }
+  if(ThisTask > 0)
+    {
+      buffer = malloc(sizeof(float)*N1*N2*N3);
+    }
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Bcast(&robarhalo, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  if(ThisTask > 0)
+    {
+      unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3);
+    }
+  free(buffer);
   MPI_Barrier(MPI_COMM_WORLD);
   t_stop = MPI_Wtime();
   /* Sanity MPI check */
