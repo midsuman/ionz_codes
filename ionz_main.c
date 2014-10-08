@@ -309,6 +309,11 @@ main(int argc, char **argv)
     {
       unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3);
     }
+  if(ThisTask == 0)
+    {
+      for(ii=0;ii<100;ii++)
+	printf("%d %f\n",ii,buffer[ii]);
+    }
   free(buffer);
   MPI_Barrier(MPI_COMM_WORLD);
   t_stop = MPI_Wtime();
