@@ -398,16 +398,16 @@ main(int argc, char **argv)
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
       // printf("Task: %d finish job %d\n",ThisTask,JobsTask[ii]);
     }  
-  t_stop = MPI_Wtime();
   MPI_Barrier(MPI_COMM_WORLD);
+  t_stop = MPI_Wtime();
   if(ThisTask == 0)
     printf("Finish reionizing process %lf s\n",t_stop-t_start);
   t_start = MPI_Wtime();
   pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
+  MPI_Barrier(MPI_COMM_WORLD);
   t_stop = MPI_Wtime();
   if(ThisTask == 0)
     printf("Finish packing data %lf s\n",t_stop-t_start);
-  MPI_Barrier(MPI_COMM_WORLD);
   t_start = MPI_Wtime();
   MPI_Reduce(buffer,buffer_final,Nnion*N1*N2*N3,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);
   t_stop = MPI_Wtime();
@@ -464,6 +464,7 @@ main(int argc, char **argv)
 	  system("date");
 	}
     }
- system("date");            
+  MPI_Barrier(MPI_COMM_WORLD);
+  return 0;
 } /* END OF MAIN */
 
