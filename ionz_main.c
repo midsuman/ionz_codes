@@ -235,6 +235,8 @@ main(int argc, char **argv)
   int *JobsTask;
   double t_start, t_stop;
   float *buffer, *buffer_final;
+  int mpi_buffer_size = 1000000;
+  int cur_mpi_buffer_size;
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);
@@ -412,7 +414,16 @@ main(int argc, char **argv)
     printf("Finish packing data %lf s\n",t_stop-t_start);
   t_start = MPI_Wtime();
   MPI_Barrier(MPI_COMM_WORLD);
-  MPI_Reduce(buffer,buffer_final,Nnion*N1*N2*N3,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);
+  
+  ii = 0;
+  while ((ii+1)*mpi_buffer_size <= Nnion*N1*N2*N3-1)
+    {
+      
+      cur_mpi_buffer_size = min(mpi_buffer_size,Nnion*N1*N2*N3-(ii*mpi_buffer_size)-1);
+      MPI_Barrier(MPI_COMM_WORLD);
+      MPI_Reduce(&buffer[ii*mpi_buffer_size],buffer_final[ii*mpi_buffer_size],cur_mpi_buffer_size,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);
+      ii++;
+    }
   MPI_Barrier(MPI_COMM_WORLD);
   t_stop = MPI_Wtime();
   if(ThisTask == 0)
