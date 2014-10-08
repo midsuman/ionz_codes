@@ -134,6 +134,8 @@ void unpack_4d_array_mpi_transfer(float *input, fftw_real ****output, int n_nion
 	for(kk=0;kk<n3;kk++)
 	  output[jk][ii][jj][kk]=input[jk*n1*n2*n3 + ii*n2*n3 + jj*n3 + kk];
 }
+
+/* Read density in cubep3m format (Fortran binary) */
 void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real ***nh_p, double *robar_p)
 {  
   int ii,jj,kk;
@@ -309,16 +311,7 @@ main(int argc, char **argv)
     {
       unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3);
     }
- if(ThisTask == 10)
-    {
-      for(ii=0;ii<10;ii++)
-	printf("%d %f\n",ii,buffer[ii]);
-    }
-  if(ThisTask == 100)
-    {
-      for(ii=0;ii<10;ii++)
-	printf("%d %f\n",ii,buffer[ii]);
-    }
+
   free(buffer);
   MPI_Barrier(MPI_COMM_WORLD);
   t_stop = MPI_Wtime();
@@ -402,9 +395,6 @@ main(int argc, char **argv)
   //smoothing loop 
   //done for a range of length scales from r_min to r_max (in units of grid size)
   
-  // system("date");
-  /* smoothing */
-  // printf("Task: %d Njobs %d\n",ThisTask,NjobsperTask[ThisTask]);
   MPI_Barrier(MPI_COMM_WORLD);
   t_start = MPI_Wtime();
   for(ii=0;ii<NjobsperTask[ThisTask];ii++)
