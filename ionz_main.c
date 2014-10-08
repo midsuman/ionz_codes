@@ -411,9 +411,11 @@ main(int argc, char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   t_stop = MPI_Wtime();
   if(ThisTask == 0)
-    printf("Finish packing data %lf s\n",t_stop-t_start);
-  if(ThisTask == 0)
-    buffer_final = malloc(sizeof(float)*Nnion*N1*N2*N3);
+    {
+      printf("Finish packing data %lf s\n",t_stop-t_start);
+      /* allocate buffer_final for final outputs */
+      buffer_final = malloc(sizeof(float)*Nnion*N1*N2*N3);
+    }
   MPI_Barrier(MPI_COMM_WORLD);
   t_start = MPI_Wtime();
   ii = 0;
@@ -441,7 +443,7 @@ main(int argc, char **argv)
     {
       t_start = MPI_Wtime();
       for(ii=0;ii<100;ii++)
-	printf("%d %f\n",ii,buffer_final[ii]);
+	printf("%d %f\n",ii,buffer[ii]);
       unpack_4d_array_mpi_transfer(buffer_final, nxion, Nnion, N1, N2, N3);
       t_stop = MPI_Wtime();
       printf("Finish unpacking data %lf s\n",t_stop-t_start);
