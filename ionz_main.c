@@ -309,9 +309,14 @@ main(int argc, char **argv)
     {
       unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3);
     }
-  if(ThisTask == 10)
+ if(ThisTask == 10)
     {
-      for(ii=0;ii<100;ii++)
+      for(ii=0;ii<10;ii++)
+	printf("%d %f\n",ii,buffer[ii]);
+    }
+  if(ThisTask == 100)
+    {
+      for(ii=0;ii<10;ii++)
 	printf("%d %f\n",ii,buffer[ii]);
     }
   free(buffer);
