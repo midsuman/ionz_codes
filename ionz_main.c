@@ -421,6 +421,8 @@ main(int argc, char **argv)
   if(ThisTask == 0)
     {
       t_start = MPI_Wtime();
+      for(ii=0;ii<100;ii++)
+	printf("%d %f\n",ii,buffer_final[ii]);
       unpack_4d_array_mpi_transfer(buffer_final, nxion, Nnion, N1, N2, N3);
       t_stop = MPI_Wtime();
       printf("Finish unpacking data %lf s\n",t_stop-t_start);
