@@ -257,6 +257,10 @@ main(int argc, char **argv)
   read_params("input.ionz");
   Nnion = input_param.Nnion;
   nion=(float*)calloc(Nnion,sizeof(float));
+  for(ii=0;ii<Nnion;ii++)
+    {
+      nion[ii] = input_param.nion[ii];
+    }
   vion=(double*)calloc(Nnion,sizeof(double));
   roion=(double*)calloc(Nnion,sizeof(double));
   N1 = input_param.N1;
@@ -266,7 +270,7 @@ main(int argc, char **argv)
   vomegalam = input_param.omegalam;
   vomegab = input_param.omegab;
   
-
+  
 
   // Allocating memory to different arrays
   Setting_Up_Memory_For_ionz(Nnion);
