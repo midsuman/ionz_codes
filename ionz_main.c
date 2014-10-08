@@ -381,7 +381,8 @@ main(int argc, char **argv)
       // printf("obtained vol. avg. x_ion=%e mass avg. x_ion=%e\n",vion[jk],roion[jk]);
     }
 
-
+  if(ThisTask == 0)
+    printf("Start semi-numerical reionization\n");
   //subgrid re-ionization  done
 
  
