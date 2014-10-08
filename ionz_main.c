@@ -235,20 +235,22 @@ main(int argc, char **argv)
   int *JobsTask;
   double t_start, t_stop;
   float *buffer, *buffer_final;
-
+  int mpi_buffer=1000000;
+  int cur_len;
 
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
-
-  printf("Start semi-numerical reionization process\n");
-
   MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);
   MPI_Comm_size(MPI_COMM_WORLD, &NTask);
 #else
   NTask = 1;
   ThisTask = 0;
 #endif //PARALLEL
-
+  if(ThisTask == 0)
+    {
+      system("date");
+      printf("Start semi-numerical reionization process\n");
+    }
   pi=4.0*atan(1.0);
   read_params("input.ionz");
   Nnion = input_param.Nnion;
@@ -335,10 +337,6 @@ main(int argc, char **argv)
 	    }
 	}
     }
-  buffer = malloc(sizeof(float)*Nnion*N1*N2*N3);
-  if(ThisTask == 0)
-    buffer_final = malloc(sizeof(float)*Nnion*N1*N2*N3);
-
   // The max smoothing radius here is set as half of the diagonal of the box
   // This can be changed, one can choose a redshift dependent function instead
   // Or one can choose a model for redshift evolution of the mean free path of the UV photons
@@ -404,6 +402,7 @@ main(int argc, char **argv)
       reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
     }  
   MPI_Barrier(MPI_COMM_WORLD);
+  buffer = malloc(sizeof(float)*Nnion*N1*N2*N3);
   t_stop = MPI_Wtime();
   if(ThisTask == 0)
     printf("Finish reionizing process %lf s\n",t_stop-t_start);
@@ -414,8 +413,18 @@ main(int argc, char **argv)
   if(ThisTask == 0)
     printf("Finish packing data %lf s\n",t_stop-t_start);
   t_start = MPI_Wtime();
+  if(ThisTask == 0)
+    buffer_final = malloc(sizeof(float)*Nnion*N1*N2*N3);
   MPI_Barrier(MPI_COMM_WORLD);
-  MPI_Reduce(buffer,buffer_final,Nnion*N1*N2*N3,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);
+  ii = 0;
+  while (ii*mpi_buffer < Nnion*N1*N2*N3)
+    {
+      cur_len = min(mpi_buffer, Nnion*N1*N2*N3-ii*mpi_buffer);
+      MPI_Barrier(MPI_COMM_WORLD);
+      MPI_Reduce(&buffer[ii*mpi_buffer],&buffer_final[ii*mpi_buffer],cur_len,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);      
+      ii++;
+    }
+
   MPI_Barrier(MPI_COMM_WORLD);
   t_stop = MPI_Wtime();
   if(ThisTask == 0)
