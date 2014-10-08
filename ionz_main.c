@@ -60,10 +60,6 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
   // printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
 
   //Smoothing with real space spherical filter
-  t_start = MPI_Wtime();
-  if(ThisTask == 0)
-    {
-    }
   smooth(nhs,Radii);
   smooth(ngammas,Radii); 
 
@@ -418,7 +414,6 @@ main(int argc, char **argv)
   ii = 0;
   while ((ii+1)*mpi_buffer_size <= Nnion*N1*N2*N3-1)
     {
-      
       cur_mpi_buffer_size = min(mpi_buffer_size,Nnion*N1*N2*N3-(ii*mpi_buffer_size)-1);
       MPI_Barrier(MPI_COMM_WORLD);
       MPI_Reduce(&buffer[ii*mpi_buffer_size],&buffer_final[ii*mpi_buffer_size],cur_mpi_buffer_size,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);
