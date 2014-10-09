@@ -223,7 +223,7 @@ main(int argc, char **argv)
   float *buffer, *buffer_final;
   int mpi_buffer=1000000;
   int cur_len;
-  char densfilename[2000], sourcefilename[2000];
+  char densfilename[2000], sourcefilename[2000],z_out[1000];
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);
@@ -232,12 +232,13 @@ main(int argc, char **argv)
   NTask = 1;
   ThisTask = 0;
 #endif //PARALLEL
-  if(argc != 3) {
-    printf("Need 2 inputs\n");
+  if(argc != 4) {
+    printf("Need 3 inputs\n");
     exit(0);
   }
   sprintf(densfilename,"%s",argv[1]);
   sprintf(sourcefilename,"%s",argv[2]);
+  sprintf(z_out,"%s",argv[3]);
   if(ThisTask == 0)
     {
       system("date");
@@ -452,10 +453,8 @@ main(int argc, char **argv)
 	  // Defining the ionization map output file name
 	  // This is based on the value of nion assigned to it
 
-	  strcpy(file2,"xHI_map_");
-	  sprintf(num,"%10.2f",nion[jk]);
-	  strcat(file2,num);
 
+	  sprintf(file2,"xHI_map_%s_%10.2f",z_out,nion[jk]);
 	  // Writing the x_HI map in binary
 	  // In the begining 3 integers are written which defines the size
 	  // of the x_HI array
