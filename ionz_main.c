@@ -485,7 +485,8 @@ main(int argc, char **argv)
 	  system("date");
 	}
     }
-  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Finalize();
+
   return 0;
 } /* END OF MAIN */
 
