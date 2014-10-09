@@ -139,7 +139,7 @@ void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real
   int ii,jj,kk;
   FILE *inp;
   // printf("start read_density\n");
-  inp=fopen(filename,"r");
+  inp=fopen(filename,"rb");
   *robar_p=0.;
   fread(N1_p,sizeof(int),1,inp);
   fread(N2_p,sizeof(int),1,inp);
@@ -464,9 +464,9 @@ main(int argc, char **argv)
 	  fwrite(&N1,sizeof(int),1,inp);
 	  fwrite(&N2,sizeof(int),1,inp);
 	  fwrite(&N3,sizeof(int),1,inp);
-	  for(ii=0;ii<N1;ii++)
+	  for(kk=0;ii<N3;ii++)
 	    for(jj=0;jj<N2;jj++)
-	      for(kk=0;kk<N3;kk++)
+	      for(ii=0;kk<N1;kk++)
 		{
 		  xh1=(1.-nxion[jk][ii][jj][kk]);
 		  xh1=(xh1 >0.0)? xh1: 0.0;
@@ -474,8 +474,7 @@ main(int argc, char **argv)
 		  nxion[jk][ii][jj][kk]=xh1; // store x_HI instead of x_ion
 		  nhs[ii][jj][kk]=xh1*nh[ii][jj][kk]; // ro_HI on grid
 		  roion[jk]+=nhs[ii][jj][kk];
-		  fwrite(&nxion[jk][ii][jj][kk],sizeof(float),1,inp);
-	      
+		  fwrite(&nxion[jk][ii][jj][kk],sizeof(float),1,inp);	      
 		}
 	    
 	  fclose(inp);
