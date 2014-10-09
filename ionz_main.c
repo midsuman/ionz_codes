@@ -184,15 +184,7 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
   // Next 2 columns are low mass and high mass source contribution to that grid
   // There could be another column in the file which we don't need
   
-  *robarhalo_p=0.;
   inp=fopen(filename,"rb");
-  
-  fscanf(inp,"%d",&nhalo);
-  //Total number of filled grid points with sources
-  if(ThisTask == 0)
-    printf("nhalo =%d\n",nhalo);
-
-  inp=fopen(filename,"r");
   *robarhalo_p=0.;
   fread(n1,sizeof(int),1,inp);
   fread(n2,sizeof(int),1,inp);
