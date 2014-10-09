@@ -136,6 +136,7 @@ void unpack_4d_array_mpi_transfer(float *input, fftw_real ****output, int n_nion
 }
 
 /* Read density in cubep3m format (Fortran binary) */
+/* The output will be the mass of baryons in cubep3m grid mass */
 void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real ***nh_p, double *robar_p)
 {  
   int ii,jj,kk;
@@ -148,13 +149,12 @@ void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real
   fread(N3_p,sizeof(int),1,inp);
   if(ThisTask == 0)
     printf("N1=%d\n",*N1_p);
-  for(ii=0;ii<*N1_p;ii++)
+  for(kk=0;kk<*N3_p;kk++)
     for(jj=0;jj<*N2_p;jj++)
-      for(kk=0;kk<*N3_p;kk++)
+      for(ii=0;ii<*N1_p;ii++)
 	{
-	  // printf("reading %d %d %d\n", ii,jj,kk);
 	  fread(&nh_p[ii][jj][kk],sizeof(float),1,inp);
-	  
+	  nh_p[ii][jj][kk] *= vomegab/vomegam;
 	  *robar_p += nh_p[ii][jj][kk];
 	}
   fclose(inp);
@@ -162,13 +162,15 @@ void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real
   // printf("ok with density\n");
 }
 
-
+/* Read source in C2Ray like */
+/* The output will be the SFR in cubep3m grid mass/year */
 void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p, double *robarhalo_p)
 {
   FILE *inp;
   int ii,jj,kk,ll;
   int nhalo;
   float mass1,mass2;
+  int n1,n2,n3
   mass1 = 0.;
   mass2 = 0.;
   /* Clear out the array before reading source density ******/
@@ -199,19 +201,14 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
   
   for(ll=0;ll<nhalo;ll++)
     {
-      //If there are 6 columns in the file 
-
-      //fscanf(inp,"%d%d%d%f%f%f",&ii,&jj,&kk,&mass1,&mass2,&dump);   
-      //If there are 4 columns in the file 
       fscanf(inp,"%d%d%d%f",&ii,&jj,&kk,&mass1);
-   
       //You can treat both mass ranges similarly
       //Or one can use different weights or functional response for each mass range
       //We show the simplest case here, treating both of them similarly
-      ngamma_p[ii-1][jj-1][kk-1] = mass1+mass2;     
+      ngamma_p[ii-1][jj-1][kk-1] = mass1;
+      
       *robarhalo_p += ngamma_p[ii-1][jj-1][kk-1]; 
     }
-    
   fclose(inp);
   //Avg. source density
   *robarhalo_p/=(1.*N1*N2*N3);
