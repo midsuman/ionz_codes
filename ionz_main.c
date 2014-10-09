@@ -453,6 +453,7 @@ main(int argc, char **argv)
 
 
       sprintf(file2,"xHI_map_%s_%10.2f",z_out,nion[jk]);
+      printf("Saving %s\n",file2);
       // Writing the x_HI map in binary
       // In the begining 3 integers are written which defines the size
       // of the x_HI array
