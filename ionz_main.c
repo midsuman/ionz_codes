@@ -60,10 +60,7 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
   // printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
 
   //Smoothing with real space spherical filter
-  t_start = MPI_Wtime();
-  if(ThisTask == 0)
-    {
-    }
+  
   smooth(nhs,Radii);
   smooth(ngammas,Radii); 
 
@@ -168,16 +165,13 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
 {
   FILE *inp;
   int ii,jj,kk,ll;
-  int nhalo;
-  float mass1,mass2;
-
-  mass1 = 0.;
-  mass2 = 0.;
+  int n1,n2,n3;
+ 
   /* Clear out the array before reading source density ******/
-  for (ii=0;ii<N1;ii++)
-    for (jj=0;jj<N2;jj++)
-      for (kk=0;kk<N3;kk++)
-	ngamma_p[ii][jj][kk] = 0.0;
+  /* for (ii=0;ii<N1;ii++) */
+  /*   for (jj=0;jj<N2;jj++) */
+  /*     for (kk=0;kk<N3;kk++) */
+  /* 	ngamma_p[ii][jj][kk] = 0.0; */
   
 
   /********************************/
@@ -191,27 +185,27 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
   // There could be another column in the file which we don't need
   
   *robarhalo_p=0.;
-  inp=fopen(filename,"r");
+  inp=fopen(filename,"rb");
   
   fscanf(inp,"%d",&nhalo);
   //Total number of filled grid points with sources
   if(ThisTask == 0)
     printf("nhalo =%d\n",nhalo);
-  
-  
-  for(ll=0;ll<nhalo;ll++)
-    {
-      fscanf(inp,"%d%d%d%f",&ii,&jj,&kk,&mass1);
-      //You can treat both mass ranges similarly
-      //Or one can use different weights or functional response for each mass range
-      //We show the simplest case here, treating both of them similarly
-      ngamma_p[ii-1][jj-1][kk-1] = mass1;
-      
-      *robarhalo_p += ngamma_p[ii-1][jj-1][kk-1]; 
-    }
+
+  inp=fopen(filename,"r");
+  *robarhalo_p=0.;
+  fread(n1,sizeof(int),1,inp);
+  fread(n2,sizeof(int),1,inp);
+  fread(n3,sizeof(int),1,inp);
+  for(kk=0;kk<*n3;kk++)
+    for(jj=0;jj<*n2;jj++)
+      for(ii=0;ii<*n3;ii++)
+	{
+	  fread(&ngamma_p[ii][jj][kk],sizeof(float),1,inp);
+	  *robarhalo_p += ngamma_p[ii][jj][kk];
+	}
   fclose(inp);
-  //Avg. source density
-  *robarhalo_p/=(1.*N1*N2*N3);
+  *robarhalo_p /= (1.*(n1)*(n2)*(n3));
 }
 
 
@@ -236,7 +230,7 @@ main(int argc, char **argv)
   float *buffer, *buffer_final;
   int mpi_buffer=1000000;
   int cur_len;
-
+  char densfilename[2000], sourcefilename[2000];
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);
@@ -245,6 +239,12 @@ main(int argc, char **argv)
   NTask = 1;
   ThisTask = 0;
 #endif //PARALLEL
+  if(argc != 3) {
+    printf("Need 2 inputs\n");
+    exit(0);
+  }
+  sprintf(densfilename,"%s",argv[1]);
+  sprintf(sourcefilename,"%s",argv[2]);
   if(ThisTask == 0)
     {
       system("date");
@@ -274,7 +274,7 @@ main(int argc, char **argv)
   t_start = MPI_Wtime();
   if(ThisTask == 0)
     {
-      read_density("/research/prace/sph_smooth_cubepm_130315_6_1728_47Mpc_ext2/nc306/7.859n_all.dat",&N1,&N2,&N3,nh,&robar);
+      read_density(densfilename,&N1,&N2,&N3,nh,&robar);
       buffer = malloc(sizeof(float)*N1*N2*N3);
       pack_3d_array_mpi_transfer(nh,buffer,N1,N2,N3);
     }
@@ -297,7 +297,7 @@ main(int argc, char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
     {
-      read_sources("/research/prace/47Mpc_RT/47Mpc_f2_gs_306/sources/7.859-coarsest_sources_used_wfgamma.dat",N1,N2,N3,ngamma,&robarhalo);  
+      read_sources(sourcefilename,N1,N2,N3,ngamma,&robarhalo);  
       buffer = malloc(sizeof(float)*N1*N2*N3);
       pack_3d_array_mpi_transfer(ngamma,buffer,N1,N2,N3);
     }

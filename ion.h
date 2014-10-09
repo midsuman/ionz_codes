@@ -23,7 +23,7 @@ extern void smooth(fftw_real ***ro_dum,float Radii);
 struct params 
 {
   int Nnion;
-  int *nion;
+  float *nion;
   float a_expansion;
   float z;
   float Hubble_h;
