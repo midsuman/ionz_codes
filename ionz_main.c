@@ -461,9 +461,9 @@ main(int argc, char **argv)
       fwrite(&N1,sizeof(int),1,inp);
       fwrite(&N2,sizeof(int),1,inp);
       fwrite(&N3,sizeof(int),1,inp);
-      for(kk=0;ii<N3;ii++)
+      for(kk=0;kk<N3;kk++)
 	for(jj=0;jj<N2;jj++)
-	  for(ii=0;kk<N1;ii++) {
+	  for(ii=0;ii<N1;ii++) {
 	    xh1=(1.-nxion[jk][ii][jj][kk]);
 	    xh1=(xh1 >0.0)? xh1: 0.0;
 	    vion[jk]+=xh1;
