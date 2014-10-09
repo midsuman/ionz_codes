@@ -197,9 +197,9 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
   fread(n1,sizeof(int),1,inp);
   fread(n2,sizeof(int),1,inp);
   fread(n3,sizeof(int),1,inp);
-  for(kk=0;kk<*n3;kk++)
-    for(jj=0;jj<*n2;jj++)
-      for(ii=0;ii<*n3;ii++)
+  for(kk=0;kk<n3;kk++)
+    for(jj=0;jj<n2;jj++)
+      for(ii=0;ii<n3;ii++)
 	{
 	  fread(&ngamma_p[ii][jj][kk],sizeof(float),1,inp);
 	  *robarhalo_p += ngamma_p[ii][jj][kk];
