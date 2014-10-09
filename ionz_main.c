@@ -170,7 +170,7 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
   int ii,jj,kk,ll;
   int nhalo;
   float mass1,mass2;
-  int n1,n2,n3
+
   mass1 = 0.;
   mass2 = 0.;
   /* Clear out the array before reading source density ******/
