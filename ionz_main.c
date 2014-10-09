@@ -2,7 +2,7 @@
 
 #define  min(x,y)  ((x)<(y) ?(x):(y))
 #define  max(x,y)  ((x)>(y) ?(x):(y))
- /*  GLOBAL VARIABLES  */
+/*  GLOBAL VARIABLES  */
 
 
 
@@ -33,14 +33,14 @@ rfftwnd_plan q_ro; // for FFT
 fftw_real ***nh,***nhs,***ngamma,***ngammas,***rosp,****nxion;
 
 
-  //Reading the Nbody dark matter density field 
-  //Density are in c^2ray simulation unit (raw)
-  //Density files are in binary format with three integers written in
-  //the begining of the file, which represents the grid size N1xN2xN3
-  //After that the density array of size N1xN2xN3 is written in row-major order (C order), each value is of size float (float32 in python) 
+//Reading the Nbody dark matter density field 
+//Density are in c^2ray simulation unit (raw)
+//Density files are in binary format with three integers written in
+//the begining of the file, which represents the grid size N1xN2xN3
+//After that the density array of size N1xN2xN3 is written in row-major order (C order), each value is of size float (float32 in python) 
 
  
-  //To avoid confusion we take input the density and the source data in same units
+//To avoid confusion we take input the density and the source data in same units
 
 
 void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int n1, int n2, int n3 )
@@ -108,9 +108,9 @@ void unpack_3d_array_mpi_transfer(float *input, fftw_real ***output, int n1, int
 {
   int ii,jj,kk;
   for(ii=0;ii<n1;ii++)
-   for(jj=0;jj<n2;jj++)
-     for(kk=0;kk<n3;kk++)
-       output[ii][jj][kk]=input[ii*n2*n3 + jj*n3 + kk];
+    for(jj=0;jj<n2;jj++)
+      for(kk=0;kk<n3;kk++)
+	output[ii][jj][kk]=input[ii*n2*n3 + jj*n3 + kk];
 }
 void pack_4d_array_mpi_transfer(fftw_real ****input, float *output, int n_nion, int n1, int n2, int n3)
 { 
@@ -438,53 +438,49 @@ main(int argc, char **argv)
     printf("Finish finding max:whole %lf s\n",t_stop-t_start); 
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
-  if(ThisTask == 0)
-    {
-      t_start = MPI_Wtime();
-      unpack_4d_array_mpi_transfer(buffer_final, nxion, Nnion, N1, N2, N3);
-      t_stop = MPI_Wtime();
-      printf("Finish unpacking data %lf s\n",t_stop-t_start);
-      for(jk=0;jk<Nnion;++jk)
-	{
-	  //calculating avg. ionization frction
-	  vion[jk]=0.0;
-	  roion[jk]=0.0;
+  if(ThisTask == 0) {
+    t_start = MPI_Wtime();
+    unpack_4d_array_mpi_transfer(buffer_final, nxion, Nnion, N1, N2, N3);
+    t_stop = MPI_Wtime();
+    printf("Finish unpacking data %lf s\n",t_stop-t_start);
+    for(jk=0;jk<Nnion;++jk)	{
+      //calculating avg. ionization frction
+      vion[jk]=0.0;
+      roion[jk]=0.0;
       
-	  // Defining the ionization map output file name
-	  // This is based on the value of nion assigned to it
+      // Defining the ionization map output file name
+      // This is based on the value of nion assigned to it
 
 
-	  sprintf(file2,"xHI_map_%s_%10.2f",z_out,nion[jk]);
-	  // Writing the x_HI map in binary
-	  // In the begining 3 integers are written which defines the size
-	  // of the x_HI array
+      sprintf(file2,"xHI_map_%s_%10.2f",z_out,nion[jk]);
+      // Writing the x_HI map in binary
+      // In the begining 3 integers are written which defines the size
+      // of the x_HI array
 
-	  inp=fopen(file2,"w");
-	  fwrite(&N1,sizeof(int),1,inp);
-	  fwrite(&N2,sizeof(int),1,inp);
-	  fwrite(&N3,sizeof(int),1,inp);
-	  for(kk=0;ii<N3;ii++)
-	    for(jj=0;jj<N2;jj++)
-	      for(ii=0;kk<N1;kk++)
-		{
-		  xh1=(1.-nxion[jk][ii][jj][kk]);
-		  xh1=(xh1 >0.0)? xh1: 0.0;
-		  vion[jk]+=xh1;
-		  nxion[jk][ii][jj][kk]=xh1; // store x_HI instead of x_ion
-		  nhs[ii][jj][kk]=xh1*nh[ii][jj][kk]; // ro_HI on grid
-		  roion[jk]+=nhs[ii][jj][kk];
-		  fwrite(&nxion[jk][ii][jj][kk],sizeof(float),1,inp);	      
-		}
-	    
-	  fclose(inp);
-	  roion[jk]/=(N1*N2*N3); // mean HI density in grid units
+      inp=fopen(file2,"w");
+      fwrite(&N1,sizeof(int),1,inp);
+      fwrite(&N2,sizeof(int),1,inp);
+      fwrite(&N3,sizeof(int),1,inp);
+      for(kk=0;ii<N3;ii++)
+	for(jj=0;jj<N2;jj++)
+	  for(ii=0;kk<N1;ii++) {
+	    xh1=(1.-nxion[jk][ii][jj][kk]);
+	    xh1=(xh1 >0.0)? xh1: 0.0;
+	    vion[jk]+=xh1;
+	    nxion[jk][ii][jj][kk]=xh1; // store x_HI instead of x_ion
+	    nhs[ii][jj][kk]=xh1*nh[ii][jj][kk]; // ro_HI on grid
+	    roion[jk]+=nhs[ii][jj][kk];
+	    fwrite(&nxion[jk][ii][jj][kk],sizeof(float),1,inp);	      
+	  }	    
+      fclose(inp);
+      roion[jk]/=(N1*N2*N3); // mean HI density in grid units
       
-	  vion[jk]/=(1.*N1*N2*N3); // volume avg xHI
-	  roion[jk]/=(float)robar; // divide by H density to get mass avg. xHI
-	  printf("nion = %f obtained vol. avg. x_HI=%e mass avg. x_HI=%e\n",nion[jk],vion[jk],roion[jk]);
-	  system("date");
-	}
+      vion[jk]/=(1.*N1*N2*N3); // volume avg xHI
+      roion[jk]/=(float)robar; // divide by H density to get mass avg. xHI
+      printf("nion = %f obtained vol. avg. x_HI=%e mass avg. x_HI=%e\n",nion[jk],vion[jk],roion[jk]);
+      system("date");
     }
+  }
   MPI_Finalize();
 
   return 0;
