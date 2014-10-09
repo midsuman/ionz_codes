@@ -166,7 +166,7 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
   FILE *inp;
   int ii,jj,kk,ll;
   int n1,n2,n3;
- 
+  float dt = 11.6e6;
   /* Clear out the array before reading source density ******/
   /* for (ii=0;ii<N1;ii++) */
   /*   for (jj=0;jj<N2;jj++) */
@@ -194,6 +194,7 @@ void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p,
       for(ii=0;ii<n3;ii++)
 	{
 	  fread(&ngamma_p[ii][jj][kk],sizeof(float),1,inp);
+	  ngamma_p[ii][jj][kk] *= dt;
 	  *robarhalo_p += ngamma_p[ii][jj][kk];
 	}
   fclose(inp);
@@ -452,7 +453,7 @@ main(int argc, char **argv)
 	  // This is based on the value of nion assigned to it
 
 	  strcpy(file2,"xHI_map_");
-	  sprintf(num,"%4.2f",nion[jk]);
+	  sprintf(num,"%10.2f",nion[jk]);
 	  strcat(file2,num);
 
 	  // Writing the x_HI map in binary
