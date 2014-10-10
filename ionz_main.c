@@ -404,7 +404,7 @@ main(int argc, char **argv) {
       // Defining the ionization map output file name
       // This is based on the value of nion assigned to it
 
-      sprintf(file2,"xHI_map_%s_%8.2f",z_out,nion[jk]);
+      sprintf(file2,"xHI_map_%s_%4.2f",z_out,nion[jk]);
       printf("Saving %s\n",file2);
       // Writing the x_HI map in binary
       // In the begining 3 integers are written which defines the size
