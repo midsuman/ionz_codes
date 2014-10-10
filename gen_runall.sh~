@@ -34,8 +34,7 @@ cur_line2=$((cur_line2+1))
 done < $z2listfile
 
 #echo "$z2   $z3"
-
-echo 'mpirun -np $NSLOTS' "./ionz_main ${densdir}${z3}n_all.dat ${srcdir}${z2}.dat $z3" >> $pbsfile
+echo "mpirun -np $NSLOTS ./ionz_main ${densdir}${z3}n_all.dat ${srcdir}${z2}.dat $z3" >> $pbsfile
 #mpirun -np $NSLOTS ./ionz_main ${densdir}${z3}n_all.dat ${srcdir}${z2}.dat $z3
 #mpirun -np $NSLOTS ../mpi_test
 cur_line=$((cur_line+1))
