@@ -86,6 +86,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">ionz_io.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>IO operations.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="ion_8h_source.html">ion.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -96,14 +99,20 @@ Functions</h2></td></tr>
 <tr class="separator:a951c25f62971884a0b0aa5be6f903569"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3e7c05c734d4e1b9516a11d79f07366"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__io_8c.html#ae3e7c05c734d4e1b9516a11d79f07366">pack_4d_array_mpi_transfer</a> (fftw_real ****input, float *output, int Nnion, int N1, int N2, int N3)</td></tr>
 <tr class="separator:ae3e7c05c734d4e1b9516a11d79f07366"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9caa5ed97c4a19780bc9b11760d30ef4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__io_8c.html#a9caa5ed97c4a19780bc9b11760d30ef4">unpack_4d_array_mpi_transfer</a> (float *input, fftw_real ****output, int n_nion, int n1, int n2, int n3)</td></tr>
-<tr class="separator:a9caa5ed97c4a19780bc9b11760d30ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81c6a9dba70c6b44213dc05309f5a8a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__io_8c.html#a81c6a9dba70c6b44213dc05309f5a8a2">unpack_4d_array_mpi_transfer</a> (float *input, fftw_real ****output, int Nnion, int N1, int N2, int N3)</td></tr>
+<tr class="separator:a81c6a9dba70c6b44213dc05309f5a8a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6241f690f16f77c1f942a96cb4e9e9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__io_8c.html#ad6241f690f16f77c1f942a96cb4e9e9c">read_density</a> (char *filename, float *buffer_3d, double *robar_p, int N1, int N2, int N3, float vomegam, float vomegab)</td></tr>
 <tr class="separator:ad6241f690f16f77c1f942a96cb4e9e9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2f727cabe5ba3e264757f33d2d20fdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__io_8c.html#ad2f727cabe5ba3e264757f33d2d20fdc">read_xfrac</a> (char *dirname, float *buffer_4d, float *nion_list, int Nnion, int N1, int N2, int N3)</td></tr>
+<tr class="separator:ad2f727cabe5ba3e264757f33d2d20fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0be7fa625cefb590988fcd6088eba60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__io_8c.html#af0be7fa625cefb590988fcd6088eba60">read_sources</a> (char *filename, float *buffer_3d, double *robarhalo_p, int N1, int N2, int N3)</td></tr>
 <tr class="separator:af0be7fa625cefb590988fcd6088eba60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>IO operations. </p>
+<dl class="section author"><dt>Author</dt><dd>Chaichalit Srisawat &lt; <a href="#" onclick="location.href='mai'+'lto:'+'boy'+'d.'+'sri'+'sa'+'wat'+'@g'+'mai'+'l.'+'com'; return false;">boyd.<span style="display: none;">.nosp@m.</span>sris<span style="display: none;">.nosp@m.</span>awat@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a>&gt; </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>Sat Oct 11 21:44:53 2014 </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ad4ddf14a0a19d8ece8aae44ea4bdc405"></a>
 <div class="memitem">
 <div class="memproto">
@@ -206,11 +215,11 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Convert 1D-float array to 3D-fftw_real array. This is used to simplify MPI transfer process.</p>
+<p>Convert 3D-fftw_real array to 1D-float array. This is used to simplify MPI transfer process.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">input</td><td>1D-float array input </td></tr>
-    <tr><td class="paramname">output</td><td>3D-fftw_real array output </td></tr>
+    <tr><td class="paramname">input</td><td>3D-fftw_real array output </td></tr>
+    <tr><td class="paramname">output</td><td>1D-float array input </td></tr>
     <tr><td class="paramname">Nion</td><td>Number of the choices of total reionizing photons/neutral baryon </td></tr>
     <tr><td class="paramname">N1</td><td>1st dimension grid number </td></tr>
     <tr><td class="paramname">N2</td><td>2nd dimension grid number </td></tr>
@@ -280,6 +289,20 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read in density of matter in cubep3m format (Fortran binary)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Filename (char* input) </td></tr>
+    <tr><td class="paramname">buffer_3d</td><td>Output buffer[N1*N2*N3] </td></tr>
+    <tr><td class="paramname">robar_p</td><td>Average density of baryons (output) </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid (input) </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid (input) </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid (input) </td></tr>
+    <tr><td class="paramname">vomegam</td><td>Omega_matter (input) </td></tr>
+    <tr><td class="paramname">vomegab</td><td>Omega_baryon (input) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -330,6 +353,87 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read sources list. The data will be the SFR in cubep3m_gridmass/year</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Filename (char* input) </td></tr>
+    <tr><td class="paramname">buffer_3d</td><td>Output buffer[N1*N2*N3] </td></tr>
+    <tr><td class="paramname">robar_p</td><td>Average density of photons (output) </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid (input) </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid (input) </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid (input) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad2f727cabe5ba3e264757f33d2d20fdc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void read_xfrac </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>dirname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>buffer_4d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>nion_list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>Nnion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read in the history of ionized fraction (previous snapshot).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dirname</td><td>Directory of the xh (input) </td></tr>
+    <tr><td class="paramname">buffer_4d</td><td>4D float output </td></tr>
+    <tr><td class="paramname">nion_list</td><td>List of minimum N_gamma/N_b (input) </td></tr>
+    <tr><td class="paramname">Nnion</td><td>Number of elements in nion_list </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid (input) </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid (input) </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid (input) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -388,7 +492,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9caa5ed97c4a19780bc9b11760d30ef4"></a>
+<a class="anchor" id="a81c6a9dba70c6b44213dc05309f5a8a2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -408,25 +512,25 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>n_nion</em>, </td>
+          <td class="paramname"><em>Nnion</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>n1</em>, </td>
+          <td class="paramname"><em>N1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>n2</em>, </td>
+          <td class="paramname"><em>N2</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>n3</em>&#160;</td>
+          <td class="paramname"><em>N3</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -435,13 +539,25 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Convert 1D-float array to 3D-fftw_real array. This is used to simplify MPI transfer process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>1D-float array input </td></tr>
+    <tr><td class="paramname">output</td><td>3D-fftw_real array output </td></tr>
+    <tr><td class="paramname">Nion</td><td>Number of the choices of total reionizing photons/neutral baryon </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid number </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid number </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid number </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 11 2014 21:33:21 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 12 2014 00:27:01 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

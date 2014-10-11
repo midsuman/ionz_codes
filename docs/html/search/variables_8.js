@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['p_5fro',['p_ro',['../struct_g_l_o_b_a_l_v_a_r_s.html#a8e52ad9c7463e1b0688d4f0ce102c309',1,'GLOBALVARS']]],
-  ['pi',['pi',['../struct_g_l_o_b_a_l_v_a_r_s.html#a9cb0638a7b1d7af8ff421d2dc025d3a8',1,'GLOBALVARS']]]
+  ['n1',['N1',['../structparams.html#a5a6a26e0827f9640d2eb7201017f19d7',1,'params']]],
+  ['n2',['N2',['../structparams.html#adeea8075a0038c985c63d45161804d60',1,'params']]],
+  ['n3',['N3',['../structparams.html#a4e8e9c2bf9e06ae07ef364c05a073302',1,'params']]],
+  ['nion',['nion',['../structparams.html#adad540bcd9d58ccb6cf0dfa257febb93',1,'params']]],
+  ['nnion',['Nnion',['../structparams.html#ab6d8d0b2c7ee385271e90e51818623bc',1,'params']]],
+  ['ntask',['NTask',['../structmy_m_p_i.html#a675acdcd149f5993271a1fdc11673b65',1,'myMPI']]]
 ];

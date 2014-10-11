@@ -29,10 +29,19 @@
 /// Global variables
 struct CONSTANTS {
   const float pi = M_PI;
+  const int max_Nradii = 2048;
+  const float dr_inc = 0.1;
+  const float max_dr = 2.0;
 } constants;
 
+/// MPI variables
+struct myMPI {
+  int NTask;
+  int ThisTask;
+} mympi;
+
 /* in ionz_misc.c */
-extern int make_radii_list(float *radii_p, float r_min, float r_max);
+extern int make_radii_list(float *radii_p, float r_min, float r_max, float dr_inc = constant.dr_inc, float max_dr = constants.max_dr);
 extern double Get_Current_time();
 
 /* in ionz_io.c */

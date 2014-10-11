@@ -9,25 +9,51 @@
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{ionz__funcs_8c_aaf0b63263cc4bc9ea88532bb6e6cfa7e}{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz} (int Nnion)
+void \hyperlink{ionz__funcs_8c_aa8b5e455b9ae5c10e6b44ff5f28f8bf0}{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz} (int Nnion, int N1, int N2, int N3, fftw\+\_\+real $\ast$$\ast$$\ast$nh, fftw\+\_\+real $\ast$$\ast$$\ast$ngamma, fftw\+\_\+real $\ast$$\ast$$\ast$$\ast$nxion)
 \item 
-void \hyperlink{ionz__funcs_8c_a986c9cd8284823daaf3c3ea5c05c16a6}{smooth} (fftw\+\_\+real $\ast$$\ast$$\ast$ro\+\_\+dum, float Radii)
+void \hyperlink{ionz__funcs_8c_a553eda876fc651efecef3202b2046c77}{smooth} (fftw\+\_\+real $\ast$$\ast$$\ast$ro\+\_\+dum, float Radii, int N1, int N2, int N3)
+\item 
+void \hyperlink{ionz__funcs_8c_aa174d816f11484078e55fe5af64c211b}{reionization} (float Radii, fftw\+\_\+real $\ast$$\ast$$\ast$nh\+\_\+p, fftw\+\_\+real $\ast$$\ast$$\ast$ngamma\+\_\+p, fftw\+\_\+real $\ast$$\ast$$\ast$$\ast$nxion\+\_\+p, float $\ast$nion\+\_\+p, int Nnion, int N1, int N2, int N3)
 \end{DoxyCompactItemize}
 
 
 \subsection{Function Documentation}
-\hypertarget{ionz__funcs_8c_aaf0b63263cc4bc9ea88532bb6e6cfa7e}{\index{ionz\+\_\+funcs.\+c@{ionz\+\_\+funcs.\+c}!Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz@{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz}}
+\hypertarget{ionz__funcs_8c_aa174d816f11484078e55fe5af64c211b}{\index{ionz\+\_\+funcs.\+c@{ionz\+\_\+funcs.\+c}!reionization@{reionization}}
+\index{reionization@{reionization}!ionz\+\_\+funcs.\+c@{ionz\+\_\+funcs.\+c}}
+\subsubsection[{reionization}]{\setlength{\rightskip}{0pt plus 5cm}void reionization (
+\begin{DoxyParamCaption}
+\item[{float}]{Radii, }
+\item[{fftw\+\_\+real $\ast$$\ast$$\ast$}]{nh\+\_\+p, }
+\item[{fftw\+\_\+real $\ast$$\ast$$\ast$}]{ngamma\+\_\+p, }
+\item[{fftw\+\_\+real $\ast$$\ast$$\ast$$\ast$}]{nxion\+\_\+p, }
+\item[{float $\ast$}]{nion\+\_\+p, }
+\item[{int}]{Nnion, }
+\item[{int}]{N1, }
+\item[{int}]{N2, }
+\item[{int}]{N3}
+\end{DoxyParamCaption}
+)}}\label{ionz__funcs_8c_aa174d816f11484078e55fe5af64c211b}
+\hypertarget{ionz__funcs_8c_aa8b5e455b9ae5c10e6b44ff5f28f8bf0}{\index{ionz\+\_\+funcs.\+c@{ionz\+\_\+funcs.\+c}!Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz@{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz}}
 \index{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz@{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz}!ionz\+\_\+funcs.\+c@{ionz\+\_\+funcs.\+c}}
 \subsubsection[{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz}]{\setlength{\rightskip}{0pt plus 5cm}void Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz (
 \begin{DoxyParamCaption}
-\item[{int}]{Nnion}
+\item[{int}]{Nnion, }
+\item[{int}]{N1, }
+\item[{int}]{N2, }
+\item[{int}]{N3, }
+\item[{fftw\+\_\+real $\ast$$\ast$$\ast$}]{nh, }
+\item[{fftw\+\_\+real $\ast$$\ast$$\ast$}]{ngamma, }
+\item[{fftw\+\_\+real $\ast$$\ast$$\ast$$\ast$}]{nxion}
 \end{DoxyParamCaption}
-)}}\label{ionz__funcs_8c_aaf0b63263cc4bc9ea88532bb6e6cfa7e}
-\hypertarget{ionz__funcs_8c_a986c9cd8284823daaf3c3ea5c05c16a6}{\index{ionz\+\_\+funcs.\+c@{ionz\+\_\+funcs.\+c}!smooth@{smooth}}
+)}}\label{ionz__funcs_8c_aa8b5e455b9ae5c10e6b44ff5f28f8bf0}
+\hypertarget{ionz__funcs_8c_a553eda876fc651efecef3202b2046c77}{\index{ionz\+\_\+funcs.\+c@{ionz\+\_\+funcs.\+c}!smooth@{smooth}}
 \index{smooth@{smooth}!ionz\+\_\+funcs.\+c@{ionz\+\_\+funcs.\+c}}
 \subsubsection[{smooth}]{\setlength{\rightskip}{0pt plus 5cm}void smooth (
 \begin{DoxyParamCaption}
 \item[{fftw\+\_\+real $\ast$$\ast$$\ast$}]{ro\+\_\+dum, }
-\item[{float}]{Radii}
+\item[{float}]{Radii, }
+\item[{int}]{N1, }
+\item[{int}]{N2, }
+\item[{int}]{N3}
 \end{DoxyParamCaption}
-)}}\label{ionz__funcs_8c_a986c9cd8284823daaf3c3ea5c05c16a6}
+)}}\label{ionz__funcs_8c_a553eda876fc651efecef3202b2046c77}

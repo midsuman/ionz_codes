@@ -1,6 +1,10 @@
 var searchData=
 [
-  ['main',['main',['../ionz__main_8c.html#a5ea466849f21e6c2be4ef9b2eb8868d3',1,'ionz_main.c']]],
-  ['make_5fradii_5flist',['make_radii_list',['../ion_8h.html#a60cce38828ffcaf572634e35943c634d',1,'make_radii_list(float *radii_p, float r_min, float r_max):&#160;ion.h'],['../ionz__misc_8c.html#a3e46a5fa78103b3e575939db4a0f765a',1,'make_radii_list(float *radii_p, float r_min, float r_max, float dt):&#160;ionz_misc.c']]],
-  ['mpi_20version_20of_20ionz_5fcodes',['MPI version of ionz_codes',['../md__r_e_a_d_m_e.html',1,'']]]
+  ['input_5fparam',['input_param',['../ion_8h.html#a62c41a4636d22215339031855db0e48c',1,'ion.h']]],
+  ['ion_2eh',['ion.h',['../ion_8h.html',1,'']]],
+  ['ion_5fh_5f',['ION_H_',['../ion_8h.html#a517275cd6d6e1b2731fc3f91a7c1f4e7',1,'ion.h']]],
+  ['ionz_5ffuncs_2ec',['ionz_funcs.c',['../ionz__funcs_8c.html',1,'']]],
+  ['ionz_5fio_2ec',['ionz_io.c',['../ionz__io_8c.html',1,'']]],
+  ['ionz_5fmain_2ec',['ionz_main.c',['../ionz__main_8c.html',1,'']]],
+  ['ionz_5fmisc_2ec',['ionz_misc.c',['../ionz__misc_8c.html',1,'']]]
 ];

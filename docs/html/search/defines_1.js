@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['ion_5fh_5f',['ION_H_',['../ion_8h.html#a517275cd6d6e1b2731fc3f91a7c1f4e7',1,'ion.h']]]
+  ['max',['max',['../ion_8h.html#ac39d9cef6a5e030ba8d9e11121054268',1,'ion.h']]],
+  ['min',['min',['../ion_8h.html#abb702d8b501669a23aa0ab3b281b9384',1,'ion.h']]]
 ];

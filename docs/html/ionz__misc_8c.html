@@ -86,16 +86,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">ionz_misc.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Misc functions.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="ion_8h_source.html">ion.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a665ce6685b219f01938fe7e1f4919465"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__misc_8c.html#a665ce6685b219f01938fe7e1f4919465">Get_Current_time</a> ()</td></tr>
 <tr class="separator:a665ce6685b219f01938fe7e1f4919465"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e46a5fa78103b3e575939db4a0f765a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__misc_8c.html#a3e46a5fa78103b3e575939db4a0f765a">make_radii_list</a> (float *radii_p, float r_min, float r_max, float dt)</td></tr>
-<tr class="separator:a3e46a5fa78103b3e575939db4a0f765a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaceabff842284e2dc8f9611fdd0696bd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__misc_8c.html#aaceabff842284e2dc8f9611fdd0696bd">make_radii_list</a> (float *radii_p, float r_min, float r_max, float dr_inc=constant.dr_inc, float max_dr=constants.max_dr)</td></tr>
+<tr class="separator:aaceabff842284e2dc8f9611fdd0696bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Misc functions. </p>
+<dl class="section author"><dt>Author</dt><dd>Chaichalit Srisawat &lt; <a href="#" onclick="location.href='mai'+'lto:'+'boy'+'d.'+'sri'+'sa'+'wat'+'@g'+'mai'+'l.'+'com'; return false;">boyd.<span style="display: none;">.nosp@m.</span>sris<span style="display: none;">.nosp@m.</span>awat@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a>&gt; </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>Sat Oct 11 23:55:03 2014 </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a665ce6685b219f01938fe7e1f4919465"></a>
 <div class="memitem">
 <div class="memproto">
@@ -108,10 +115,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get current time</p>
+<dl class="section return"><dt>Returns</dt><dd>current time </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a3e46a5fa78103b3e575939db4a0f765a"></a>
+<a class="anchor" id="aaceabff842284e2dc8f9611fdd0696bd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -137,7 +146,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>dt</em>&#160;</td>
+          <td class="paramname"><em>dr_inc</em> = <code>constant.dr_inc</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>max_dr</em> = <code>constants.max_dr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -146,13 +161,27 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Generate a list of radii to compute semi-numerical reionization</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">radii_p</td><td>Pointer to radii list (pre-allocated) </td></tr>
+    <tr><td class="paramname">r_min</td><td>Minimum radius </td></tr>
+    <tr><td class="paramname">r_max</td><td>Maximum radius </td></tr>
+    <tr><td class="paramname">dr_inc</td><td>Increase in radius (0.0 &lt; dr_inc &lt;= 1.0; 0.1 by default) </td></tr>
+    <tr><td class="paramname">max_dr</td><td>Maximum increase in radius (2.0 by default) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>total number of radii </dd></dl>
+<p>Test if nRadii &lt;= max_Nradii</p>
+<p>Store radii list </p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 11 2014 21:33:21 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 12 2014 00:27:01 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

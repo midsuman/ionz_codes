@@ -1,14 +1,11 @@
 var searchData=
 [
-  ['n1',['N1',['../structparams.html#a5a6a26e0827f9640d2eb7201017f19d7',1,'params']]],
-  ['n2',['N2',['../structparams.html#adeea8075a0038c985c63d45161804d60',1,'params']]],
-  ['n3',['N3',['../structparams.html#a4e8e9c2bf9e06ae07ef364c05a073302',1,'params']]],
-  ['ngamma',['ngamma',['../struct_g_l_o_b_a_l_v_a_r_s.html#ae7b5316d4357f08ef5f55d0a7731af7e',1,'GLOBALVARS']]],
-  ['ngammas',['ngammas',['../struct_g_l_o_b_a_l_v_a_r_s.html#a4d0f7c8f1d42a2a1e6a3739de78464e5',1,'GLOBALVARS']]],
-  ['nh',['nh',['../struct_g_l_o_b_a_l_v_a_r_s.html#aaf5f5d543991740821b0508a5ec2e798',1,'GLOBALVARS']]],
-  ['nhs',['nhs',['../struct_g_l_o_b_a_l_v_a_r_s.html#a75b9cc475a9b492f88ac81b10c17d615',1,'GLOBALVARS']]],
-  ['nion',['nion',['../structparams.html#ad55bc1e5d127b88c3b3bdf08ce83e026',1,'params']]],
-  ['nnion',['Nnion',['../structparams.html#ab6d8d0b2c7ee385271e90e51818623bc',1,'params']]],
-  ['ntask',['NTask',['../ionz__mpi_8c.html#a675acdcd149f5993271a1fdc11673b65',1,'NTask():&#160;ionz_mpi.c'],['../ionz__mpi_8h.html#a675acdcd149f5993271a1fdc11673b65',1,'NTask():&#160;ionz_mpi.c']]],
-  ['nxion',['nxion',['../struct_g_l_o_b_a_l_v_a_r_s.html#afe3435714e08d26c42c93e355d4d96f7',1,'GLOBALVARS']]]
+  ['main',['main',['../ionz__main_8c.html#a5ea466849f21e6c2be4ef9b2eb8868d3',1,'ionz_main.c']]],
+  ['make_5fradii_5flist',['make_radii_list',['../ion_8h.html#aaceabff842284e2dc8f9611fdd0696bd',1,'make_radii_list(float *radii_p, float r_min, float r_max, float dr_inc=constant.dr_inc, float max_dr=constants.max_dr):&#160;ionz_misc.c'],['../ionz__misc_8c.html#aaceabff842284e2dc8f9611fdd0696bd',1,'make_radii_list(float *radii_p, float r_min, float r_max, float dr_inc=constant.dr_inc, float max_dr=constants.max_dr):&#160;ionz_misc.c']]],
+  ['max',['max',['../ion_8h.html#ac39d9cef6a5e030ba8d9e11121054268',1,'ion.h']]],
+  ['max_5fdr',['max_dr',['../struct_c_o_n_s_t_a_n_t_s.html#a5ddc9828f90dc883b9baf3dfab1cd3e6',1,'CONSTANTS']]],
+  ['max_5fnradii',['max_Nradii',['../struct_c_o_n_s_t_a_n_t_s.html#afe3adcf3ff974c278558c412f9ba9aaa',1,'CONSTANTS']]],
+  ['mpi_20version_20of_20ionz_5fcodes',['MPI version of ionz_codes',['../md__r_e_a_d_m_e.html',1,'']]],
+  ['min',['min',['../ion_8h.html#abb702d8b501669a23aa0ab3b281b9384',1,'ion.h']]],
+  ['mympi',['myMPI',['../structmy_m_p_i.html',1,'myMPI'],['../ion_8h.html#a6291b94bd446cba2e7517c12276ebd51',1,'mympi():&#160;ion.h']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['globalvars',['GLOBALVARS',['../struct_g_l_o_b_a_l_v_a_r_s.html',1,'']]]
+  ['constants',['CONSTANTS',['../struct_c_o_n_s_t_a_n_t_s.html',1,'']]]
 ];

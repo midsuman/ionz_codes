@@ -94,13 +94,83 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aaf0b63263cc4bc9ea88532bb6e6cfa7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__funcs_8c.html#aaf0b63263cc4bc9ea88532bb6e6cfa7e">Setting_Up_Memory_For_ionz</a> (int Nnion)</td></tr>
-<tr class="separator:aaf0b63263cc4bc9ea88532bb6e6cfa7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a986c9cd8284823daaf3c3ea5c05c16a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__funcs_8c.html#a986c9cd8284823daaf3c3ea5c05c16a6">smooth</a> (fftw_real ***ro_dum, float Radii)</td></tr>
-<tr class="separator:a986c9cd8284823daaf3c3ea5c05c16a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8b5e455b9ae5c10e6b44ff5f28f8bf0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__funcs_8c.html#aa8b5e455b9ae5c10e6b44ff5f28f8bf0">Setting_Up_Memory_For_ionz</a> (int Nnion, int N1, int N2, int N3, fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion)</td></tr>
+<tr class="separator:aa8b5e455b9ae5c10e6b44ff5f28f8bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a553eda876fc651efecef3202b2046c77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__funcs_8c.html#a553eda876fc651efecef3202b2046c77">smooth</a> (fftw_real ***ro_dum, float Radii, int N1, int N2, int N3)</td></tr>
+<tr class="separator:a553eda876fc651efecef3202b2046c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa174d816f11484078e55fe5af64c211b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__funcs_8c.html#aa174d816f11484078e55fe5af64c211b">reionization</a> (float Radii, fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3)</td></tr>
+<tr class="separator:aa174d816f11484078e55fe5af64c211b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="aaf0b63263cc4bc9ea88532bb6e6cfa7e"></a>
+<a class="anchor" id="aa174d816f11484078e55fe5af64c211b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void reionization </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>Radii</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fftw_real ***&#160;</td>
+          <td class="paramname"><em>nh_p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fftw_real ***&#160;</td>
+          <td class="paramname"><em>ngamma_p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fftw_real ****&#160;</td>
+          <td class="paramname"><em>nxion_p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>nion_p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>Nnion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa8b5e455b9ae5c10e6b44ff5f28f8bf0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -108,15 +178,55 @@ Functions</h2></td></tr>
           <td class="memname">void Setting_Up_Memory_For_ionz </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>Nnion</em></td><td>)</td>
+          <td class="paramname"><em>Nnion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fftw_real ***&#160;</td>
+          <td class="paramname"><em>nh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fftw_real ***&#160;</td>
+          <td class="paramname"><em>ngamma</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fftw_real ****&#160;</td>
+          <td class="paramname"><em>nxion</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a986c9cd8284823daaf3c3ea5c05c16a6"></a>
+<a class="anchor" id="a553eda876fc651efecef3202b2046c77"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -130,7 +240,25 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>Radii</em>&#160;</td>
+          <td class="paramname"><em>Radii</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -145,7 +273,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 11 2014 21:33:21 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 12 2014 00:27:01 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

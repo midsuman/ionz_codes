@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['params',['params',['../structparams.html',1,'']]]
+  ['mympi',['myMPI',['../structmy_m_p_i.html',1,'']]]
 ];

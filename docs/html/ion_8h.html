@@ -97,34 +97,57 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;math.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="global_8h_source.html">global.h</a>&quot;</code><br />
 </div>
 <p><a href="ion_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_o_n_s_t_a_n_t_s.html">CONSTANTS</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global variables.  <a href="struct_c_o_n_s_t_a_n_t_s.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmy_m_p_i.html">myMPI</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPI variables.  <a href="structmy_m_p_i.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structparams.html">params</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:abb702d8b501669a23aa0ab3b281b9384"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#abb702d8b501669a23aa0ab3b281b9384">min</a>(x, y)&#160;&#160;&#160;((x)&lt;(y) ?(x):(y))</td></tr>
+<tr class="separator:abb702d8b501669a23aa0ab3b281b9384"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac39d9cef6a5e030ba8d9e11121054268"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#ac39d9cef6a5e030ba8d9e11121054268">max</a>(x, y)&#160;&#160;&#160;((x)&gt;(y) ?(x):(y))</td></tr>
+<tr class="separator:ac39d9cef6a5e030ba8d9e11121054268"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a517275cd6d6e1b2731fc3f91a7c1f4e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a517275cd6d6e1b2731fc3f91a7c1f4e7">ION_H_</a></td></tr>
 <tr class="separator:a517275cd6d6e1b2731fc3f91a7c1f4e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a60cce38828ffcaf572634e35943c634d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a60cce38828ffcaf572634e35943c634d">make_radii_list</a> (float *radii_p, float r_min, float r_max)</td></tr>
-<tr class="separator:a60cce38828ffcaf572634e35943c634d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaceabff842284e2dc8f9611fdd0696bd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#aaceabff842284e2dc8f9611fdd0696bd">make_radii_list</a> (float *radii_p, float r_min, float r_max, float dr_inc=constant.dr_inc, float max_dr=constants.max_dr)</td></tr>
+<tr class="separator:aaceabff842284e2dc8f9611fdd0696bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a665ce6685b219f01938fe7e1f4919465"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a665ce6685b219f01938fe7e1f4919465">Get_Current_time</a> ()</td></tr>
 <tr class="separator:a665ce6685b219f01938fe7e1f4919465"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4ddf14a0a19d8ece8aae44ea4bdc405"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#ad4ddf14a0a19d8ece8aae44ea4bdc405">pack_3d_array_mpi_transfer</a> (fftw_real ***input, float *output, int N1, int N2, int N3)</td></tr>
+<tr class="separator:ad4ddf14a0a19d8ece8aae44ea4bdc405"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a951c25f62971884a0b0aa5be6f903569"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a951c25f62971884a0b0aa5be6f903569">unpack_3d_array_mpi_transfer</a> (float *input, fftw_real ***output, int N1, int N2, int N3)</td></tr>
+<tr class="separator:a951c25f62971884a0b0aa5be6f903569"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3e7c05c734d4e1b9516a11d79f07366"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#ae3e7c05c734d4e1b9516a11d79f07366">pack_4d_array_mpi_transfer</a> (fftw_real ****input, float *output, int Nnion, int N1, int N2, int N3)</td></tr>
+<tr class="separator:ae3e7c05c734d4e1b9516a11d79f07366"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81c6a9dba70c6b44213dc05309f5a8a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a81c6a9dba70c6b44213dc05309f5a8a2">unpack_4d_array_mpi_transfer</a> (float *input, fftw_real ****output, int Nnion, int N1, int N2, int N3)</td></tr>
+<tr class="separator:a81c6a9dba70c6b44213dc05309f5a8a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6241f690f16f77c1f942a96cb4e9e9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#ad6241f690f16f77c1f942a96cb4e9e9c">read_density</a> (char *filename, float *buffer_3d, double *robar_p, int N1, int N2, int N3, float vomegam, float vomegab)</td></tr>
+<tr class="separator:ad6241f690f16f77c1f942a96cb4e9e9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2f727cabe5ba3e264757f33d2d20fdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#ad2f727cabe5ba3e264757f33d2d20fdc">read_xfrac</a> (char *dirname, float *buffer_4d, float *nion_list, int Nnion, int N1, int N2, int N3)</td></tr>
+<tr class="separator:ad2f727cabe5ba3e264757f33d2d20fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0be7fa625cefb590988fcd6088eba60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#af0be7fa625cefb590988fcd6088eba60">read_sources</a> (char *filename, float *buffer_3d, double *robarhalo_p, int N1, int N2, int N3)</td></tr>
+<tr class="separator:af0be7fa625cefb590988fcd6088eba60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95e86e9acb1f854c98436818e8e32b44"><td class="memItemLeft" align="right" valign="top">float **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a95e86e9acb1f854c98436818e8e32b44">allocate_float_2d</a> (long N1, int N2)</td></tr>
 <tr class="separator:a95e86e9acb1f854c98436818e8e32b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee5c3609b2e190b1a88268997eb0a7dd"><td class="memItemLeft" align="right" valign="top">fftw_real ***&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#aee5c3609b2e190b1a88268997eb0a7dd">allocate_fftw_real_3d</a> (int N1, int N2, int N3)</td></tr>
 <tr class="separator:aee5c3609b2e190b1a88268997eb0a7dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf0b63263cc4bc9ea88532bb6e6cfa7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#aaf0b63263cc4bc9ea88532bb6e6cfa7e">Setting_Up_Memory_For_ionz</a> (int Nnion)</td></tr>
-<tr class="separator:aaf0b63263cc4bc9ea88532bb6e6cfa7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a986c9cd8284823daaf3c3ea5c05c16a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a986c9cd8284823daaf3c3ea5c05c16a6">smooth</a> (fftw_real ***ro_dum, float Radii)</td></tr>
-<tr class="separator:a986c9cd8284823daaf3c3ea5c05c16a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8b5e455b9ae5c10e6b44ff5f28f8bf0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#aa8b5e455b9ae5c10e6b44ff5f28f8bf0">Setting_Up_Memory_For_ionz</a> (int Nnion, int N1, int N2, int N3, fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion)</td></tr>
+<tr class="separator:aa8b5e455b9ae5c10e6b44ff5f28f8bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a553eda876fc651efecef3202b2046c77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a553eda876fc651efecef3202b2046c77">smooth</a> (fftw_real ***ro_dum, float Radii, int N1, int N2, int N3)</td></tr>
+<tr class="separator:a553eda876fc651efecef3202b2046c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa174d816f11484078e55fe5af64c211b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#aa174d816f11484078e55fe5af64c211b">reionization</a> (float Radii, fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3)</td></tr>
 <tr class="separator:aa174d816f11484078e55fe5af64c211b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab69d716af1dbf6ef48002cb900f32615"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#ab69d716af1dbf6ef48002cb900f32615">read_param</a> (char filename[2048])</td></tr>
@@ -132,8 +155,12 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a917a6f325da1dca5db916db4a0751e75"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structparams.html">params</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a917a6f325da1dca5db916db4a0751e75">input_param</a></td></tr>
-<tr class="separator:a917a6f325da1dca5db916db4a0751e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b21e15773869cae21bd1d502d49d715"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct_c_o_n_s_t_a_n_t_s.html">CONSTANTS</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a1b21e15773869cae21bd1d502d49d715">constants</a></td></tr>
+<tr class="separator:a1b21e15773869cae21bd1d502d49d715"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6291b94bd446cba2e7517c12276ebd51"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structmy_m_p_i.html">myMPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a6291b94bd446cba2e7517c12276ebd51">mympi</a></td></tr>
+<tr class="separator:a6291b94bd446cba2e7517c12276ebd51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62c41a4636d22215339031855db0e48c"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structparams.html">params</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a62c41a4636d22215339031855db0e48c">input_param</a></td></tr>
+<tr class="separator:a62c41a4636d22215339031855db0e48c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Define all functions. </p>
@@ -146,6 +173,58 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define ION_H_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac39d9cef6a5e030ba8d9e11121054268"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define max</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;((x)&gt;(y) ?(x):(y))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="abb702d8b501669a23aa0ab3b281b9384"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define min</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;((x)&lt;(y) ?(x):(y))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -223,10 +302,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get current time</p>
+<dl class="section return"><dt>Returns</dt><dd>current time </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a60cce38828ffcaf572634e35943c634d"></a>
+<a class="anchor" id="aaceabff842284e2dc8f9611fdd0696bd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -246,7 +327,19 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>r_max</em>&#160;</td>
+          <td class="paramname"><em>r_max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>dr_inc</em> = <code>constant.dr_inc</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>max_dr</em> = <code>constants.max_dr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -255,6 +348,213 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Generate a list of radii to compute semi-numerical reionization</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">radii_p</td><td>Pointer to radii list (pre-allocated) </td></tr>
+    <tr><td class="paramname">r_min</td><td>Minimum radius </td></tr>
+    <tr><td class="paramname">r_max</td><td>Maximum radius </td></tr>
+    <tr><td class="paramname">dr_inc</td><td>Increase in radius (0.0 &lt; dr_inc &lt;= 1.0; 0.1 by default) </td></tr>
+    <tr><td class="paramname">max_dr</td><td>Maximum increase in radius (2.0 by default) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>total number of radii </dd></dl>
+<p>Test if nRadii &lt;= max_Nradii</p>
+<p>Store radii list </p>
+
+</div>
+</div>
+<a class="anchor" id="ad4ddf14a0a19d8ece8aae44ea4bdc405"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pack_3d_array_mpi_transfer </td>
+          <td>(</td>
+          <td class="paramtype">fftw_real ***&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Convert 3D-fftw_real array to 1D-float array. This is used to simplify MPI transfer process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>3D-fftw_real array input </td></tr>
+    <tr><td class="paramname">output</td><td>1D-float array output </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid number </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid number </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid number </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae3e7c05c734d4e1b9516a11d79f07366"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pack_4d_array_mpi_transfer </td>
+          <td>(</td>
+          <td class="paramtype">fftw_real ****&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>Nnion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Convert 3D-fftw_real array to 1D-float array. This is used to simplify MPI transfer process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>3D-fftw_real array output </td></tr>
+    <tr><td class="paramname">output</td><td>1D-float array input </td></tr>
+    <tr><td class="paramname">Nion</td><td>Number of the choices of total reionizing photons/neutral baryon </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid number </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid number </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid number </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad6241f690f16f77c1f942a96cb4e9e9c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void read_density </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>buffer_3d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>robar_p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>vomegam</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>vomegab</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read in density of matter in cubep3m format (Fortran binary)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Filename (char* input) </td></tr>
+    <tr><td class="paramname">buffer_3d</td><td>Output buffer[N1*N2*N3] </td></tr>
+    <tr><td class="paramname">robar_p</td><td>Average density of baryons (output) </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid (input) </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid (input) </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid (input) </td></tr>
+    <tr><td class="paramname">vomegam</td><td>Omega_matter (input) </td></tr>
+    <tr><td class="paramname">vomegab</td><td>Omega_baryon (input) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -271,6 +571,137 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af0be7fa625cefb590988fcd6088eba60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void read_sources </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>buffer_3d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>robarhalo_p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read sources list. The data will be the SFR in cubep3m_gridmass/year</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Filename (char* input) </td></tr>
+    <tr><td class="paramname">buffer_3d</td><td>Output buffer[N1*N2*N3] </td></tr>
+    <tr><td class="paramname">robar_p</td><td>Average density of photons (output) </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid (input) </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid (input) </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid (input) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad2f727cabe5ba3e264757f33d2d20fdc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void read_xfrac </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>dirname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>buffer_4d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>nion_list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>Nnion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read in the history of ionized fraction (previous snapshot).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dirname</td><td>Directory of the xh (input) </td></tr>
+    <tr><td class="paramname">buffer_4d</td><td>4D float output </td></tr>
+    <tr><td class="paramname">nion_list</td><td>List of minimum N_gamma/N_b (input) </td></tr>
+    <tr><td class="paramname">Nnion</td><td>Number of elements in nion_list </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid (input) </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid (input) </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid (input) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -342,7 +773,7 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aaf0b63263cc4bc9ea88532bb6e6cfa7e"></a>
+<a class="anchor" id="aa8b5e455b9ae5c10e6b44ff5f28f8bf0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -350,15 +781,55 @@ Variables</h2></td></tr>
           <td class="memname">void Setting_Up_Memory_For_ionz </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>Nnion</em></td><td>)</td>
+          <td class="paramname"><em>Nnion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fftw_real ***&#160;</td>
+          <td class="paramname"><em>nh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fftw_real ***&#160;</td>
+          <td class="paramname"><em>ngamma</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fftw_real ****&#160;</td>
+          <td class="paramname"><em>nxion</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a986c9cd8284823daaf3c3ea5c05c16a6"></a>
+<a class="anchor" id="a553eda876fc651efecef3202b2046c77"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -372,7 +843,25 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>Radii</em>&#160;</td>
+          <td class="paramname"><em>Radii</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -384,13 +873,154 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="a917a6f325da1dca5db916db4a0751e75"></a>
+<a class="anchor" id="a951c25f62971884a0b0aa5be6f903569"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct <a class="el" href="structparams.html">params</a> input_param</td>
+          <td class="memname">void unpack_3d_array_mpi_transfer </td>
+          <td>(</td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fftw_real ***&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Convert 1D-float array to 3D-fftw_real array. This is used to simplify MPI transfer process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>1D-float array input </td></tr>
+    <tr><td class="paramname">output</td><td>3D-fftw_real array output </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid number </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid number </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid number </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a81c6a9dba70c6b44213dc05309f5a8a2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void unpack_4d_array_mpi_transfer </td>
+          <td>(</td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">fftw_real ****&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>Nnion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>N3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Convert 1D-float array to 3D-fftw_real array. This is used to simplify MPI transfer process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>1D-float array input </td></tr>
+    <tr><td class="paramname">output</td><td>3D-fftw_real array output </td></tr>
+    <tr><td class="paramname">Nion</td><td>Number of the choices of total reionizing photons/neutral baryon </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid number </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid number </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid number </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="a1b21e15773869cae21bd1d502d49d715"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="struct_c_o_n_s_t_a_n_t_s.html">CONSTANTS</a>  constants</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a62c41a4636d22215339031855db0e48c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structparams.html">params</a>  input_param</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6291b94bd446cba2e7517c12276ebd51"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structmy_m_p_i.html">myMPI</a>  mympi</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -400,7 +1030,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 11 2014 21:33:21 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 12 2014 00:27:01 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -45,11 +45,11 @@ main(int argc, char **argv) {
   fftw_real ***nh, ***ngamma, ****nxion;
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
-  MPI_Comm_rank(MPI_COMM_WORLD, &ThisTask);
-  MPI_Comm_size(MPI_COMM_WORLD, &NTask);
+  MPI_Comm_rank(MPI_COMM_WORLD, &mympi.ThisTask);
+  MPI_Comm_size(MPI_COMM_WORLD, &mympi.NTask);
 #else
-  NTask = 1;
-  ThisTask = 0;
+  mympi.NTask = 1;
+  mympi.ThisTask = 0;
 #endif //PARALLEL
 
   if(argc != 4) {
@@ -59,7 +59,7 @@ main(int argc, char **argv) {
   sprintf(densfilename,"%s",argv[1]);
   sprintf(sourcefilename,"%s",argv[2]);
   sprintf(z_out,"%s",argv[3]);
-  if(ThisTask == 0) {
+  if(mympi.ThisTask == 0) {
     system("date");
     printf("Start semi-numerical reionization process\n");
   }
@@ -90,7 +90,7 @@ main(int argc, char **argv) {
   buffer = malloc(sizeof(float)*N1*N2*N3);
 
   /// Use Task:0 to read density
-  if(ThisTask == 0) {
+  if(mympi.ThisTask == 0) {
     read_density(densfilename,buffer,&robar,N1,N2,N3,vomegam,vomegab);
   }
 
@@ -107,13 +107,12 @@ main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
 
-  if(ThisTask == 0)  {
+  if(mympi.ThisTask == 0)  {
   read_sources(sourcefilename,buffer,&robarhalo,N1,N2,N3);  
   }
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(&robarhalo, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
 #endif
   unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3);
   free(buffer);
@@ -125,9 +124,11 @@ main(int argc, char **argv) {
   t_stop = Get_Current_time();
 
   /* Sanity MPI check */
-  if(ThisTask == 1)
+#ifdef PARALLEL
+  if(mympi.ThisTask == 1)
     printf("N1=%d N2=%d N3=%d\n",N1,N2,N3);
-  if(ThisTask == 0)
+#endif
+  if(mympi.ThisTask == 0)
     printf("reading in data %lf s\n",t_stop-t_start);
 
   //calculating max and min radius for smoothing in units of grid size
@@ -135,16 +136,16 @@ main(int argc, char **argv) {
   r_max=pow((1.*N1*N2*N3),(1./3.))/2.;
 
   Radii_list = malloc(sizeof(float)*constants.max_Nradii); 
-  NjobsperTask = malloc(sizeof(float)*NTask);
+  NjobsperTask = malloc(sizeof(float)*mympi.NTask);
   n_radii = make_radii_list(Radii_list,r_min,r_max);
-  for(jj=0;jj<NTask;jj++) {
-    NjobsperTask[jj] = n_radii/NTask;
-    if(jj < n_radii%NTask)
+  for(jj=0;jj<mympi.NTask;jj++) {
+    NjobsperTask[jj] = n_radii/mympi.NTask;
+    if(jj < n_radii%mympi.NTask)
       NjobsperTask[jj]++;
-    if(jj == ThisTask) {
+    if(jj == mympi.ThisTask) {
       JobsTask = malloc(sizeof(int)*NjobsperTask[jj]);
       for(ii=0;ii<NjobsperTask[jj];ii++) {
-	JobsTask[ii] = ii*NTask+ThisTask;
+	JobsTask[ii] = ii*mympi.NTask+mympi.ThisTask;
       }
     }
   }
@@ -176,11 +177,11 @@ main(int argc, char **argv) {
 	}
     vion[jk]/=(1.*N1*N2*N3);
     roion[jk]/=(float)(robar*N1*N2*N3);
-    if(ThisTask == 0)
+    if(mympi.ThisTask == 0)
       printf("Subgrid: obtained vol. avg. x_ion=%e mass avg. x_ion=%e\n",vion[jk],roion[jk]);
  }
 
-  if(ThisTask == 0)
+  if(mympi.ThisTask == 0)
     printf("Start semi-numerical reionization process\n");
 
 
@@ -189,7 +190,7 @@ main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
   t_start = Get_Current_time();
-  for(ii=0;ii<NjobsperTask[ThisTask];ii++) {
+  for(ii=0;ii<NjobsperTask[mympi.ThisTask];ii++) {
     reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
   }  
   fftw_free(ngamma);
@@ -199,7 +200,7 @@ main(int argc, char **argv) {
 #endif
   buffer = malloc(sizeof(float)*Nnion*N1*N2*N3);
   t_stop = Get_Current_time();
-  if(ThisTask == 0)
+  if(mympi.ThisTask == 0)
     printf("Finish reionizing process %lf s\n",t_stop-t_start);
   t_start = Get_Current_time();
 
@@ -208,7 +209,7 @@ main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
   t_stop = Get_Current_time();
-  if(ThisTask == 0) {
+  if(mympi.ThisTask == 0) {
     printf("Finish packing data %lf s\n",t_stop-t_start);
 #ifdef PARALLEL
     buffer_final = malloc(sizeof(float)*Nnion*N1*N2*N3);
@@ -229,7 +230,7 @@ main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 
   t_stop = Get_Current_time();
-  if(ThisTask == 0)
+  if(mympi.ThisTask == 0)
     printf("Finish finding max:split %lf s\n",t_stop-t_start); 
   MPI_Barrier(MPI_COMM_WORLD);
 #else
@@ -237,13 +238,13 @@ main(int argc, char **argv) {
   MPI_Reduce(buffer, buffer_final, Nnion*N1*N2*N3, MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);      
   MPI_Barrier(MPI_COMM_WORLD);
   t_stop = Get_Current_time();
-  if(ThisTask == 0)
+  if(mympi.ThisTask == 0)
     printf("Finish finding max:whole %lf s\n",t_stop-t_start); 
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
 #endif // PARALLEL
 
-  if(ThisTask == 0) {
+  if(mympi.ThisTask == 0) {
     for(jk=0;jk<Nnion;jk++) {
       //calculating avg. ionization frction
       vion[jk]=0.0;
