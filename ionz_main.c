@@ -2,57 +2,21 @@
 
 #define  min(x,y)  ((x)<(y) ?(x):(y))
 #define  max(x,y)  ((x)>(y) ?(x):(y))
-/*  GLOBAL VARIABLES  */
 
 
 
-// cosmological parameters read from input file  "input.ionz"
-
-float  vhh, // Hubble parameter 
-  vomegam, // Omega_matter) 
-  vomegalam, // Cosmological Constant 
-  vomegab, //Omega_baryon */
-  sigma_8_present ,//  Last updated value of sigma_8 (Presently WMAP)
-  vnn; // Spectral index of primordial Power spectrum
-
-int N1,N2,N3;// box dimension (grid) 
-int Nnion;
-
-float   LL; // grid spacing in Mpc
-
-float  pi;
-
-// arrays for storing data
-
-fftw_real ***ro; // for density/potential
-rfftwnd_plan p_ro; // for FFT
-rfftwnd_plan q_ro; // for FFT
-
-//end of declaration of global variables for output binary file
-
-fftw_real ***nh,***nhs,***ngamma,***ngammas,***rosp,****nxion;
-
-
-//Reading the Nbody dark matter density field 
-//Density are in c^2ray simulation unit (raw)
-//Density files are in binary format with three integers written in
-//the begining of the file, which represents the grid size N1xN2xN3
-//After that the density array of size N1xN2xN3 is written in row-major order (C order), each value is of size float (float32 in python) 
-
- 
-//To avoid confusion we take input the density and the source data in same units
-
-
-void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int n1, int n2, int n3 ) {
+void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3) {
+  fftw_real ***nhs,***ngammas;
   int ii,jj,kk,jk;
   double t_start,t_stop;   
-  for(ii=0;ii<n1;ii++)
-    for(jj=0;jj<n2;jj++)
-      for(kk=0;kk<n3;kk++) {
+  nhs=allocate_fftw_real_3d(N1,N2,N3+2);
+  ngammas=allocate_fftw_real_3d(N1,N2,N3+2);
+  for(ii=0;ii<N1;ii++)
+    for(jj=0;jj<N2;jj++)
+      for(kk=0;kk<N3;kk++) {
 	//Filling smoothing arrays with the dark matter and source density data
 	nhs[ii][jj][kk]=nh_p[ii][jj][kk];
-	ngammas[ii][jj][kk]=ngamma_p[ii][jj][kk];
-	     
+	ngammas[ii][jj][kk]=ngamma_p[ii][jj][kk];	     
       }
       
   // printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
@@ -63,124 +27,126 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
   smooth(ngammas,Radii); 
 
   for(jk=0;jk<Nnion;++jk) {	 
-    for(ii=0;ii<n1;ii++)
-      for(jj=0;jj<n2;jj++)
-	for(kk=0;kk<n3;kk++) {
+    for(ii=0;ii<N1;ii++)
+      for(jj=0;jj<N2;jj++)
+	for(kk=0;kk<N3;kk++) {
 	  //Checking the ionization condition
 	  if(nhs[ii][jj][kk]<nion_p[jk]*ngammas[ii][jj][kk]) {
 	    nxion_p[jk][ii][jj][kk]=1.;
 	  }
 	}
   }
+  fftw_free(nhs);
+  fftw_free(ngammas);
 }
-int make_radii_list(float *radii_p, float r_min, float r_max) {
-  float r,dr;
-  int i = 0;
-  r = r_min;
-  while (r < r_max) {
-    radii_p[i] = r;
-    dr = (r*.1) < 2.0 ? (r*.1):2.0;
-    r += dr;
-    i++;
-  }
-  radii_p = realloc(radii_p,sizeof(float)*i);
-  return i;
-}
+
 void pack_3d_array_mpi_transfer(fftw_real ***input, float *output, int n1, int n2, int n3) { 
   int ii,jj,kk;
-  for(ii=0;ii<n1;ii++)
+  for(kk=0;kk<n3;kk++)
     for(jj=0;jj<n2;jj++)
-      for(kk=0;kk<n3;kk++)
-	output[ii*n2*n3 + jj*n3 + kk] = input[ii][jj][kk];
+      for(ii=0;ii<n1;ii++)
+	output[kk*n2*n1 + jj*n1 + ii] = input[ii][jj][kk];
 }
 
 void unpack_3d_array_mpi_transfer(float *input, fftw_real ***output, int n1, int n2, int n3) {
   int ii,jj,kk;
-  for(ii=0;ii<n1;ii++)
+  for(kk=0;kk<n3;kk++)
     for(jj=0;jj<n2;jj++)
-      for(kk=0;kk<n3;kk++)
-	output[ii][jj][kk]=input[ii*n2*n3 + jj*n3 + kk];
+      for(ii=0;ii<n1;ii++)
+	output[ii][jj][kk]=input[kk*n2*n1 + jj*n1 + ii];
 }
 void pack_4d_array_mpi_transfer(fftw_real ****input, float *output, int n_nion, int n1, int n2, int n3) { 
   int ii,jj,kk,jk;
   for(jk=0;jk<n_nion;jk++)
-    for(ii=0;ii<n3;ii++)
+    for(kk=0;kk<n3;kk++)
       for(jj=0;jj<n2;jj++)
-	for(kk=0;kk<n1;kk++)
-	  output[jk*n1*n2*n3 + ii*n2*n3 + jj*n3 + kk] = input[jk][ii][jj][kk];
+	for(ii=0;ii<n1;ii++)
+	  output[jk*n1*n2*n3 + ii*n1*n2 + jj*n1 + ii] = input[jk][ii][jj][kk];
 }
-
 void unpack_4d_array_mpi_transfer(float *input, fftw_real ****output, int n_nion,int n1, int n2, int n3) {
   int ii,jj,kk,jk;
   for(jk=0;jk<n_nion;jk++)
-    for(ii=0;ii<n3;ii++)
+    for(kk=0;kk<n3;kk++)
       for(jj=0;jj<n2;jj++)
-	for(kk=0;kk<n1;kk++)
-	  output[jk][ii][jj][kk]=input[jk*n1*n2*n3 + ii*n2*n3 + jj*n3 + kk];
+	for(ii=0;ii<n1;ii++)
+	  output[jk][ii][jj][kk]=input[jk*n1*n2*n3 + kk*n1*n2 + jj*n1 + ii];
 }
 
 /* Read density in cubep3m format (Fortran binary) */
 /* The output will be the mass of baryons in cubep3m grid mass */
-void read_density(char filename[2048],int *N1_p, int *N2_p, int *N3_p, fftw_real ***nh_p, double *robar_p) {  
-  int ii,jj,kk;
+
+
+void read_density(char *filename, float *buffer_3d, double *robar_p, int N1, int N2, int N3, float vomegam, float vomegab) {  
+  int ii;
+  int n1,n2,n2;
   FILE *inp;
   // printf("start read_density\n");
   inp=fopen(filename,"rb");
   *robar_p=0.;
-  fread(N1_p,sizeof(int),1,inp);
-  fread(N2_p,sizeof(int),1,inp);
-  fread(N3_p,sizeof(int),1,inp);
-  if(ThisTask == 0)
-    printf("N1=%d\n",*N1_p);
-  for(kk=0;kk<*N3_p;kk++)
-    for(jj=0;jj<*N2_p;jj++)
-      for(ii=0;ii<*N1_p;ii++) {
-	fread(&nh_p[ii][jj][kk],sizeof(float),1,inp);
-	nh_p[ii][jj][kk] *= vomegab/vomegam;
-	*robar_p += nh_p[ii][jj][kk];
-      }
+  fread(n1,sizeof(int),1,inp);
+  fread(n2,sizeof(int),1,inp);
+  fread(n3,sizeof(int),1,inp);
+  if(n1 != N1 || n2 != N2 || n3 != N3) {
+    printf("Grid dimensions in %s are not the same as in config file\n",filename);
+    printf("Density file: %d:%d:%d   Config file: %d:%d:%d\n",n1,n2,n3,N1,N2,N3);
+    printf("Terminate\n");
+    exit(1);
+  }
+  fread(buffer_3d,sizeof(float),n1*n2*n3,inp);
   fclose(inp);
-  *robar_p /= (1.*(*N1_p)*(*N2_p)*(*N3_p));
-  // printf("ok with density\n");
+  
+  for(ii=0;ii<n1*n2*n3;ii++) {
+    buffer_3d[ii] *= vomegab/vomegam;
+    *robar_p += buffer_3d[ii];
+  }
+  *robar_p /= (1.*(n1)*(n2)*(n3));
 }
+
+#ifdef XH_HISTORY
+void read_xfrac(char *filename, buffer *buffer_4d, int Nnion, int N1, int N2, int N3) {
+  FILE *inp;
+  int ii,jk;
+  int n1,n2,n3;
+  inp=fopen(filename,"rb");
+  fread(&n1,sizeof(int),1,inp);
+  fread(&n2,sizeof(int),1,inp);
+  fread(&n3,sizeof(int),1,inp);
+  if(n1 != N1 || n2 != N2 || n3 != N3) {
+    printf("Grid dimensions in %s are not the same as in config file\n",filename);
+    printf("Xfrac file: %d:%d:%d   Config file: %d:%d:%d\n",n1,n2,n3,N1,N2,N3);
+    printf("Terminate\n");
+    exit(1);
+  }
+  fread(buffer_4d,sizeof(float),n1*n2*n3,inp);
+  fclose(inp);
+}
+#endif
 
 /* Read source in C2Ray like */
 /* The output will be the SFR in cubep3m grid mass/year */
-void read_sources(char *filename, int N1, int N2, int N3, fftw_real ***ngamma_p, double *robarhalo_p) {
+void read_sources(char *filename, float *buffer_3d, double *robarhalo_p, int N1, int N2, int N3) {
   FILE *inp;
   int ii,jj,kk,ll;
   int n1,n2,n3;
   float dt = 11.6e6;
-  /* Clear out the array before reading source density ******/
-  /* for (ii=0;ii<N1;ii++) */
-  /*   for (jj=0;jj<N2;jj++) */
-  /*     for (kk=0;kk<N3;kk++) */
-  /* 	ngamma_p[ii][jj][kk] = 0.0; */
-  
-
-  /********************************/
-  // Reading the source density data
-  // This is also in the same unit as the dark matter density field (in C^2-Ray simulation unit)
-  // This file is in ascii
-  // Total no. of filled grid points with sources are written in the beginning of the file
-  // Total 5 or 6 columns of data is written after that
-  // First 3 columns are three FORTRAN indices of the array (need to subtract 1 from each to convert them into C indices)
-  // Next 2 columns are low mass and high mass source contribution to that grid
-  // There could be another column in the file which we don't need
   
   inp=fopen(filename,"rb");
   *robarhalo_p=0.;
   fread(&n1,sizeof(int),1,inp);
   fread(&n2,sizeof(int),1,inp);
   fread(&n3,sizeof(int),1,inp);
-  for(kk=0;kk<n3;kk++)
-    for(jj=0;jj<n2;jj++)
-      for(ii=0;ii<n3;ii++) {
-	fread(&ngamma_p[ii][jj][kk],sizeof(float),1,inp);
-	ngamma_p[ii][jj][kk] *= dt;
-	*robarhalo_p += ngamma_p[ii][jj][kk];
-      }
+  if(n1 != N1 || n2 != N2 || n3 != N3) {
+    printf("Grid dimensions in %s are not the same as in config file\n",filename);
+    printf("Source file: %d:%d:%d   Config file: %d:%d:%d\n",n1,n2,n3,N1,N2,N3);
+    printf("Terminate\n");
+    exit(1);
+  }
+  fread(buffer_3d,sizeof(float),n1*n2*n3,inp);
   fclose(inp);
+  for(ii=0;ii<n1*n2*n3;ii++) {
+    buffer_3d[ii] *= dt;
+    *robarhalo_p += buffer_3d;
+  }
   *robarhalo_p /= (1.*(n1)*(n2)*(n3));
 }
 
@@ -243,12 +209,13 @@ main(int argc, char **argv) {
   
   // Allocating memory to different arrays
   Setting_Up_Memory_For_ionz(Nnion);
-  t_start = MPI_Wtime();
+  t_start =Get_Current_time();
   if(ThisTask == 0) {
     read_density(densfilename,&N1,&N2,&N3,nh,&robar);
     buffer = malloc(sizeof(float)*N1*N2*N3);
     pack_3d_array_mpi_transfer(nh,buffer,N1,N2,N3);
   }
+#ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Bcast(&N1, 1, MPI_INT, 0, MPI_COMM_WORLD);
@@ -260,10 +227,15 @@ main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
   if(ThisTask > 0) {
+#endif
     unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
+#ifdef PARALLEL
   }
+#endif
   free(buffer);
+#ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
+#endif
   if(ThisTask == 0)  {
     read_sources(sourcefilename,N1,N2,N3,ngamma,&robarhalo);  
     buffer = malloc(sizeof(float)*N1*N2*N3);
@@ -272,15 +244,19 @@ main(int argc, char **argv) {
   if(ThisTask > 0) {
     buffer = malloc(sizeof(float)*N1*N2*N3);
   }
+#ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(&robarhalo, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
+#endif
   if(ThisTask > 0)    {
     unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3);
   }
 
   free(buffer);
+#ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
+#endif
   t_stop = MPI_Wtime();
   /* Sanity MPI check */
   if(ThisTask == 1)
@@ -313,61 +289,68 @@ main(int argc, char **argv) {
 
   //subgrid re-ionization
 
-  for(jk=0;jk<Nnion;++jk) {
-    for(ii=0;ii<N1;ii++)
+  for(jk=0;jk<Nnion;jk++) {
+    //calculating avg. ionization frction
+    vion[jk]=0.0;
+    roion[jk]=0.0;
+
+    for(kk=0;kk<N3;kk++)
       for(jj=0;jj<N2;jj++)
-	for(kk=0;kk<N3;kk++) {
+	for(ii=0;ii<N1;ii++) {
 	  if(nh[ii][jj][kk]>nion[jk]*ngamma[ii][jj][kk]) {
 	    nxion[jk][ii][jj][kk]=nion[jk]*ngamma[ii][jj][kk]/nh[ii][jj][kk];
 	  }    
 	  else {
 	    nxion[jk][ii][jj][kk]=1.;
 	  }
-	}
-  }
-
-  for(jk=0;jk<Nnion;++jk) {    
-    //calculating avg. ionization frction
-    vion[jk]=0.0;
-    roion[jk]=0.0;
-      
-    for(ii=0;ii<N1;ii++)
-      for(jj=0;jj<N2;jj++)
-	for(kk=0;kk<N3;kk++) {
 	  vion[jk]+=nxion[jk][ii][jj][kk];
-	  roion[jk]+=nxion[jk][ii][jj][kk]*nh[ii][jj][kk];
+	  roion[jk]+=nxion[jk][ii][jj][kk]*nh[ii][jj][kk];	  
 	}
     vion[jk]/=(1.*N1*N2*N3);
     roion[jk]/=(float)(robar*N1*N2*N3);
-    // printf("obtained vol. avg. x_ion=%e mass avg. x_ion=%e\n",vion[jk],roion[jk]);
-  }
+    if(ThisTask == 0)
+      printf("Subgrid: obtained vol. avg. x_ion=%e mass avg. x_ion=%e\n",vion[jk],roion[jk]);
+ }
 
   if(ThisTask == 0)
-    printf("Start semi-numerical reionization\n");
-  //subgrid re-ionization  done
-  
+    printf("Start semi-numerical reionization process\n");
+
+
+
+#ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
-  t_start = MPI_Wtime();
+#endif
+  t_start = Get_Current_time();
   for(ii=0;ii<NjobsperTask[ThisTask];ii++) {
     reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
   }  
+  fftw_free(ngamma);
+  fftw_free(ngammas);
+  fftw_free(nhs);
+#ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
+#endif
   buffer = malloc(sizeof(float)*Nnion*N1*N2*N3);
-  t_stop = MPI_Wtime();
+  t_stop = Get_Current_time();
   if(ThisTask == 0)
     printf("Finish reionizing process %lf s\n",t_stop-t_start);
-  t_start = MPI_Wtime();
+  t_start = Get_Current_time();
+
+#ifdef PARALLEL
   pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
   MPI_Barrier(MPI_COMM_WORLD);
-  t_stop = MPI_Wtime();
+#endif
+  t_stop = Get_Current_time();
   if(ThisTask == 0) {
     printf("Finish packing data %lf s\n",t_stop-t_start);
-    /* allocate buffer_final for final outputs */
+#ifdef PARALLEL
     buffer_final = malloc(sizeof(float)*Nnion*N1*N2*N3);
+#endif
   }
+#ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #ifdef CHUNKTRANSFER
-  t_start = MPI_Wtime();
+  t_start = Get_Current_time();
   ii = 0;
   while (ii*mpi_buffer < Nnion*N1*N2*N3) {
     cur_len = min(mpi_buffer, Nnion*N1*N2*N3-ii*mpi_buffer);
@@ -378,53 +361,57 @@ main(int argc, char **argv) {
 
   MPI_Barrier(MPI_COMM_WORLD);
 
-  t_stop = MPI_Wtime();
+  t_stop = Get_Current_time();
   if(ThisTask == 0)
     printf("Finish finding max:split %lf s\n",t_stop-t_start); 
   MPI_Barrier(MPI_COMM_WORLD);
 #else
-  t_start = MPI_Wtime();
+  t_start = Get_Current_time();
   MPI_Reduce(buffer, buffer_final, Nnion*N1*N2*N3, MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);      
   MPI_Barrier(MPI_COMM_WORLD);
-  t_stop = MPI_Wtime();
+  t_stop = Get_Current_time();
   if(ThisTask == 0)
     printf("Finish finding max:whole %lf s\n",t_stop-t_start); 
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
+#endif // PARALLEL
+
   if(ThisTask == 0) {
-    t_start = MPI_Wtime();
-    unpack_4d_array_mpi_transfer(buffer_final, nxion, Nnion, N1, N2, N3);
-    t_stop = MPI_Wtime();
-    printf("Finish unpacking data %lf s\n",t_stop-t_start);
-    for(jk=0;jk<Nnion;++jk) {
+    for(jk=0;jk<Nnion;jk++) {
       //calculating avg. ionization frction
       vion[jk]=0.0;
       roion[jk]=0.0;
-      
       // Defining the ionization map output file name
       // This is based on the value of nion assigned to it
-
       sprintf(file2,"xHI_map_%s_%4.2f",z_out,nion[jk]);
       printf("Saving %s\n",file2);
       // Writing the x_HI map in binary
       // In the begining 3 integers are written which defines the size
       // of the x_HI array
+#ifdef PARALLEL
+      
+#endif
 
       inp=fopen(file2,"w");
       fwrite(&N1,sizeof(int),1,inp);
       fwrite(&N2,sizeof(int),1,inp);
       fwrite(&N3,sizeof(int),1,inp);
-      for(kk=0;kk<N3;kk++)
-	for(jj=0;jj<N2;jj++)
-	  for(ii=0;ii<N1;ii++) {
+      
+      
+#ifdef PARALLEL
+      fwrite(&buffer_final[jk*N1*N2*N3],sizeof(float),N1*N2*N3,inp);
+#else
+      fwrite(&buffer[jk*N1*N2*N3],sizeof(float),N1*N2*N3,inp);	
+#endif
+      for(ii=0;ii<N1*N2*N3;ii++) {
 	    xh1=(1.-nxion[jk][ii][jj][kk]);
 	    xh1=(xh1 >0.0)? xh1: 0.0;
 	    vion[jk]+=xh1;
 	    nxion[jk][ii][jj][kk]=xh1; // store x_HI instead of x_ion
 	    nhs[ii][jj][kk]=xh1*nh[ii][jj][kk]; // ro_HI on grid
-	    roion[jk]+=nhs[ii][jj][kk];
-	    fwrite(&nxion[jk][ii][jj][kk],sizeof(float),1,inp);	      
-	  }	    
+	    roion[jk]+=nhs[ii][jj][kk];	
+      }
+	    
       fclose(inp);
       roion[jk]/=(N1*N2*N3); // mean HI density in grid units
       
