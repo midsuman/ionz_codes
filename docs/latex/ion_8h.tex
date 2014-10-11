@@ -1,6 +1,11 @@
 \hypertarget{ion_8h}{\section{ion.\+h File Reference}
 \label{ion_8h}\index{ion.\+h@{ion.\+h}}
 }
+
+
+Define all functions.  
+
+
 {\ttfamily \#include \char`\"{}srfftw.\+h\char`\"{}}\\*
 {\ttfamily \#include $<$stdio.\+h$>$}\\*
 {\ttfamily \#include $<$math.\+h$>$}\\*
@@ -28,11 +33,11 @@ float $\ast$$\ast$ \hyperlink{ion_8h_a95e86e9acb1f854c98436818e8e32b44}{allocate
 \item 
 fftw\+\_\+real $\ast$$\ast$$\ast$ \hyperlink{ion_8h_aee5c3609b2e190b1a88268997eb0a7dd}{allocate\+\_\+fftw\+\_\+real\+\_\+3d} (int N1, int N2, int N3)
 \item 
-void \hyperlink{ion_8h_aaf0b63263cc4bc9ea88532bb6e6cfa7e}{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz} (int \hyperlink{read__param_8cpp_ab6d8d0b2c7ee385271e90e51818623bc}{Nnion})
+void \hyperlink{ion_8h_aaf0b63263cc4bc9ea88532bb6e6cfa7e}{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz} (int Nnion)
 \item 
 void \hyperlink{ion_8h_a986c9cd8284823daaf3c3ea5c05c16a6}{smooth} (fftw\+\_\+real $\ast$$\ast$$\ast$ro\+\_\+dum, float Radii)
 \item 
-void \hyperlink{ion_8h_aa174d816f11484078e55fe5af64c211b}{reionization} (float Radii, fftw\+\_\+real $\ast$$\ast$$\ast$nh\+\_\+p, fftw\+\_\+real $\ast$$\ast$$\ast$ngamma\+\_\+p, fftw\+\_\+real $\ast$$\ast$$\ast$$\ast$nxion\+\_\+p, float $\ast$nion\+\_\+p, int \hyperlink{read__param_8cpp_ab6d8d0b2c7ee385271e90e51818623bc}{Nnion}, int N1, int N2, int N3)
+void \hyperlink{ion_8h_aa174d816f11484078e55fe5af64c211b}{reionization} (float Radii, fftw\+\_\+real $\ast$$\ast$$\ast$nh\+\_\+p, fftw\+\_\+real $\ast$$\ast$$\ast$ngamma\+\_\+p, fftw\+\_\+real $\ast$$\ast$$\ast$$\ast$nxion\+\_\+p, float $\ast$nion\+\_\+p, int Nnion, int N1, int N2, int N3)
 \item 
 void \hyperlink{ion_8h_ab69d716af1dbf6ef48002cb900f32615}{read\+\_\+param} (char filename\mbox{[}2048\mbox{]})
 \end{DoxyCompactItemize}
@@ -41,6 +46,17 @@ void \hyperlink{ion_8h_ab69d716af1dbf6ef48002cb900f32615}{read\+\_\+param} (char
 \item 
 struct \hyperlink{structparams}{params} \hyperlink{ion_8h_a917a6f325da1dca5db916db4a0751e75}{input\+\_\+param}
 \end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Define all functions. 
+
+\begin{DoxyAuthor}{Author}
+Chaichalit Srisawat $<$ \href{mailto:boyd.srisawat@gmail.com}{\tt boyd.\+srisawat@gmail.\+com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Sat Oct 11 20\+:49\+:08 2014 
+\end{DoxyDate}
 
 
 \subsection{Macro Definition Documentation}
@@ -85,7 +101,7 @@ struct \hyperlink{structparams}{params} \hyperlink{ion_8h_a917a6f325da1dca5db916
 )}}\label{ion_8h_a60cce38828ffcaf572634e35943c634d}
 \hypertarget{ion_8h_ab69d716af1dbf6ef48002cb900f32615}{\index{ion.\+h@{ion.\+h}!read\+\_\+param@{read\+\_\+param}}
 \index{read\+\_\+param@{read\+\_\+param}!ion.\+h@{ion.\+h}}
-\subsubsection[{read\+\_\+param}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf read\+\_\+param} (
+\subsubsection[{read\+\_\+param}]{\setlength{\rightskip}{0pt plus 5cm}void read\+\_\+param (
 \begin{DoxyParamCaption}
 \item[{char}]{filename\mbox{[}2048\mbox{]}}
 \end{DoxyParamCaption}

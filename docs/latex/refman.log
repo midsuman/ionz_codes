@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.8.7)  11 OCT 2014 20:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.8.7)  11 OCT 2014 21:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1073,12 +1073,14 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 6.29996pt on input line 7.
  [3
 
-] [4]
-[5])
+] [4])
 \tf@toc=\write5
 \openout5 = `refman.toc'.
 
- [6]
+
+[5] [6
+
+]
 Package hyperref Info: Option `pageanchor' set `true' on input line 138.
 
 Chapter 1.
@@ -1093,25 +1095,30 @@ LaTeX Font Info:    Font shape `T1/phv/bc/n' will be
 LaTeX Font Info:    Font shape `T1/phv/bc/n' will be
 (Font)              scaled to size 6.29996pt on input line 141.
 (./md__r_e_a_d_m_e.tex
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 11.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 1.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-)) [1
-
+)
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 7.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 10.79993pt on input line 7.
+LaTeX Font Info:    Font shape `T1/phv/bc/n' will be
+(Font)              scaled to size 10.79993pt on input line 7.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 9.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 12.9599pt on input line 9.
+LaTeX Font Info:    Font shape `T1/phv/bc/n' will be
+(Font)              scaled to size 12.9599pt on input line 9.
+) [1
 
 ] [2
 
 ]
 Chapter 2.
-(./annotated.tex
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 12.9599pt on input line 1.
-LaTeX Font Info:    Font shape `T1/phv/bc/n' will be
-(Font)              scaled to size 12.9599pt on input line 1.
-) [3] [4
+(./annotated.tex) [3] [4
 
 ]
 Chapter 3.
@@ -1120,12 +1127,6 @@ Chapter 3.
 ]
 Chapter 4.
 (./struct_g_l_o_b_a_l_v_a_r_s.tex
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 8.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 10.79993pt on input line 8.
-LaTeX Font Info:    Font shape `T1/phv/bc/n' will be
-(Font)              scaled to size 10.79993pt on input line 8.
 LaTeX Font Info:    Try loading font information for TS1+phv on input line 11.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ts1phv.fd
@@ -1144,7 +1145,9 @@ LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
 LaTeX Font Info:    Font shape `T1/phv/bc/n' will be
 (Font)              scaled to size 8.99994pt on input line 44.
  [7])
-(./structparams.tex [8]) (./classread__param.tex [9]) [10]
+(./structparams.tex [8]) [9] [10
+
+]
 Chapter 5.
 (./allotarrays_8c.tex
 Underfull \hbox (badness 10000) in paragraph at lines 4--7
@@ -1160,9 +1163,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--11
 
  []
 
-[11
-
-]
+[11]
 Underfull \hbox (badness 10000) detected at line 31
 [][][]
  []
@@ -1173,31 +1174,55 @@ Underfull \hbox (badness 10000) detected at line 34
  []
 
 ) (./ion_8h.tex
-Underfull \hbox (badness 10000) in paragraph at lines 4--10
+Underfull \hbox (badness 10000) in paragraph at lines 9--15
 
  []
 
 [12]
+Underfull \hbox (badness 10000) detected at line 54
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 57
+[][][]
+ []
+
 LaTeX Font Info:    Font shape `T1/phv/bc/it' in size <7> not available
-(Font)              Font shape `T1/phv/bc/sl' tried instead on input line 85.
+(Font)              Font shape `T1/phv/bc/sl' tried instead on input line 101.
 LaTeX Font Info:    Font shape `T1/phv/bc/sl' will be
-(Font)              scaled to size 6.29996pt on input line 85.
+(Font)              scaled to size 6.29996pt on input line 101.
 ) (./ionz__funcs_8c.tex
 Underfull \hbox (badness 10000) in paragraph at lines 4--9
 
  []
 
-) (./ionz__main_8c.tex
+[13]) (./ionz__main_8c.tex
+Underfull \hbox (badness 10000) in paragraph at lines 9--10
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 32
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 35
+[][][]
+ []
+
+[14]
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 64.
+LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
+(Font)              scaled to size 8.99994pt on input line 64.
+) (./ionz__misc_8c.tex
 Underfull \hbox (badness 10000) in paragraph at lines 4--5
 
  []
 
-[13]) (./ionz__misc_8c.tex
-Underfull \hbox (badness 10000) in paragraph at lines 4--5
-
- []
-
-[14]) (./ionz__mpi_8c.tex
+) (./ionz__mpi_8c.tex
 Underfull \hbox (badness 10000) in paragraph at lines 4--5
 
  []
@@ -1207,12 +1232,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 4--5
 
  []
 
-) (./read__param_8c.tex
-Underfull \hbox (badness 10000) in paragraph at lines 4--5
-
- []
-
-[15]) (./read__param_8cpp.tex
+[15]) (./read__param_8c.tex
 Underfull \hbox (badness 10000) in paragraph at lines 4--5
 
  []
@@ -1221,21 +1241,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 4--5
 
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 173.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 173.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 171.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 171.
  (./refman.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 173.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 173.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 171.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 171.
 Package rerunfilecheck Info: File `refman.out' has not changed.
-(rerunfilecheck)             Checksum: 4BF2353E9A7F5A02D2363FFBD52FB59A;20542.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 173.
+(rerunfilecheck)             Checksum: 0ADB072730C0D36364C82AA6F399EB8B;17233.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 171.
  ) 
 Here is how much of TeX's memory you used:
- 12849 strings out of 493117
- 183751 string characters out of 6135434
- 273077 words of memory out of 5000000
- 15814 multiletter control sequences out of 15000+600000
- 82295 words of font info for 111 fonts, out of 8000000 for 9000
+ 12770 strings out of 493117
+ 181149 string characters out of 6135434
+ 266984 words of memory out of 5000000
+ 15780 multiletter control sequences out of 15000+600000
+ 85311 words of font info for 113 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  48i,17n,43p,1401b,412s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
@@ -1247,10 +1267,10 @@ live/2014/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/201
 fonts/type1/urw/helvetic/uhvbo8ac.pfb></usr/local/texlive/2014/texmf-dist/fonts
 /type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/
 urw/helvetic/uhvro8a.pfb>
-Output written on refman.pdf (23 pages, 122281 bytes).
+Output written on refman.pdf (23 pages, 118273 bytes).
 PDF statistics:
- 1023 PDF objects out of 1200 (max. 8388607)
- 980 compressed objects within 10 object streams
- 246 named destinations out of 1000 (max. 500000)
- 929 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 869 PDF objects out of 1000 (max. 8388607)
+ 827 compressed objects within 9 object streams
+ 205 named destinations out of 1000 (max. 500000)
+ 769 words of extra memory for PDF output out of 10000 (max. 10000000)
 

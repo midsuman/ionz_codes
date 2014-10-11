@@ -1,20 +1,16 @@
 \hypertarget{ionz__main_8c}{\section{ionz\+\_\+main.\+c File Reference}
 \label{ionz__main_8c}\index{ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}}
 }
+
+
+Main program.  
+
+
 {\ttfamily \#include \char`\"{}ion.\+h\char`\"{}}\\*
-\subsection*{Macros}
-\begin{DoxyCompactItemize}
-\item 
-\#define \hyperlink{ionz__main_8c_abb702d8b501669a23aa0ab3b281b9384}{min}(x, y)~((x)$<$(y) ?(x)\+:(y))
-\item 
-\#define \hyperlink{ionz__main_8c_ac39d9cef6a5e030ba8d9e11121054268}{max}(x, y)~((x)$>$(y) ?(x)\+:(y))
-\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{ionz__main_8c_aa174d816f11484078e55fe5af64c211b}{reionization} (float Radii, fftw\+\_\+real $\ast$$\ast$$\ast$nh\+\_\+p, fftw\+\_\+real $\ast$$\ast$$\ast$ngamma\+\_\+p, fftw\+\_\+real $\ast$$\ast$$\ast$$\ast$nxion\+\_\+p, float $\ast$nion\+\_\+p, int \hyperlink{read__param_8cpp_ab6d8d0b2c7ee385271e90e51818623bc}{Nnion}, int N1, int N2, int N3)
-\item 
-void \hyperlink{ionz__main_8c_a1d29f0b7cc019590c15acb0462cd15cb}{pack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer} (fftw\+\_\+real $\ast$$\ast$$\ast$input, float $\ast$output, int n1, int n2, int n3)
+void \hyperlink{ionz__main_8c_ad4ddf14a0a19d8ece8aae44ea4bdc405}{pack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer} (fftw\+\_\+real $\ast$$\ast$$\ast$input, float $\ast$output, int N1, int N2, int N3)
 \item 
 void \hyperlink{ionz__main_8c_ab33ffc8131875c2e6002d961e7ed7ebc}{unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer} (float $\ast$input, fftw\+\_\+real $\ast$$\ast$$\ast$output, int n1, int n2, int n3)
 \item 
@@ -30,23 +26,15 @@ void \hyperlink{ionz__main_8c_af0be7fa625cefb590988fcd6088eba60}{read\+\_\+sourc
 \end{DoxyCompactItemize}
 
 
-\subsection{Macro Definition Documentation}
-\hypertarget{ionz__main_8c_ac39d9cef6a5e030ba8d9e11121054268}{\index{ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}!max@{max}}
-\index{max@{max}!ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}}
-\subsubsection[{max}]{\setlength{\rightskip}{0pt plus 5cm}\#define max(
-\begin{DoxyParamCaption}
-\item[{}]{x, }
-\item[{}]{y}
-\end{DoxyParamCaption}
-)~((x)$>$(y) ?(x)\+:(y))}}\label{ionz__main_8c_ac39d9cef6a5e030ba8d9e11121054268}
-\hypertarget{ionz__main_8c_abb702d8b501669a23aa0ab3b281b9384}{\index{ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}!min@{min}}
-\index{min@{min}!ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}}
-\subsubsection[{min}]{\setlength{\rightskip}{0pt plus 5cm}\#define min(
-\begin{DoxyParamCaption}
-\item[{}]{x, }
-\item[{}]{y}
-\end{DoxyParamCaption}
-)~((x)$<$(y) ?(x)\+:(y))}}\label{ionz__main_8c_abb702d8b501669a23aa0ab3b281b9384}
+\subsection{Detailed Description}
+Main program. 
+
+\begin{DoxyAuthor}{Author}
+Chaichalit Srisawat $<$ \href{mailto:boyd.srisawat@gmail.com}{\tt boyd.\+srisawat@gmail.\+com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Sat Oct 11 21\+:01\+:59 2014 
+\end{DoxyDate}
 
 
 \subsection{Function Documentation}
@@ -58,17 +46,32 @@ void \hyperlink{ionz__main_8c_af0be7fa625cefb590988fcd6088eba60}{read\+\_\+sourc
 \item[{char $\ast$$\ast$}]{argv}
 \end{DoxyParamCaption}
 )}}\label{ionz__main_8c_a5ea466849f21e6c2be4ef9b2eb8868d3}
-\hypertarget{ionz__main_8c_a1d29f0b7cc019590c15acb0462cd15cb}{\index{ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}!pack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer@{pack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer}}
+\hypertarget{ionz__main_8c_ad4ddf14a0a19d8ece8aae44ea4bdc405}{\index{ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}!pack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer@{pack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer}}
 \index{pack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer@{pack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer}!ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}}
 \subsubsection[{pack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer}]{\setlength{\rightskip}{0pt plus 5cm}void pack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer (
 \begin{DoxyParamCaption}
 \item[{fftw\+\_\+real $\ast$$\ast$$\ast$}]{input, }
 \item[{float $\ast$}]{output, }
-\item[{int}]{n1, }
-\item[{int}]{n2, }
-\item[{int}]{n3}
+\item[{int}]{N1, }
+\item[{int}]{N2, }
+\item[{int}]{N3}
 \end{DoxyParamCaption}
-)}}\label{ionz__main_8c_a1d29f0b7cc019590c15acb0462cd15cb}
+)}}\label{ionz__main_8c_ad4ddf14a0a19d8ece8aae44ea4bdc405}
+Convert 3\+D array of fftw\+\_\+real to 1\+D float array. This is used to simplify M\+P\+I transfer process.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & 3\+D fftw\+\_\+real array input. \\
+\hline
+{\em output} & 1\+D float array output. \\
+\hline
+{\em N1} & 1st dimension grid number. \\
+\hline
+{\em N2} & 2nd dimension grid number. \\
+\hline
+{\em N3} & 3rd dimension grid number. \\
+\hline
+\end{DoxyParams}
 \hypertarget{ionz__main_8c_a53b14c279de2c6ac87af26cf92deba04}{\index{ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}!pack\+\_\+4d\+\_\+array\+\_\+mpi\+\_\+transfer@{pack\+\_\+4d\+\_\+array\+\_\+mpi\+\_\+transfer}}
 \index{pack\+\_\+4d\+\_\+array\+\_\+mpi\+\_\+transfer@{pack\+\_\+4d\+\_\+array\+\_\+mpi\+\_\+transfer}!ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}}
 \subsubsection[{pack\+\_\+4d\+\_\+array\+\_\+mpi\+\_\+transfer}]{\setlength{\rightskip}{0pt plus 5cm}void pack\+\_\+4d\+\_\+array\+\_\+mpi\+\_\+transfer (
@@ -107,21 +110,6 @@ void \hyperlink{ionz__main_8c_af0be7fa625cefb590988fcd6088eba60}{read\+\_\+sourc
 \item[{int}]{N3}
 \end{DoxyParamCaption}
 )}}\label{ionz__main_8c_af0be7fa625cefb590988fcd6088eba60}
-\hypertarget{ionz__main_8c_aa174d816f11484078e55fe5af64c211b}{\index{ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}!reionization@{reionization}}
-\index{reionization@{reionization}!ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}}
-\subsubsection[{reionization}]{\setlength{\rightskip}{0pt plus 5cm}void reionization (
-\begin{DoxyParamCaption}
-\item[{float}]{Radii, }
-\item[{fftw\+\_\+real $\ast$$\ast$$\ast$}]{nh\+\_\+p, }
-\item[{fftw\+\_\+real $\ast$$\ast$$\ast$}]{ngamma\+\_\+p, }
-\item[{fftw\+\_\+real $\ast$$\ast$$\ast$$\ast$}]{nxion\+\_\+p, }
-\item[{float $\ast$}]{nion\+\_\+p, }
-\item[{int}]{Nnion, }
-\item[{int}]{N1, }
-\item[{int}]{N2, }
-\item[{int}]{N3}
-\end{DoxyParamCaption}
-)}}\label{ionz__main_8c_aa174d816f11484078e55fe5af64c211b}
 \hypertarget{ionz__main_8c_ab33ffc8131875c2e6002d961e7ed7ebc}{\index{ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}!unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer@{unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer}}
 \index{unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer@{unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer}!ionz\+\_\+main.\+c@{ionz\+\_\+main.\+c}}
 \subsubsection[{unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer}]{\setlength{\rightskip}{0pt plus 5cm}void unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer (

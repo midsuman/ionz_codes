@@ -1,6 +1,20 @@
+/**
+ * @file   read_param.c
+ * @author Chaichalit Srisawat < boyd.srisawat@gmail.com>
+ * @date   Sat Oct 11 22:28:50 2014
+ * 
+ * @brief  Read parameter file
+ * 
+ * 
+ */
+
 #include "ion.h"
 
-struct params input_param;
+/** 
+ * Read parameter file
+ * 
+ * @param filename Parameter file
+ */
 void read_params(char filename[2048])
   {
     FILE *inp;

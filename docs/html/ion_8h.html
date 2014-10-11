@@ -89,6 +89,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">ion.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Define all functions.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;srfftw.h&quot;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;math.h&gt;</code><br />
@@ -118,11 +121,11 @@ Functions</h2></td></tr>
 <tr class="separator:a95e86e9acb1f854c98436818e8e32b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee5c3609b2e190b1a88268997eb0a7dd"><td class="memItemLeft" align="right" valign="top">fftw_real ***&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#aee5c3609b2e190b1a88268997eb0a7dd">allocate_fftw_real_3d</a> (int N1, int N2, int N3)</td></tr>
 <tr class="separator:aee5c3609b2e190b1a88268997eb0a7dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf0b63263cc4bc9ea88532bb6e6cfa7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#aaf0b63263cc4bc9ea88532bb6e6cfa7e">Setting_Up_Memory_For_ionz</a> (int <a class="el" href="read__param_8cpp.html#ab6d8d0b2c7ee385271e90e51818623bc">Nnion</a>)</td></tr>
+<tr class="memitem:aaf0b63263cc4bc9ea88532bb6e6cfa7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#aaf0b63263cc4bc9ea88532bb6e6cfa7e">Setting_Up_Memory_For_ionz</a> (int Nnion)</td></tr>
 <tr class="separator:aaf0b63263cc4bc9ea88532bb6e6cfa7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a986c9cd8284823daaf3c3ea5c05c16a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a986c9cd8284823daaf3c3ea5c05c16a6">smooth</a> (fftw_real ***ro_dum, float Radii)</td></tr>
 <tr class="separator:a986c9cd8284823daaf3c3ea5c05c16a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa174d816f11484078e55fe5af64c211b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#aa174d816f11484078e55fe5af64c211b">reionization</a> (float Radii, fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int <a class="el" href="read__param_8cpp.html#ab6d8d0b2c7ee385271e90e51818623bc">Nnion</a>, int N1, int N2, int N3)</td></tr>
+<tr class="memitem:aa174d816f11484078e55fe5af64c211b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#aa174d816f11484078e55fe5af64c211b">reionization</a> (float Radii, fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3)</td></tr>
 <tr class="separator:aa174d816f11484078e55fe5af64c211b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab69d716af1dbf6ef48002cb900f32615"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#ab69d716af1dbf6ef48002cb900f32615">read_param</a> (char filename[2048])</td></tr>
 <tr class="separator:ab69d716af1dbf6ef48002cb900f32615"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -132,7 +135,11 @@ Variables</h2></td></tr>
 <tr class="memitem:a917a6f325da1dca5db916db4a0751e75"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structparams.html">params</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ion_8h.html#a917a6f325da1dca5db916db4a0751e75">input_param</a></td></tr>
 <tr class="separator:a917a6f325da1dca5db916db4a0751e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Define all functions. </p>
+<dl class="section author"><dt>Author</dt><dd>Chaichalit Srisawat &lt; <a href="#" onclick="location.href='mai'+'lto:'+'boy'+'d.'+'sri'+'sa'+'wat'+'@g'+'mai'+'l.'+'com'; return false;">boyd.<span style="display: none;">.nosp@m.</span>sris<span style="display: none;">.nosp@m.</span>awat@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a>&gt; </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>Sat Oct 11 20:49:08 2014 </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a517275cd6d6e1b2731fc3f91a7c1f4e7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -256,7 +263,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classread__param.html">read_param</a> </td>
+          <td class="memname">void read_param </td>
           <td>(</td>
           <td class="paramtype">char&#160;</td>
           <td class="paramname"><em>filename</em>[2048]</td><td>)</td>
@@ -393,7 +400,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 11 2014 20:44:06 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 11 2014 21:33:21 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -29,6 +29,7 @@
 /// Global variables
 struct CONSTANTS {
   const float pi = M_PI;
+  const int max_Nradii = 1000;
 } constants;
 
 /* in ionz_misc.c */
