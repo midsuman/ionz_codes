@@ -153,6 +153,7 @@ void read_xfrac(char *dirname, float *buffer_4d, float *nion_list, int Nnion, in
     exit(1);
   }
   fread(buffer_4d,sizeof(float),n1*n2*n3,inp);
+  
   fclose(inp);
 }
 
