@@ -43,7 +43,7 @@ void unpack_3d_array_mpi_transfer(float *input, fftw_real ***output, int N1, int
   for(kk=0;kk<N3;kk++)
     for(jj=0;jj<N2;jj++)
       for(ii=0;ii<N1;ii++) {
-	printf("%d %f\n",kk*N2*N1 + jj*N1 + ii,intput[kk*N2*N1 + jj*N1 + ii]);
+	printf("%d %f\n",kk*N2*N1 + jj*N1 + ii,input[kk*N2*N1 + jj*N1 + ii]);
 	output[ii][jj][kk]=input[kk*N2*N1 + jj*N1 + ii];
       }
 }
