@@ -14,7 +14,7 @@
 /* #include "rfftw.h" */
 /* #include "fftw.h" */
 #include <srfftw.h>
-#include <rfftw.h>
+// #include <rfftw.h>
 #include <fftw.h>
 #include <stdio.h>
 #include <math.h>
