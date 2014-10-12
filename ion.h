@@ -9,7 +9,7 @@
  */
 #ifndef ION_H_
 
-#include <srfftw.h>
+#include "rfftw.h"
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -35,7 +35,7 @@ const struct CONSTANTS {
   /// Maximum increase in radius
   float max_dr;
 };
-extern const struct CONSTANTS constants; 
+extern const struct CONSTANTS constvars; 
 
 /// MPI variables
 struct myMPI {
@@ -99,6 +99,7 @@ struct params
   float gridsize;
 } input_param;
 
+// read_param.c
 extern void read_param(char filename[2048]);
 
 #define ION_H_
