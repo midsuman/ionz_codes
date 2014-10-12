@@ -8,7 +8,7 @@
  * 
  */
 #include "ion.h"
-
+const_struct constvars = {3.14159265359,2048,0.1,2.0};
 
 /** 
  * Set up memory for nh, ngamma and nxion
