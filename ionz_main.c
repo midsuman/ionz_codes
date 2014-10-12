@@ -88,6 +88,7 @@ int main(int argc, char **argv) {
     printf("Omega_lambda\t%f\n",vomegalam);
     printf("Grid: %dx%dx%d\n",N1,N2,N3);
   }
+
   /* Allocating memory to different arrays */
   Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3, nh, ngamma, nxion);
 
@@ -100,21 +101,24 @@ int main(int argc, char **argv) {
   if(mympi.ThisTask == 0) {
     read_density(densfilename,buffer,&robar,N1,N2,N3,vomegam,vomegab);
   }
+
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
   MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
+  
   printf("start unpack\n");
   unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
   printf("finish unpack\n");
+  
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
 
   if(mympi.ThisTask == 0)  {
-  read_sources(sourcefilename,buffer,&robarhalo,N1,N2,N3);  
+    read_sources(sourcefilename,buffer,&robarhalo,N1,N2,N3);  
   }
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
