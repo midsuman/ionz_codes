@@ -101,14 +101,14 @@ void unpack_4d_array_mpi_transfer(float *input, fftw_real ****output, int Nnion,
  */
 void read_density(char *filename, float *buffer_3d, double *robar_p, int N1, int N2, int N3, float vomegam, float vomegab) {  
   int ii;
-  int n1,n2,n2;
+  int n1,n2,n3;
   FILE *inp;
   // printf("start read_density\n");
   inp=fopen(filename,"rb");
   *robar_p=0.;
-  fread(n1,sizeof(int),1,inp);
-  fread(n2,sizeof(int),1,inp);
-  fread(n3,sizeof(int),1,inp);
+  fread(&n1,sizeof(int),1,inp);
+  fread(&n2,sizeof(int),1,inp);
+  fread(&n3,sizeof(int),1,inp);
   if(n1 != N1 || n2 != N2 || n3 != N3) {
     printf("Grid dimensions in %s are not the same as in config file\n",filename);
     printf("Density file: %d:%d:%d   Config file: %d:%d:%d\n",n1,n2,n3,N1,N2,N3);
