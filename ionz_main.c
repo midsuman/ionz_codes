@@ -65,6 +65,9 @@ main(int argc, char **argv) {
     printf("Start semi-numerical reionization process\n");
   }
  
+  nh = NULL;
+  ngamma = NULL;
+  nxion = NULL;
   read_params("input.ionz");
 
   Nnion = input_param.Nnion;
@@ -82,7 +85,7 @@ main(int argc, char **argv) {
   vomegab = input_param.omegab;
   
   /* Allocating memory to different arrays */
-  Setting_Up_Memory_For_ionz(Nnion, N1,N2,N3,nh,ngamma, nxion);
+  Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3, nh,ngamma, nxion);
 
   t_start =Get_Current_time();
 
