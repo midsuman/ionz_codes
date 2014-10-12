@@ -108,6 +108,7 @@ int main(int argc, char **argv) {
 #endif
   printf("start unpack\n");
   unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
+  printf("finish unpack\n");
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
