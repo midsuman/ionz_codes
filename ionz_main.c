@@ -58,11 +58,6 @@ int main(int argc, char **argv) {
     system("date");
     printf("Start semi-numerical reionization process\n");
   }
- 
-  // Initialize pointers before using them
-  nh = (fftw_real ***)malloc(sizeof(fftw_real **));
-  ngamma = (fftw_real ***)malloc(sizeof(fftw_real **));
-  nxion = (fftw_real ****)malloc(sizeof(fftw_real ***));
   
   // Read input file
   read_params("input.ionz");
@@ -90,7 +85,7 @@ int main(int argc, char **argv) {
   }
 
   /* Allocating memory to different arrays */
-  Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3, &nh, &ngamma, &nxion);
+  Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3);
   printf("test in main\n");
   printf("%f \n",ngamma[34][2][34]);
   t_start =Get_Current_time();

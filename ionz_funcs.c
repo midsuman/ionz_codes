@@ -17,21 +17,15 @@
  * @param N1 1st dimension grid
  * @param N2 2nd dimension grid
  * @param N3 3rd dimension grid
- * @param nh density array
- * @param ngamma source array
- * @param nxion xfrac array
  */
-void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3, fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p) {
+void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3) {
   int jk;
-  free(nh_p);
-  free(ngamma_p);
-  free(nxion_p);
 
-  nh_p = allocate_fftw_real_3d(N1,N2,N3+2);
-  ngamma_p =allocate_fftw_real_3d(N1,N2,N3+2);
-  nxion_p=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
+  nh = allocate_fftw_real_3d(N1,N2,N3+2);
+  ngamma =allocate_fftw_real_3d(N1,N2,N3+2);
+  nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
   for(jk=0;jk<Nnion;++jk) {
-    nxion_p[jk]=allocate_fftw_real_3d(N1,N2,N3+2);
+    nxion[jk]=allocate_fftw_real_3d(N1,N2,N3+2);
   }
   // allocate area for storing densities  DONE
   /* The last dimension gets padded because of using REAL FFT */
