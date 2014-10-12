@@ -95,12 +95,12 @@ int main(int argc, char **argv) {
 
   /* Allocate buffer to store 3D array */
   buffer = malloc(sizeof(float)*N1*N2*N3);
-  printf("read dens\n");
+
   /* Use Task:0 to read density */
   if(mympi.ThisTask == 0) {
     read_density(densfilename,buffer,&robar,N1,N2,N3,vomegam,vomegab);
   }
- 
+  printf("finish reading\n");
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
