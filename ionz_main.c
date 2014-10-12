@@ -19,25 +19,21 @@ const struct CONSTANTS constants = {M_PI,2048,0.1,2.0};
  * @return 
  */
 int main(int argc, char **argv) {
-  FILE  *inp,*outpp;
-  int ii, jj, kk,ll,jk,mm,sfac;
-  float  vaa,epsilon,box;
-  int  temp,flag_sup;
-  float dr,r_min,r_max;
+  FILE  *inp;
+  int ii, jj, kk,jk;
+  float r_min,r_max;
   char file1[300],file2[300],num[50];
   int Nnion,N1,N2,N3;
-  float *nion,xh1,dump,mass1,mass2;  
-  int nhalo,output_flag,in_flag;
-  float Radii,his_z,zval;
-  double robar,robarhalo,vfac,*vion,*roion;
-  float **rra,**vva,**halo,**data,*dummy,junk1=1.0,junk2=0.0;
+  float *nion,xh1;  
+  float Radii;
+  double robar,robarhalo,*vion,*roion;;
   float *Radii_list;
   int n_radii;
   int *NjobsperTask;
   int *JobsTask;
   double t_start, t_stop;
   float *buffer, *buffer_final;
-  float vomegam,vomegab,vomegalam;
+  float vomegam,vomegab;
 #ifdef CHUNKTRANSFER
   int mpi_buffer=1000000;
   int cur_len;
