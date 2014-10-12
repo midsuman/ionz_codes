@@ -51,7 +51,7 @@ void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3, fftw_real ***
  */
 void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   int i,j,k,index;
-  float m,tempre,tempim,tot;
+  float tempre,tempim,tot;
   fftw_real ***rosp;
   fftw_complex *A;
   fftw_complex *B;
