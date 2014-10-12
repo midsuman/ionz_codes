@@ -162,30 +162,8 @@ main(int argc, char **argv) {
   
   // printf("robar=%e  robarhalo=%e ratio= %e\n",robar,robarhalo,robar/robarhalo);
 
-  //subgrid re-ionization
-
-  for(jk=0;jk<Nnion;jk++) {
-    //calculating avg. ionization frction
-    vion[jk]=0.0;
-    roion[jk]=0.0;
-
-    for(kk=0;kk<N3;kk++)
-      for(jj=0;jj<N2;jj++)
-	for(ii=0;ii<N1;ii++) {
-	  if(nh[ii][jj][kk]>nion[jk]*ngamma[ii][jj][kk]) {
-	    nxion[jk][ii][jj][kk]=nion[jk]*ngamma[ii][jj][kk]/nh[ii][jj][kk];
-	  }    
-	  else {
-	    nxion[jk][ii][jj][kk]=1.;
-	  }
-	  vion[jk]+=nxion[jk][ii][jj][kk];
-	  roion[jk]+=nxion[jk][ii][jj][kk]*nh[ii][jj][kk];	  
-	}
-    vion[jk]/=(1.*N1*N2*N3);
-    roion[jk]/=(float)(robar*N1*N2*N3);
-    if(mympi.ThisTask == 0)
-      printf("Subgrid: obtained vol. avg. x_ion=%e mass avg. x_ion=%e\n",vion[jk],roion[jk]);
- }
+  // Do subgrid seminumerical simulation
+  subgrid_reionization(nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );  
 
   if(mympi.ThisTask == 0)
     printf("Start semi-numerical reionization process\n");
