@@ -81,6 +81,13 @@ int main(int argc, char **argv) {
   vomegalam = input_param.omegalam;
   vomegab = input_param.omegab;
   
+  if(mympi.ThisTask == 0) {
+    printf("Using Cosmological parameters:\n");
+    printf("Omega_m\t%f\n",vomegam);
+    printf("Omega_b\t%f\n",vomegab);
+    printf("Omega_lambda\t%f\n",vomegalam);
+    printf("Grid: %dx%dx%d\n",N1,N2,N3);
+  }
   /* Allocating memory to different arrays */
   Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3, nh,ngamma, nxion);
 
