@@ -10,9 +10,9 @@
 
 #ifndef ION_H_
 
-#include "srfftw.h"
-#include "rfftw.h"
-#include "fftw.h"
+/* #include "srfftw.h" */
+/* #include "rfftw.h" */
+/* #include "fftw.h" */
 #include <srfftw.h>
 #include <rfftw.h>
 #include <fftw.h>

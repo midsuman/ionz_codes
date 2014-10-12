@@ -9,9 +9,6 @@
  */
 
 #include "ion.h"
-#include<stdlib.h>
-#include<sfftw.h>
-#include<srfftw.h>
 
 /** 
  * Allocate 3D fftw_real array
