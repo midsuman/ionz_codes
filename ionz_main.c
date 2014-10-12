@@ -18,7 +18,7 @@ const struct CONSTANTS constants = {M_PI,2048,0.1,2.0};
  * 
  * @return 
  */
-main(int argc, char **argv) {
+int main(int argc, char **argv) {
   FILE  *inp,*outpp;
   int ii, jj, kk,ll,jk,mm,sfac;
   float  vaa,epsilon,box;
