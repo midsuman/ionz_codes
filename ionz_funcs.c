@@ -1,3 +1,13 @@
+/**
+ * @file   ionz_funcs.c
+ * @author Chaichalit Srisawat < boyd.srisawat@gmail.com>
+ * @date   Sun Oct 12 00:59:24 2014
+ * 
+ * @brief  Several core functions
+ * 
+ * 
+ */
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
@@ -5,8 +15,17 @@
 #include"ion.h"
 
 
-
-// arrays for storing data
+/** 
+ * Set up memory for nh, ngamma and nxion
+ * 
+ * @param Nnion Number of nion
+ * @param N1 1st dimension grid
+ * @param N2 2nd dimension grid
+ * @param N3 3rd dimension grid
+ * @param nh density array
+ * @param ngamma source array
+ * @param nxion xfrac array
+ */
 void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3, fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion) {
   int jk;
   nh=allocate_fftw_real_3d(N1,N2,N3+2);
@@ -23,7 +42,15 @@ void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3, fftw_real ***
   
 }
 
-
+/** 
+ * Smooth radius with FFT
+ * 
+ * @param ro_dum density field
+ * @param Radii Smooth radius 
+ * @param N1 1st dimension grid
+ * @param N2 2nd dimension grid
+ * @param N3 3rd dimension grid
+ */
 void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   int i,j,k,index,x1,y1,z1,x2,y2,z2,a,b,c;
   float m,tempre,tempim,tot;
@@ -96,7 +123,19 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   // fftw_free(B);
 }
 
-
+/** 
+ * Core function to do semi-numnerical reionization estimation
+ * 
+ * @param Radii Radius 
+ * @param nh_p Pointer to baryon density field
+ * @param ngamma_p Pointer to photon density field
+ * @param nxion_p Pointer to Xfrac field
+ * @param nion_p nion arrays
+ * @param Nnion Total element of nion
+ * @param N1 1st dimension grid
+ * @param N2 2nd dimension grid
+ * @param N3 3rd dimension grid
+ */
 void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3) {
   fftw_real ***nhs,***ngammas;
   int ii,jj,kk,jk;

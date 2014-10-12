@@ -81,15 +81,15 @@ main(int argc, char **argv) {
   vomegalam = input_param.omegalam;
   vomegab = input_param.omegab;
   
-  /// Allocating memory to different arrays
+  /* Allocating memory to different arrays */
   Setting_Up_Memory_For_ionz(Nnion, N1,N2,N3,nh, ngamma, nxion);
 
   t_start =Get_Current_time();
 
-  /// Allocate buffer to store 3D array
+  /* Allocate buffer to store 3D array */
   buffer = malloc(sizeof(float)*N1*N2*N3);
 
-  /// Use Task:0 to read density
+  /* Use Task:0 to read density */
   if(mympi.ThisTask == 0) {
     read_density(densfilename,buffer,&robar,N1,N2,N3,vomegam,vomegab);
   }

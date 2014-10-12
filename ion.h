@@ -28,15 +28,21 @@
 
 /// Global variables
 struct CONSTANTS {
+  /// PI
   const float pi = M_PI;
+  /// Maximum number of radii
   const int max_Nradii = 2048;
+  /// Increase in radius (factor of radius)
   const float dr_inc = 0.1;
+  /// Maximum increase in radius
   const float max_dr = 2.0;
 } constants;
 
 /// MPI variables
 struct myMPI {
+  /// Total MPI rank
   int NTask;
+  /// This MPI node number
   int ThisTask;
 } mympi;
 
@@ -63,6 +69,7 @@ extern void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3);
 extern void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3);
 
 /* in read_param.c */
+/// Input Parameters
 struct params 
 {
   /// Number of Nions used

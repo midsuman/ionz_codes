@@ -19,7 +19,7 @@ struct \hyperlink{struct_c_o_n_s_t_a_n_t_s}{C\+O\+N\+S\+T\+A\+N\+T\+S}
 struct \hyperlink{structmy_m_p_i}{my\+M\+P\+I}
 \begin{DoxyCompactList}\small\item\em M\+P\+I variables. \end{DoxyCompactList}\item 
 struct \hyperlink{structparams}{params}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Input Parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
@@ -116,6 +116,20 @@ Sat Oct 11 20\+:49\+:08 2014
 \item[{int}]{N3}
 \end{DoxyParamCaption}
 )}}\label{ion_8h_aee5c3609b2e190b1a88268997eb0a7dd}
+Allocate 3\+D fftw\+\_\+real array
+
+
+\begin{DoxyParams}{Parameters}
+{\em N1} & 1st dimension len \\
+\hline
+{\em N2} & 2nd dimension len \\
+\hline
+{\em N3} & 3rd dimension len\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3\+D fftw\+\_\+real array pointer 
+\end{DoxyReturn}
 \hypertarget{ion_8h_a95e86e9acb1f854c98436818e8e32b44}{\index{ion.\+h@{ion.\+h}!allocate\+\_\+float\+\_\+2d@{allocate\+\_\+float\+\_\+2d}}
 \index{allocate\+\_\+float\+\_\+2d@{allocate\+\_\+float\+\_\+2d}!ion.\+h@{ion.\+h}}
 \subsubsection[{allocate\+\_\+float\+\_\+2d}]{\setlength{\rightskip}{0pt plus 5cm}float$\ast$$\ast$ allocate\+\_\+float\+\_\+2d (
@@ -340,6 +354,29 @@ Read in the history of ionized fraction (previous snapshot).
 \item[{int}]{N3}
 \end{DoxyParamCaption}
 )}}\label{ion_8h_aa174d816f11484078e55fe5af64c211b}
+Core function to do semi-\/numnerical reionization estimation
+
+
+\begin{DoxyParams}{Parameters}
+{\em Radii} & Radius \\
+\hline
+{\em nh\+\_\+p} & Pointer to baryon density field \\
+\hline
+{\em ngamma\+\_\+p} & Pointer to photon density field \\
+\hline
+{\em nxion\+\_\+p} & Pointer to Xfrac field \\
+\hline
+{\em nion\+\_\+p} & nion arrays \\
+\hline
+{\em Nnion} & Total element of nion \\
+\hline
+{\em N1} & 1st dimension grid \\
+\hline
+{\em N2} & 2nd dimension grid \\
+\hline
+{\em N3} & 3rd dimension grid \\
+\hline
+\end{DoxyParams}
 \hypertarget{ion_8h_aa8b5e455b9ae5c10e6b44ff5f28f8bf0}{\index{ion.\+h@{ion.\+h}!Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz@{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz}}
 \index{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz@{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz}!ion.\+h@{ion.\+h}}
 \subsubsection[{Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz}]{\setlength{\rightskip}{0pt plus 5cm}void Setting\+\_\+\+Up\+\_\+\+Memory\+\_\+\+For\+\_\+ionz (
@@ -353,6 +390,25 @@ Read in the history of ionized fraction (previous snapshot).
 \item[{fftw\+\_\+real $\ast$$\ast$$\ast$$\ast$}]{nxion}
 \end{DoxyParamCaption}
 )}}\label{ion_8h_aa8b5e455b9ae5c10e6b44ff5f28f8bf0}
+Set up memory for nh, ngamma and nxion
+
+
+\begin{DoxyParams}{Parameters}
+{\em Nnion} & Number of nion \\
+\hline
+{\em N1} & 1st dimension grid \\
+\hline
+{\em N2} & 2nd dimension grid \\
+\hline
+{\em N3} & 3rd dimension grid \\
+\hline
+{\em nh} & density array \\
+\hline
+{\em ngamma} & source array \\
+\hline
+{\em nxion} & xfrac array \\
+\hline
+\end{DoxyParams}
 \hypertarget{ion_8h_a553eda876fc651efecef3202b2046c77}{\index{ion.\+h@{ion.\+h}!smooth@{smooth}}
 \index{smooth@{smooth}!ion.\+h@{ion.\+h}}
 \subsubsection[{smooth}]{\setlength{\rightskip}{0pt plus 5cm}void smooth (
@@ -364,6 +420,21 @@ Read in the history of ionized fraction (previous snapshot).
 \item[{int}]{N3}
 \end{DoxyParamCaption}
 )}}\label{ion_8h_a553eda876fc651efecef3202b2046c77}
+Smooth radius with F\+F\+T
+
+
+\begin{DoxyParams}{Parameters}
+{\em ro\+\_\+dum} & density field \\
+\hline
+{\em Radii} & Smooth radius \\
+\hline
+{\em N1} & 1st dimension grid \\
+\hline
+{\em N2} & 2nd dimension grid \\
+\hline
+{\em N3} & 3rd dimension grid \\
+\hline
+\end{DoxyParams}
 \hypertarget{ion_8h_a951c25f62971884a0b0aa5be6f903569}{\index{ion.\+h@{ion.\+h}!unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer@{unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer}}
 \index{unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer@{unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer}!ion.\+h@{ion.\+h}}
 \subsubsection[{unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer}]{\setlength{\rightskip}{0pt plus 5cm}void unpack\+\_\+3d\+\_\+array\+\_\+mpi\+\_\+transfer (

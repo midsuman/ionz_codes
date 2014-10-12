@@ -86,6 +86,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">ionz_funcs.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Several core functions.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;math.h&gt;</code><br />
@@ -101,7 +104,11 @@ Functions</h2></td></tr>
 <tr class="memitem:aa174d816f11484078e55fe5af64c211b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ionz__funcs_8c.html#aa174d816f11484078e55fe5af64c211b">reionization</a> (float Radii, fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3)</td></tr>
 <tr class="separator:aa174d816f11484078e55fe5af64c211b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Several core functions. </p>
+<dl class="section author"><dt>Author</dt><dd>Chaichalit Srisawat &lt; <a href="#" onclick="location.href='mai'+'lto:'+'boy'+'d.'+'sri'+'sa'+'wat'+'@g'+'mai'+'l.'+'com'; return false;">boyd.<span style="display: none;">.nosp@m.</span>sris<span style="display: none;">.nosp@m.</span>awat@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a>&gt; </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>Sun Oct 12 00:59:24 2014 </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="aa174d816f11484078e55fe5af64c211b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -167,6 +174,21 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Core function to do semi-numnerical reionization estimation</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Radii</td><td>Radius </td></tr>
+    <tr><td class="paramname">nh_p</td><td>Pointer to baryon density field </td></tr>
+    <tr><td class="paramname">ngamma_p</td><td>Pointer to photon density field </td></tr>
+    <tr><td class="paramname">nxion_p</td><td>Pointer to Xfrac field </td></tr>
+    <tr><td class="paramname">nion_p</td><td>nion arrays </td></tr>
+    <tr><td class="paramname">Nnion</td><td>Total element of nion </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -223,6 +245,19 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set up memory for nh, ngamma and nxion</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Nnion</td><td>Number of nion </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid </td></tr>
+    <tr><td class="paramname">nh</td><td>density array </td></tr>
+    <tr><td class="paramname">ngamma</td><td>source array </td></tr>
+    <tr><td class="paramname">nxion</td><td>xfrac array </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -267,13 +302,24 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Smooth radius with FFT</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ro_dum</td><td>density field </td></tr>
+    <tr><td class="paramname">Radii</td><td>Smooth radius </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 12 2014 00:27:01 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 12 2014 01:07:40 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

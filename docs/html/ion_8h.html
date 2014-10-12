@@ -109,6 +109,7 @@ Data Structures</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPI variables.  <a href="structmy_m_p_i.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structparams.html">params</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input Parameters.  <a href="structparams.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -261,6 +262,16 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Allocate 3D fftw_real array</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N1</td><td>1st dimension len </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension len </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension len</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>3D fftw_real array pointer </dd></dl>
 
 </div>
 </div>
@@ -770,6 +781,21 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Core function to do semi-numnerical reionization estimation</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Radii</td><td>Radius </td></tr>
+    <tr><td class="paramname">nh_p</td><td>Pointer to baryon density field </td></tr>
+    <tr><td class="paramname">ngamma_p</td><td>Pointer to photon density field </td></tr>
+    <tr><td class="paramname">nxion_p</td><td>Pointer to Xfrac field </td></tr>
+    <tr><td class="paramname">nion_p</td><td>nion arrays </td></tr>
+    <tr><td class="paramname">Nnion</td><td>Total element of nion </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -826,6 +852,19 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set up memory for nh, ngamma and nxion</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Nnion</td><td>Number of nion </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid </td></tr>
+    <tr><td class="paramname">nh</td><td>density array </td></tr>
+    <tr><td class="paramname">ngamma</td><td>source array </td></tr>
+    <tr><td class="paramname">nxion</td><td>xfrac array </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -870,6 +909,17 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Smooth radius with FFT</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ro_dum</td><td>density field </td></tr>
+    <tr><td class="paramname">Radii</td><td>Smooth radius </td></tr>
+    <tr><td class="paramname">N1</td><td>1st dimension grid </td></tr>
+    <tr><td class="paramname">N2</td><td>2nd dimension grid </td></tr>
+    <tr><td class="paramname">N3</td><td>3rd dimension grid </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1030,7 +1080,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 12 2014 00:27:01 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 12 2014 01:07:40 for Semi-numerical Reionization by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

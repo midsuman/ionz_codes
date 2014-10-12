@@ -9,11 +9,42 @@
  */
 
 #include "ion.h"
+#include<stdlib.h>
+#include<sfftw.h>
+#include<srfftw.h>
+
+/** 
+ * Allocate 3D fftw_real array
+ * 
+ * @param N1 1st dimension len 
+ * @param N2 2nd dimension len
+ * @param N3 3rd dimension len
+ * 
+ * @return 3D fftw_real array pointer
+ */
+fftw_real  ***allocate_fftw_real_3d(int N1,int N2,int N3)
+{
+  int ii,jj;
+  fftw_real ***phia, *phi;
+  phia=(fftw_real ***)malloc(N1 *  sizeof(fftw_real **));
+
+  for(ii=0;ii<N1;++ii)
+      phia[ii]=(fftw_real **)malloc(N2 *  sizeof(fftw_real*));
+
+  phi = (fftw_real *) calloc(N1 * N2 * N3,sizeof(fftw_real));
+
+  for(ii=0;ii<N1;++ii)
+    for(jj=0;jj<N2;++jj)
+      phia[ii][jj]=phi+ (N2*N3)*ii + N3*jj;
+
+  return(phia);
+}
+
 /** 
  * Get current time
  * 
  * 
- * @return current time
+ * @return  current time
  */
 double Get_Current_time() {
 #ifdef PARALLEL
