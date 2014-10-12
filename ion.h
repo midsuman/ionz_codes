@@ -46,7 +46,7 @@ struct myMPI {
 } mympi;
 
 /* in ionz_misc.c */
-extern int make_radii_list(float *radii_p, float r_min, float r_max, float dr_inc = constant.dr_inc, float max_dr = constants.max_dr);
+extern int make_radii_list(float *radii_p, float r_min, float r_max, float dr_inc, float max_dr);
 extern double Get_Current_time();
 
 /* in ionz_io.c */

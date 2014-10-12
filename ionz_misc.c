@@ -68,7 +68,7 @@ double Get_Current_time() {
  * @param max_dr Maximum increase in radius (2.0 by default)
  * @return total number of radii 
  */
-int make_radii_list(float *radii_p, float r_min, float r_max, float dr_inc = constant.dr_inc, float max_dr = constants.max_dr) {
+int make_radii_list(float *radii_p, float r_min, float r_max, float dr_inc, float max_dr) {
   float r,dr;
   int i;
 

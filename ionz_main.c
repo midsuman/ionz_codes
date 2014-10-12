@@ -21,7 +21,7 @@
 main(int argc, char **argv) {
   FILE  *inp,*outpp;
   int ii, jj, kk,ll,jk,mm,sfac;
-  float  Nnion,vaa,epsilon,box;
+  float  vaa,epsilon,box;
   int  temp,flag_sup;
   float dr,r_min,r_max;
   char file1[300],file2[300],num[50];
@@ -37,7 +37,6 @@ main(int argc, char **argv) {
   int *JobsTask;
   double t_start, t_stop;
   float *buffer, *buffer_final;
-  int N1,N2,N3;
   float vomegam,vomegab,vomegalam;
 #ifdef CHUNKTRANSFER
   int mpi_buffer=1000000;
@@ -139,7 +138,7 @@ main(int argc, char **argv) {
 
   Radii_list = malloc(sizeof(float)*constants.max_Nradii); 
   NjobsperTask = malloc(sizeof(float)*mympi.NTask);
-  n_radii = make_radii_list(Radii_list,r_min,r_max);
+  n_radii = make_radii_list(Radii_list,r_min,r_max,constants.dr_inc,constants.max_dr);
   for(jj=0;jj<mympi.NTask;jj++) {
     NjobsperTask[jj] = n_radii/mympi.NTask;
     if(jj < n_radii%mympi.NTask)
