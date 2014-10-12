@@ -11,7 +11,7 @@ all: ionz_main
 
 
 read_param.o: read_param.c
-	$(CC) -c $(CFLAGS) $(INCLUDE) $(LINKLIB) read_param.c $(POSTFLAGS)
+		$(CC) -c $(CFLAGS) $(INCLUDE) $(LINKLIB) read_param.c $(POSTFLAGS)
 
 ionz_misc.o: ionz_misc.c
 	$(CC) -c $(CFLAGS) $(INCLUDE) $(LINKLIB) ionz_misc.c $(POSTFLAGS)
