@@ -9,7 +9,7 @@
  */
 #ifndef ION_H_
 
-#include "rfftw.h"
+#include <srfftw.h>
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
