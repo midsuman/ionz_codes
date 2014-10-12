@@ -22,10 +22,9 @@ int main(int argc, char **argv) {
   FILE  *inp;
   int ii, jj, kk,jk;
   float r_min,r_max;
-  char file1[300],file2[300],num[50];
+  char file2[300];
   int Nnion,N1,N2,N3;
-  float *nion,xh1;  
-  float Radii;
+  float *nion,xh1; 
   double robar,robarhalo,*vion,*roion;;
   float *Radii_list;
   int n_radii;
@@ -33,7 +32,7 @@ int main(int argc, char **argv) {
   int *JobsTask;
   double t_start, t_stop;
   float *buffer, *buffer_final;
-  float vomegam,vomegab;
+  float vomegam,vomegab,vomegalam;
 #ifdef CHUNKTRANSFER
   int mpi_buffer=1000000;
   int cur_len;
