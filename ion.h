@@ -25,7 +25,7 @@
 
 
 /// Global variables
-const struct CONSTANTS {
+struct CONSTANTS {
   /// PI
   float pi;
   /// Maximum number of radii
