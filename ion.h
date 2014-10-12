@@ -101,7 +101,7 @@ struct params
 } input_param;
 
 // read_param.c
-extern void read_param(char filename[2048]);
+extern void read_param(char *filename);
 
 #define ION_H_
 #endif

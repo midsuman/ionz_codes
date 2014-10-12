@@ -15,7 +15,7 @@
  * 
  * @param filename Parameter file
  */
-void read_params(char filename[2048])
+void read_params(char *filename)
   {
     FILE *inp;
     int ii;
