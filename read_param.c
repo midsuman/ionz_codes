@@ -23,7 +23,6 @@ void read_params(char filename[2048])
     inp=fopen(filename,"r");
     /* get parameters for reion simulation */
     fscanf(inp,"%d",&input_param.Nnion);
-    input_param.nion = malloc(sizeof(int)*input_param.Nnion);
     //Nnion is the number of nion values for which we will run the simulation
     //You will get a x_HI map for each value of nion
     //Allocating memory for some variables
