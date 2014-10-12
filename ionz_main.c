@@ -9,6 +9,7 @@
 
 #include "ion.h"
 struct_const constvars = {3.14159265359,1024,0.1,2.0};
+fftw_real ***nh, ***ngamma, ****nxion;
 /** 
  * Main program
  * 
@@ -37,7 +38,6 @@ int main(int argc, char **argv) {
   int cur_len;
 #endif
   char densfilename[2000], sourcefilename[2000],z_out[1000];
-  fftw_real ***nh, ***ngamma, ****nxion;
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &mympi.ThisTask);
