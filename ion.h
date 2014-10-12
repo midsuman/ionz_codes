@@ -34,7 +34,7 @@ const struct CONSTANTS {
   float dr_inc;
   /// Maximum increase in radius
   float max_dr;
-} constants = {M_PI,2048,0.1,2.0};
+} constants; 
 
 /// MPI variables
 struct myMPI {
