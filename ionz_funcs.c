@@ -119,12 +119,40 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   	ro_dum[i][j][k]=ro_dum[i][j][k]/(N1*N2*N3);
 
   fftw_free(rosp);
-  fftw_destroy_plan(p_ro);
-  fftw_destroy_plan(q_ro);
+  rfftw_destroy_plan(p_ro);
+  rfftw_destroy_plan(q_ro);
   /* A and B are aliases so there is no need to free them... Boyd */
   // fftw_free(A);
   // fftw_free(B);
 }
+void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion, float *nion, int Nnion, int N1, int N2, int N3) {
+  int ii,jj,kk,jk;
+  double vion[Nnion],roion[Nnion];
+  
+  for(jk=0;jk<Nnion;jk++) {
+    //calculating avg. ionization frction
+    vion[jk]=0.0;
+    roion[jk]=0.0;
+
+    for(kk=0;kk<N3;kk++)
+      for(jj=0;jj<N2;jj++)
+	for(ii=0;ii<N1;ii++) {
+	  if(nh[ii][jj][kk]>nion[jk]*ngamma[ii][jj][kk]) {
+	    nxion[jk][ii][jj][kk]=nion[jk]*ngamma[ii][jj][kk]/nh[ii][jj][kk];
+	  }    
+	  else {
+	    nxion[jk][ii][jj][kk]=1.;
+	  }
+	  vion[jk]+=nxion[jk][ii][jj][kk];
+	  roion[jk]+=nxion[jk][ii][jj][kk]*nh[ii][jj][kk];	  
+	}
+    vion[jk]/=(1.*N1*N2*N3);
+    roion[jk]/=(float)(robar*N1*N2*N3);
+    if(mympi.ThisTask == 0)
+      printf("Subgrid: obtained vol. avg. x_ion=%e mass avg. x_ion=%e\n",vion[jk],roion[jk]);
+ }
+}
+
 
 /** 
  * Core function to do semi-numnerical reionization estimation
