@@ -1,5 +1,5 @@
-LINKLIB= -L/home/c/cs/cs390/local/fftw-2.1.5/install/lib -lsrfftw -lsfftw -lm
-INCLUDE= -I/home/c/cs/cs390/local/fftw-2.1.5/install/include/
+LINKLIB= -L${TACC_FFTW2_LIB} -lfftw -lsrfftw -lsfftw -lm
+INCLUDE= -I${TACC_FFTW2_INC}
 CFLAGS=-g
 CC=mpicc
 CFLAGS+= -DPARALLEL
@@ -15,8 +15,8 @@ read_param.o: read_param.c
 ionz_mpi.o: ionz_mpi.c
 	$(CC) -c $(CFLAGS) $(INCLUDE) $(LINKLIB) ionz_mpi.c
 
-allotarrays.o:	allotarrays.c
-	$(CC) -c $(CFLAGS) $(INCLUDE) $(LINKLIB) allotarrays.c
+ionz_misc.o: ionz_misc.c
+	$(CC) -c $(CFLAGS) $(INCLUDE) $(LINKLIB) ionz_misc.c
 
 
 ionz_main.o: 	ionz_main.c 
