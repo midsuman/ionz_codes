@@ -46,29 +46,7 @@ struct myMPI {
   int ThisTask;
 } mympi;
 
-/* in ionz_misc.c */
-extern int make_radii_list(float *radii_p, float r_min, float r_max, float dr_inc, float max_dr);
-extern double Get_Current_time();
 
-/* in ionz_io.c */
-extern void pack_3d_array_mpi_transfer(fftw_real ***input, float *output, int N1, int N2, int N3);
-extern void unpack_3d_array_mpi_transfer(float *input, fftw_real ***output, int N1, int N2, int N3);
-extern void pack_4d_array_mpi_transfer(fftw_real ****input, float *output, int Nnion, int N1, int N2, int N3);
-extern void unpack_4d_array_mpi_transfer(float *input, fftw_real ****output, int Nnion,int N1, int N2, int N3);
-extern void read_density(char *filename, float *buffer_3d, double *robar_p, int N1, int N2, int N3, float vomegam, float vomegab);
-extern void read_xfrac(char *dirname, float *buffer_4d, float *nion_list, int Nnion, int N1, int N2, int N3);
-extern void read_sources(char *filename, float *buffer_3d, double *robarhalo_p, int N1, int N2, int N3);
-
-/* in allotarrays.c */
-extern fftw_real  ***allocate_fftw_real_3d(int N1,int N2,int N3);
-
-/* in ionz_funcs.c */
-extern void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3, fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion);
-extern void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3);
-extern void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion, double robar,float *nion, int Nnion, int N1, int N2, int N3);
-extern void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3);
-
-/* in read_param.c */
 /// Input Parameters
 struct params 
 {
@@ -100,8 +78,31 @@ struct params
   float gridsize;
 } input_param;
 
-// read_param.c
+// in read_param.c
 extern void read_param(char *filename);
+
+/* in ionz_misc.c */
+extern int make_radii_list(float *radii_p, float r_min, float r_max, float dr_inc, float max_dr);
+extern double Get_Current_time();
+
+/* in ionz_io.c */
+extern void pack_3d_array_mpi_transfer(fftw_real ***input, float *output, int N1, int N2, int N3);
+extern void unpack_3d_array_mpi_transfer(float *input, fftw_real ***output, int N1, int N2, int N3);
+extern void pack_4d_array_mpi_transfer(fftw_real ****input, float *output, int Nnion, int N1, int N2, int N3);
+extern void unpack_4d_array_mpi_transfer(float *input, fftw_real ****output, int Nnion,int N1, int N2, int N3);
+extern void read_density(char *filename, float *buffer_3d, double *robar_p, int N1, int N2, int N3, float vomegam, float vomegab);
+extern void read_xfrac(char *dirname, float *buffer_4d, float *nion_list, int Nnion, int N1, int N2, int N3);
+extern void read_sources(char *filename, float *buffer_3d, double *robarhalo_p, int N1, int N2, int N3);
+
+/* in allotarrays.c */
+extern fftw_real  ***allocate_fftw_real_3d(int N1,int N2,int N3);
+
+/* in ionz_funcs.c */
+extern void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3, fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion);
+extern void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3);
+extern void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion, double robar,float *nion, int Nnion, int N1, int N2, int N3);
+extern void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3);
+
 
 #define ION_H_
 #endif
