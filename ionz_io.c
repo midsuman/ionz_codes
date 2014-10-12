@@ -187,7 +187,7 @@ void read_sources(char *filename, float *buffer_3d, double *robarhalo_p, int N1,
   fclose(inp);
   for(ii=0;ii<n1*n2*n3;ii++) {
     buffer_3d[ii] *= dt;
-    *robarhalo_p += buffer_3d;
+    *robarhalo_p += buffer_3d[ii];
   }
   *robarhalo_p /= (1.*(n1)*(n2)*(n3));
 }
