@@ -8,7 +8,6 @@
  */
 
 #include "ion.h"
-const struct CONSTANTS constvars = {3.14159265359,2048,0.1,2.0};
 
 /** 
  * Main program

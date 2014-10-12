@@ -34,8 +34,7 @@ const struct CONSTANTS {
   float dr_inc;
   /// Maximum increase in radius
   float max_dr;
-};
-extern const struct CONSTANTS constvars; 
+} constvars = {3.14159265359,2048,0.1,2.0}; 
 
 /// MPI variables
 struct myMPI {
