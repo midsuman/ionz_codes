@@ -141,7 +141,7 @@ void read_xfrac(char *dirname, float *buffer_4d, float *nion_list, int Nnion, in
   FILE *inp;
   int ii,jk;
   int n1,n2,n3;
-  chat filename[2048];
+  char filename[2048];
   inp=fopen(filename,"rb");
   fread(&n1,sizeof(int),1,inp);
   fread(&n2,sizeof(int),1,inp);
