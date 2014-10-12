@@ -7,8 +7,8 @@
  * 
  * 
  */
+
 #include "ion.h"
-const_struct constvars = {3.14159265359,2048,0.1,2.0};
 
 /** 
  * Set up memory for nh, ngamma and nxion
@@ -50,7 +50,7 @@ void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3, fftw_real ***
  * @param N3 3rd dimension grid
  */
 void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
-  int i,j,k,index,x1,y1,z1,x2,y2,z2,a,b,c;
+  int i,j,k,index;
   float m,tempre,tempim,tot;
   fftw_real ***rosp;
   fftw_complex *A;
