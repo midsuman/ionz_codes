@@ -60,9 +60,9 @@ int main(int argc, char **argv) {
   }
  
   // Initialize pointers before using them
-  nh = malloc(sizeof(fftw_real **));
-  ngamma = malloc(sizeof(fftw_real **));
-  nxion = malloc(sizeof(fftw_real ***));
+  nh = (fftw_real ***)malloc(sizeof(fftw_real **));
+  ngamma = (fftw_real ***)malloc(sizeof(fftw_real **));
+  nxion = (fftw_real ****)malloc(sizeof(fftw_real ***));
   
   // Read input file
   read_params("input.ionz");

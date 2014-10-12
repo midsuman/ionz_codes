@@ -23,9 +23,9 @@
  */
 void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3, fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion) {
   int jk;
-  fftw_free(nh);
-  fftw_free(ngamma);
-  fftw_free(nxion);
+  free(nh);
+  free(ngamma);
+  free(nxion);
   nh=allocate_fftw_real_3d(N1,N2,N3+2);
   ngamma=allocate_fftw_real_3d(N1,N2,N3+2);
   nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
@@ -34,10 +34,7 @@ void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3, fftw_real ***
     nxion[jk]=allocate_fftw_real_3d(N1,N2,N3+2);
   }
   // allocate area for storing densities  DONE
-    
   /* The last dimension gets padded because of using REAL FFT */
-    
-  
 }
 
 /** 
