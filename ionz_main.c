@@ -8,7 +8,7 @@
  */
 
 #include "ion.h"
-
+constvars = {3.14159265359,1024,0.1,2.0};
 /** 
  * Main program
  * 

@@ -25,7 +25,7 @@
 
 
 /// Global variables
-struct CONSTANTS {
+extern struct CONSTANTS {
   /// PI
   float pi;
   /// Maximum number of radii
@@ -34,7 +34,7 @@ struct CONSTANTS {
   float dr_inc;
   /// Maximum increase in radius
   float max_dr;
-} constvars = {3.14159265359,1024,0.1,2.0};
+} constvars;
 
 
 /// MPI variables
