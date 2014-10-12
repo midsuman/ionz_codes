@@ -65,6 +65,7 @@ extern fftw_real  ***allocate_fftw_real_3d(int N1,int N2,int N3);
 /* in ionz_funcs.c */
 extern void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3, fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion);
 extern void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3);
+extern void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion, float *nion, int Nnion, int N1, int N2, int N3);
 extern void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3);
 
 /* in read_param.c */
