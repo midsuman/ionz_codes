@@ -81,7 +81,7 @@ int make_radii_list(float *radii_p, float r_min, float r_max, float dr_inc, floa
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
   if(mympi.ThisTask == 0) 
-    if(i > constants.max_Nradii) {
+    if(i > constvars.max_Nradii) {
       printf("[%s][%s] ***Error: File:%s Line:%d\n",__DATE__,__TIME__,__FILE__,__LINE__);
       printf("The number of smoothing radii is greater than %d\nTerminate\n",constvars.max_Nradii);
       exit(1);
