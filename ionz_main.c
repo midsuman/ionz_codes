@@ -65,9 +65,12 @@ main(int argc, char **argv) {
     printf("Start semi-numerical reionization process\n");
   }
  
-  nh = NULL;
-  ngamma = NULL;
-  nxion = NULL;
+  // Initialize pointers before using them
+  nh = malloc(sizeof(fftw_real **));
+  ngamma = malloc(sizeof(fftw_real **));
+  nxion = malloc(sizeof(fftw_real ***));
+  
+  // Read input file
   read_params("input.ionz");
 
   Nnion = input_param.Nnion;
