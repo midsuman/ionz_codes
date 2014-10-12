@@ -18,7 +18,6 @@
 
 #ifdef PARALLEL
 #include <mpi.h>
-#include "ionz_mpi.h"
 #endif
 
 
