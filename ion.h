@@ -79,7 +79,7 @@ struct params
 } input_param;
 
 // in read_param.c
-extern void read_param(char *filename);
+extern void read_params(char *filename);
 
 /* in ionz_misc.c */
 extern int make_radii_list(float *radii_p, float r_min, float r_max, float dr_inc, float max_dr);
