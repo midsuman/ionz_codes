@@ -25,7 +25,7 @@ ionz_funcs.o:	ionz_funcs.c
 	$(CC) -c $(CFLAGS) $(INCLUDE)  $(LINKLIB) ionz_funcs.c $(POSTFLAGS)
 
 
-ionz_main: ionz_main.o ionz_misc.o  ionz_funcs.o  ionz_mpi.o read_param.o
+ionz_main: ionz_main.o ionz_misc.o  ionz_funcs.o read_param.o
 	$(CC) $(CFLAGS) -o ionz_main  ionz_main.o ionz_misc.o ionz_funcs.o read_param.o $(POSTFLAGS)
 
 
