@@ -100,16 +100,14 @@ int main(int argc, char **argv) {
   if(mympi.ThisTask == 0) {
     read_density(densfilename,buffer,&robar,N1,N2,N3,vomegam,vomegab);
   }
-
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
   MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
-
+  printf("start unpack\n");
   unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
-  printf("finish\n");
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
