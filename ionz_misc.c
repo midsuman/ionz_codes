@@ -25,13 +25,13 @@ fftw_real  ***allocate_fftw_real_3d(int N1,int N2,int N3)
   fftw_real ***phia, *phi;
   phia=(fftw_real ***)malloc(N1 *  sizeof(fftw_real **));
 
-  for(ii=0;ii<N1;++ii)
+  for(ii=0;ii<N1;ii++)
       phia[ii]=(fftw_real **)malloc(N2 *  sizeof(fftw_real*));
 
   phi = (fftw_real *) calloc(N1 * N2 * N3,sizeof(fftw_real));
 
-  for(ii=0;ii<N1;++ii)
-    for(jj=0;jj<N2;++jj)
+  for(ii=0;ii<N1;ii++)
+    for(jj=0;jj<N2;jj++)
       phia[ii][jj]=phi+ (N2*N3)*ii + N3*jj;
 
   return(phia);
