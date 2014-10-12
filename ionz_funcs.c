@@ -26,6 +26,7 @@ void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3, fftw_real ***
   free(nh);
   free(ngamma);
   free(nxion);
+  printf("ok checked");
   nh=allocate_fftw_real_3d(N1,N2,N3+2);
   ngamma=allocate_fftw_real_3d(N1,N2,N3+2);
   nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
