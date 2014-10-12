@@ -26,16 +26,16 @@
 
 
 /// Global variables
-struct CONSTANTS {
+const struct CONSTANTS {
   /// PI
-  const float pi = M_PI;
+  float pi;
   /// Maximum number of radii
-  const int max_Nradii = 2048;
+  int max_Nradii;
   /// Increase in radius (factor of radius)
-  const float dr_inc = 0.1;
+  float dr_inc;
   /// Maximum increase in radius
-  const float max_dr = 2.0;
-} constants;
+  float max_dr;
+} constants = {M_PI,2048,0.1,2.0};
 
 /// MPI variables
 struct myMPI {
