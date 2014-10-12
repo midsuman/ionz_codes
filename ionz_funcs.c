@@ -7,12 +7,11 @@
  * 
  * 
  */
-
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-#include<srfftw.h>
-#include"ion.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <srfftw.h>
+#include "ion.h"
 
 
 /** 
