@@ -260,8 +260,8 @@ main(int argc, char **argv) {
 	    xh1=(xh1 >0.0)? xh1: 0.0;
 	    vion[jk]+=xh1;
 	    nxion[jk][ii][jj][kk]=xh1; // store x_HI instead of x_ion
-	    nhs[ii][jj][kk]=xh1*nh[ii][jj][kk]; // ro_HI on grid
-	    roion[jk]+=nhs[ii][jj][kk];	
+	    //  nhs[ii][jj][kk]=xh1*nh[ii][jj][kk]; // ro_HI on grid
+	    //  roion[jk]+=nhs[ii][jj][kk];	
       }
 	    
       fclose(inp);
