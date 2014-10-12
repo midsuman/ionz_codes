@@ -8,7 +8,7 @@
  */
 
 #include "ion.h"
-const struct CONSTANTS constants = {M_PI,2048,0.1,2.0};
+const struct CONSTANTS constvars = {M_PI,2048,0.1,2.0};
 
 /** 
  * Main program
@@ -136,9 +136,9 @@ int main(int argc, char **argv) {
   r_min=1.;
   r_max=pow((1.*N1*N2*N3),(1./3.))/2.;
 
-  Radii_list = malloc(sizeof(float)*constants.max_Nradii); 
+  Radii_list = malloc(sizeof(float)*constvars.max_Nradii); 
   NjobsperTask = malloc(sizeof(float)*mympi.NTask);
-  n_radii = make_radii_list(Radii_list,r_min,r_max,constants.dr_inc,constants.max_dr);
+  n_radii = make_radii_list(Radii_list,r_min,r_max,constvars.dr_inc,constvars.max_dr);
   for(jj=0;jj<mympi.NTask;jj++) {
     NjobsperTask[jj] = n_radii/mympi.NTask;
     if(jj < n_radii%mympi.NTask)
