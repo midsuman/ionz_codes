@@ -163,7 +163,7 @@ main(int argc, char **argv) {
   // printf("robar=%e  robarhalo=%e ratio= %e\n",robar,robarhalo,robar/robarhalo);
 
   // Do subgrid seminumerical simulation
-  subgrid_reionization(nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );  
+  subgrid_reionization(nh, ngamma, nxion, robar, nion, Nnion, N1, N2, N3 );  
 
   if(mympi.ThisTask == 0)
     printf("Start semi-numerical reionization process\n");

@@ -125,7 +125,7 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   // fftw_free(A);
   // fftw_free(B);
 }
-void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion, float *nion, int Nnion, int N1, int N2, int N3) {
+void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion, double robar, float *nion, int Nnion, int N1, int N2, int N3) {
   int ii,jj,kk,jk;
   double vion[Nnion],roion[Nnion];
   
