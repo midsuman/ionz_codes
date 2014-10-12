@@ -37,6 +37,8 @@ main(int argc, char **argv) {
   int *JobsTask;
   double t_start, t_stop;
   float *buffer, *buffer_final;
+  int N1,N2,N3;
+  float vomegam,vomegab,vomegalam;
 #ifdef CHUNKTRANSFER
   int mpi_buffer=1000000;
   int cur_len;
