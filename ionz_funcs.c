@@ -119,8 +119,8 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   	ro_dum[i][j][k]=ro_dum[i][j][k]/(N1*N2*N3);
 
   fftw_free(rosp);
-  rfftw_destroy_plan(p_ro);
-  rfftw_destroy_plan(q_ro);
+  rfftwnd_destroy_plan(p_ro);
+  rfftwnd_destroy_plan(q_ro);
   /* A and B are aliases so there is no need to free them... Boyd */
   // fftw_free(A);
   // fftw_free(B);
