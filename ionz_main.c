@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
   }
 
   /* Allocating memory to different arrays */
-  Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3, nh, ngamma, nxion);
+  Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3, &nh, &ngamma, &nxion);
   printf("test in main\n");
   printf("%f \n",ngamma[34][2][34]);
   t_start =Get_Current_time();
