@@ -169,7 +169,7 @@ void read_xfrac(char *dirname, float *buffer_4d, float *nion_list, int Nnion, in
  */
 void read_sources(char *filename, float *buffer_3d, double *robarhalo_p, int N1, int N2, int N3) {
   FILE *inp;
-  int ii,jj,kk,ll;
+  int ii;
   int n1,n2,n3;
   float dt = 11.6e6;
   
