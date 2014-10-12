@@ -91,7 +91,8 @@ int main(int argc, char **argv) {
 
   /* Allocating memory to different arrays */
   Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3, nh, ngamma, nxion);
-
+  printf("test in main\n");
+  printf("%f\n",ngamma[0][0][0]);
   t_start =Get_Current_time();
 
   /* Allocate buffer to store 3D array */
