@@ -7,15 +7,9 @@
  * Define all functions
  * 
  */
-
 #ifndef ION_H_
 
-/* #include "srfftw.h" */
-/* #include "rfftw.h" */
-/* #include "fftw.h" */
 #include <srfftw.h>
-// #include <rfftw.h>
-// #include <fftw.h>
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -64,7 +58,6 @@ extern void read_xfrac(char *dirname, float *buffer_4d, float *nion_list, int Nn
 extern void read_sources(char *filename, float *buffer_3d, double *robarhalo_p, int N1, int N2, int N3);
 
 /* in allotarrays.c */
-extern float **allocate_float_2d(long N1,int N2);
 extern fftw_real  ***allocate_fftw_real_3d(int N1,int N2,int N3);
 
 /* in ionz_funcs.c */
