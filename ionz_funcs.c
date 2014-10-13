@@ -104,8 +104,10 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   debug_checkpoint();
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
-      for(k=0;k<=N3;k++)
-  	ro_dum[i][j][k]=ro_dum[i][j][k]/(N1*N2*N3);
+      for(k=0;k<=N3;k++) { 
+  	debug_checkpoint();
+	ro_dum[i][j][k]=ro_dum[i][j][k]/(N1*N2*N3);
+      }
   debug_checkpoint();
   free_fftw_real_3d(rosp,N1,N2,N3+2);
   debug_checkpoint();
