@@ -169,7 +169,7 @@ int main(int argc, char **argv) {
   if(mympi.ThisTask == 0)
     printf("Start subgrid semi-numerical reionization\n");
 
-  subgrid_reionization(nh, ngamma, nxion, robar, nion, Nnion, N1, N2, N3 );  
+  // subgrid_reionization(nh, ngamma, nxion, robar, nion, Nnion, N1, N2, N3 );  
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
