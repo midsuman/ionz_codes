@@ -57,7 +57,7 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   
   p_ro = rfftw3d_create_plan(N1,N2,N3,FFTW_REAL_TO_COMPLEX,FFTW_ESTIMATE | FFTW_IN_PLACE);  
   q_ro = rfftw3d_create_plan(N1,N2,N3,FFTW_COMPLEX_TO_REAL,FFTW_ESTIMATE | FFTW_IN_PLACE);
-  printf("sub2\n");
+  debug_checkpoint();
   //generating the filtering function
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
@@ -66,7 +66,7 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
  
   //Radii is radius of the sphere in grid unit
   //generating a sphere at the centre of the box
-  printf("sub3\n");
+  debug_checkpoint();
   tot=0.;
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
@@ -77,18 +77,18 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
       }
   //Sphere generation complete 
   //Doing Fourier Transform of the sphere
-  printf("sub4\n");
+  debug_checkpoint();
   rfftwnd_one_real_to_complex(p_ro,&rosp[0][0][0], NULL);
   B=(fftw_complex*)&(rosp[0][0][0]);
-  printf("sub5\n");
+  debug_checkpoint();
   //We will multiply the factor powf((-1.),(i+j+k)) with FT of the sphere to shift it to one corner of the box from box centre while applying boundary condition below
   //----------------------------------------------------------------------
-  printf("sub6\n");
+  debug_checkpoint();
   //Doing Fourier Transform of the density field
   rfftwnd_one_real_to_complex(p_ro,&ro_dum[0][0][0], NULL);
   A=(fftw_complex*)&(ro_dum[0][0][0]);
   
-  printf("sub7\n");
+  debug_checkpoint();
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
       for(k=0;k<=N3/2;k++)    { 
@@ -99,15 +99,16 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
 	A[index].re=tempre;
 	A[index].im=tempim;
       }
-  printf("sub8\n");
+  debug_checkpoint();
   rfftwnd_one_complex_to_real(q_ro,(fftw_complex *) &ro_dum[0][0][0], NULL);
+  debug_checkpoint();
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
       for(k=0;k<=N3;k++)
   	ro_dum[i][j][k]=ro_dum[i][j][k]/(N1*N2*N3);
-  printf("start free rsop\n");
+  debug_checkpoint();
   free_fftw_real_3d(rosp,N1,N2,N3+2);
-  printf("finish free rsop\n");
+  debug_checkpoint();
   rfftwnd_destroy_plan(p_ro);
   rfftwnd_destroy_plan(q_ro);
   /* A and B are aliases so there is no need to free them... Boyd */
