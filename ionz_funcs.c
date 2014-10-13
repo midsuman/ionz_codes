@@ -105,6 +105,7 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
       for(k=0;k<=N3;k++) { 
+	printf("%d %d %d\n",i,j,k);
   	debug_checkpoint();
 	ro_dum[i][j][k]=ro_dum[i][j][k]/(N1*N2*N3);
       }
