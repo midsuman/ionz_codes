@@ -186,7 +186,7 @@ void subgrid_reionization_with_xfrac(fftw_real ***nh_p, fftw_real ***ngamma_p, f
     vion[jk]/=(1.*N1*N2*N3);
     roion[jk]/=(float)(robar*N1*N2*N3);
   }
-  fftw_free(nhs);
+  free_fftw_real_3d(nhs);
 }
 
 
@@ -210,33 +210,31 @@ void reionization_with_xfrac(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_
 
   nhs=allocate_fftw_real_3d(N1,N2,N3+2);
   ngammas=allocate_fftw_real_3d(N1,N2,N3+2);
-  for(ii=0;ii<N1;ii++)
-    for(jj=0;jj<N2;jj++)
-      for(kk=0;kk<N3;kk++) {
-	//Filling smoothing arrays with the dark matter and source density data
-	nhs[ii][jj][kk]=nh_p[ii][jj][kk]*(1.-xfrac_p[jk][ii][jj][kk]);
-	ngammas[ii][jj][kk]=ngamma_p[ii][jj][kk];	     
-      }
-      
-  // printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
 
-  //Smoothing with real space spherical filter
-  
-  smooth(nhs,Radii,N1,N2,N3);
-  smooth(ngammas,Radii,N1,N2,N3); 
-
-  for(jk=0;jk<Nnion;++jk) {	 
+  for(jk=0;jk<Nnion;++jk) {
+    //Filling smoothing arrays with the dark matter and source density data
+    for(ii=0;ii<N1;ii++)
+      for(jj=0;jj<N2;jj++)
+	for(kk=0;kk<N3;kk++) {
+	  nhs[ii][jj][kk]=nh_p[ii][jj][kk]*(1.-xfrac_p[jk][ii][jj][kk]);
+	  ngammas[ii][jj][kk]=ngamma_p[ii][jj][kk];	     
+	}
+    //Smoothing with real space spherical filter
+    smooth(nhs,Radii,N1,N2,N3);
+    smooth(ngammas,Radii,N1,N2,N3); 
+    
     for(ii=0;ii<N1;ii++)
       for(jj=0;jj<N2;jj++)
 	for(kk=0;kk<N3;kk++) {
 	  //Checking the ionization condition
+
 	  if(nhs[ii][jj][kk]<nion_p[jk]*ngammas[ii][jj][kk]) {
 	    nxion_p[jk][ii][jj][kk]=1.;
 	  }
 	}
   }
-  fftw_free(nhs);
-  fftw_free(ngammas);
+  free_fftw_real_3d(nhs);
+  free_fftw_real_3d(ngammas);
 }
 
 /** 
@@ -283,8 +281,8 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
 	  }
 	}
   }
-  fftw_free(nhs);
-  fftw_free(ngammas);
+  free_fftw_real_3d(nhs);
+  free_fftw_real_3d(ngammas);
 }
 
 

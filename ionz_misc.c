@@ -11,7 +11,25 @@
 #include "ion.h"
 
 /** 
- * Allocate 3D fftw_real array
+ * Free 3D fftw_real arrays
+ * 
+ * @param f fftw_real*** to free 
+ * @param N1 1st dimension len 
+ * @param N2 2nd dimension len
+ * @param N3 3rd dimension len
+ */
+void free_fftw_real_3d(fftw_real ***f, int N1, int N2, int N3) {
+  int ii,jj;
+  for(ii=0;ii<N1;ii++) {
+    for(jj=0;jj<N2;jj++)
+      free(f[ii][jj]);
+    free(f[ii]);
+  }
+  free(f);
+}
+
+/** 
+ * Allocate 3D fftw_real arrays
  * 
  * @param N1 1st dimension len 
  * @param N2 2nd dimension len
@@ -19,21 +37,16 @@
  * 
  * @return 3D fftw_real array pointer
  */
-fftw_real  ***allocate_fftw_real_3d(int N1,int N2,int N3)
-{
+fftw_real  ***allocate_fftw_real_3d(int N1,int N2,int N3) {
   int ii,jj;
-  fftw_real ***phia, *phi;
+  fftw_real ***phia;
+ 
   phia=(fftw_real ***)malloc(N1 *  sizeof(fftw_real **));
-
-  for(ii=0;ii<N1;ii++)
+  for(ii=0;ii<N1;ii++) {
       phia[ii]=(fftw_real **)malloc(N2 *  sizeof(fftw_real*));
-
-  phi = (fftw_real *) calloc(N1 * N2 * N3,sizeof(fftw_real));
-
-  for(ii=0;ii<N1;ii++)
-    for(jj=0;jj<N2;jj++)
-      phia[ii][jj]=phi+ (N2*N3)*ii + N3*jj;
-
+      for(jj=0;jj<N2;jj++)
+	phia[ii][jj] = (fftw_real *) calloc(N3,sizeof(fftw_real));
+  }
   return(phia);
 }
 

@@ -96,6 +96,8 @@ extern void read_sources(char *filename, float *buffer_3d, double *robarhalo_p, 
 
 /* in allotarrays.c */
 extern fftw_real  ***allocate_fftw_real_3d(int N1,int N2,int N3);
+extern void free_fftw_real_3d(fftw_real ***f, int N1, int N2, int N3);
+
 
 /* in ionz_funcs.c */
 extern void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3);
