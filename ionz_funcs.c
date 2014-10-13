@@ -88,7 +88,7 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   rfftwnd_one_real_to_complex(p_ro,&ro_dum[0][0][0], NULL);
   A=(fftw_complex*)&(ro_dum[0][0][0]);
   
-
+  printf("sub7\n");
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
       for(k=0;k<=N3/2;k++)    { 
@@ -99,7 +99,7 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
 	A[index].re=tempre;
 	A[index].im=tempim;
       }
-
+  printf("sub8\n");
   rfftwnd_one_complex_to_real(q_ro,(fftw_complex *) &ro_dum[0][0][0], NULL);
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
