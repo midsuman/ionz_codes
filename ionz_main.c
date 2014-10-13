@@ -77,10 +77,10 @@ int main(int argc, char **argv) {
   vomegab = input_param.omegab;
   
   if(mympi.ThisTask == 0) {
-    printf("Using Cosmological parameters:\n");
-    printf("Omega_m\t%f\n",vomegam);
-    printf("Omega_b\t%f\n",vomegab);
-    printf("Omega_lambda\t%f\n",vomegalam);
+    printf("Using Cosmological parameters: ");
+    printf("Omega_m:%f\t",vomegam);
+    printf("Omega_b:%f\t",vomegab);
+    printf("Omega_lambda:%f\n",vomegalam);
     printf("Grid: %dx%dx%d\n",N1,N2,N3);
   }
 
@@ -177,7 +177,7 @@ int main(int argc, char **argv) {
   for(ii=0;ii<NjobsperTask[mympi.ThisTask];ii++) 
     reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
   
-  fftw_free(ngamma);
+  free_fftw_real_3d(ngamma);
 
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
@@ -186,8 +186,8 @@ int main(int argc, char **argv) {
   t_stop = Get_Current_time();
   if(mympi.ThisTask == 0)
     printf("Finish reionizing process %lf s\n",t_stop-t_start);
-  t_start = Get_Current_time();
 
+  t_start = Get_Current_time();
 #ifdef PARALLEL
   pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
   MPI_Barrier(MPI_COMM_WORLD);
@@ -240,9 +240,6 @@ int main(int argc, char **argv) {
       // Writing the x_HI map in binary
       // In the begining 3 integers are written which defines the size
       // of the x_HI array
-#ifdef PARALLEL
-      
-#endif
 
       inp=fopen(file2,"w");
       fwrite(&N1,sizeof(int),1,inp);
@@ -256,8 +253,8 @@ int main(int argc, char **argv) {
       fwrite(&buffer[jk*N1*N2*N3],sizeof(float),N1*N2*N3,inp);	
 #endif
       for(ii=0;ii<N1*N2*N3;ii++) {
-	    xh1=(1.-nxion[jk][ii][jj][kk]);
-	    xh1=(xh1 >0.0)? xh1: 0.0;
+	    xh1 = (1.-nxion[jk][ii][jj][kk]);
+	    xh1 = max(xh1,0.0);
 	    vion[jk]+=xh1;
 	    nxion[jk][ii][jj][kk]=xh1; // store x_HI instead of x_ion
 	    //  nhs[ii][jj][kk]=xh1*nh[ii][jj][kk]; // ro_HI on grid

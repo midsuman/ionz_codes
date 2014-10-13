@@ -104,7 +104,7 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
       for(k=0;k<=N3;k++)
   	ro_dum[i][j][k]=ro_dum[i][j][k]/(N1*N2*N3);
 
-  fftw_free(rosp);
+  free_fftw_real_3d(rosp,N1,N2,N3);
   rfftwnd_destroy_plan(p_ro);
   rfftwnd_destroy_plan(q_ro);
   /* A and B are aliases so there is no need to free them... Boyd */
@@ -186,7 +186,7 @@ void subgrid_reionization_with_xfrac(fftw_real ***nh_p, fftw_real ***ngamma_p, f
     vion[jk]/=(1.*N1*N2*N3);
     roion[jk]/=(float)(robar*N1*N2*N3);
   }
-  free_fftw_real_3d(nhs);
+  free_fftw_real_3d(nhs,N1,N2,N3+2);
 }
 
 
@@ -233,8 +233,8 @@ void reionization_with_xfrac(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_
 	  }
 	}
   }
-  free_fftw_real_3d(nhs);
-  free_fftw_real_3d(ngammas);
+  free_fftw_real_3d(nhs,N1,N2,N3+2);
+  free_fftw_real_3d(ngammas,N1,N2,N3+2);
 }
 
 /** 
@@ -281,8 +281,8 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
 	  }
 	}
   }
-  free_fftw_real_3d(nhs);
-  free_fftw_real_3d(ngammas);
+  free_fftw_real_3d(nhs,N1,N2,N3+2);
+  free_fftw_real_3d(ngammas,N1,N2,N3+2);
 }
 
 
