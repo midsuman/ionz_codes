@@ -83,6 +83,12 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   debug_checkpoint();
   //We will multiply the factor powf((-1.),(i+j+k)) with FT of the sphere to shift it to one corner of the box from box centre while applying boundary condition below
   //----------------------------------------------------------------------
+  for(i=0;i<N1;i++)
+    for(j=0;j<N2;j++)
+      for(k=0;k<=N3;k++) { 
+	debug_checkpoint();
+	printf("%d %d %d  ... %f\n",i,j,k,(float)ro_dum[i][j][k]);
+      }
   debug_checkpoint();
   //Doing Fourier Transform of the density field
   rfftwnd_one_real_to_complex(p_ro,&ro_dum[0][0][0], NULL);
@@ -98,11 +104,6 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
 	//multiplying the factor powf((-1.),(i+j+k)) with FT of the sphere to shift it to box centre from one corner of the box after complex to real FT
 	A[index].re=tempre;
 	A[index].im=tempim;
-      }
-  for(i=0;i<N1;i++)
-    for(j=0;j<N2;j++)
-      for(k=0;k<=N3;k++) { 
-	printf("%d %d %d  ... %f\n",i,j,k,(float)ro_dum[i][j][k]);
       }
   debug_checkpoint();
   rfftwnd_one_complex_to_real(q_ro,(fftw_complex *) &ro_dum[0][0][0], NULL);
