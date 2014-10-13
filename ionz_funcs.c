@@ -50,14 +50,13 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   rfftwnd_plan p_ro; // for FFT
   rfftwnd_plan q_ro; // for FFT
   
-  debug_checkpoint();
   rosp = allocate_fftw_real_3d(N1,N2,N3+2);
   /****************************************************/	
   /* Creating the plans for forward and reverse FFT's */
   
   p_ro = rfftw3d_create_plan(N1,N2,N3,FFTW_REAL_TO_COMPLEX,FFTW_ESTIMATE | FFTW_IN_PLACE);  
   q_ro = rfftw3d_create_plan(N1,N2,N3,FFTW_COMPLEX_TO_REAL,FFTW_ESTIMATE | FFTW_IN_PLACE);
-  debug_checkpoint();
+ 
   //generating the filtering function
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
@@ -66,7 +65,7 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
  
   //Radii is radius of the sphere in grid unit
   //generating a sphere at the centre of the box
-  debug_checkpoint();
+ 
   tot=0.;
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
@@ -77,23 +76,21 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
       }
   //Sphere generation complete 
   //Doing Fourier Transform of the sphere
-  debug_checkpoint();
   rfftwnd_one_real_to_complex(p_ro,&rosp[0][0][0], NULL);
   B=(fftw_complex*)&(rosp[0][0][0]);
-  debug_checkpoint();
+
   //We will multiply the factor powf((-1.),(i+j+k)) with FT of the sphere to shift it to one corner of the box from box centre while applying boundary condition below
   //----------------------------------------------------------------------
+
+  //Doing Fourier Transform of the density field
+  rfftwnd_one_real_to_complex(p_ro,&ro_dum[0][0][0], NULL);
+  A=(fftw_complex*)&(ro_dum[0][0][0]);
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
       for(k=0;k<=N3;k++) { 
 	debug_checkpoint();
 	printf("%d %d %d  ... %f\n",i,j,k,(float)ro_dum[i][j][k]);
       }
-  debug_checkpoint();
-  //Doing Fourier Transform of the density field
-  rfftwnd_one_real_to_complex(p_ro,&ro_dum[0][0][0], NULL);
-  A=(fftw_complex*)&(ro_dum[0][0][0]);
-  
   debug_checkpoint();
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
