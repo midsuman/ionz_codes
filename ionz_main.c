@@ -160,12 +160,22 @@ int main(int argc, char **argv) {
   // This can be changed, one can choose a redshift dependent function instead
   // Or one can choose a model for redshift evolution of the mean free path of the UV photons
   // We are showing the most simple case here
-  
-  // printf("robar=%e  robarhalo=%e ratio= %e\n",robar,robarhalo,robar/robarhalo);
 
+#ifdef PARALLEL
+  MPI_Barrier(MPI_COMM_WORLD);
+#endif  
+  t_start = Get_Current_time();
   // Do subgrid seminumerical simulation
-  subgrid_reionization(nh, ngamma, nxion, robar, nion, Nnion, N1, N2, N3 );  
+  if(mympi.ThisTask == 0)
+    printf("Start subgrid semi-numerical reionization\n");
 
+  subgrid_reionization(nh, ngamma, nxion, robar, nion, Nnion, N1, N2, N3 );  
+#ifdef PARALLEL
+  MPI_Barrier(MPI_COMM_WORLD);
+#endif
+  t_stop = Get_Current_time();
+  if(mympi.ThisTask == 0)
+    printf("Finish subgrid semi-numerical reionization: %lf s\n",t_stop-t_start);
   if(mympi.ThisTask == 0)
     printf("Start semi-numerical reionization process\n");
 
