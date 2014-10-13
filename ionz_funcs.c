@@ -267,7 +267,7 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
   // printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
 
   //Smoothing with real space spherical filter
-  
+  printf("smooth\n");
   smooth(nhs,Radii,N1,N2,N3);
   smooth(ngammas,Radii,N1,N2,N3); 
 
