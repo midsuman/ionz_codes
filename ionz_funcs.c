@@ -87,13 +87,6 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   A=(fftw_complex*)&(ro_dum[0][0][0]);
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
-      for(k=0;k<=N3;k++) { 
-	debug_checkpoint();
-	printf("%d %d %d  ... %f\n",i,j,k,(float)ro_dum[i][j][k]);
-      }
-  debug_checkpoint();
-  for(i=0;i<N1;i++)
-    for(j=0;j<N2;j++)
       for(k=0;k<=N3/2;k++)    { 
 	index = i*N2*(N3/2 +1) + j*(N3/2 +1) + k;
 	tempre=(A[index].re*B[index].re-A[index].im*B[index].im)*powf((-1.),1.*(i+j+k))/tot;
@@ -102,9 +95,8 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
 	A[index].re=tempre;
 	A[index].im=tempim;
       }
-  debug_checkpoint();
   rfftwnd_one_complex_to_real(q_ro,(fftw_complex *) &ro_dum[0][0][0], NULL);
-  debug_checkpoint();
+ 
   for(i=0;i<N1;i++)
     for(j=0;j<N2;j++)
       for(k=0;k<=N3;k++) { 

@@ -22,11 +22,9 @@
  */
 void free_fftw_real_3d(fftw_real ***f, int N1, int N2, int N3) {
   int ii,jj;
-  for(ii=0;ii<N1;ii++) {
-    for(jj=0;jj<N2;jj++)
-      free(f[ii][jj]);
+  free(&f[0][0][0]);
+  for(ii=0;ii<N1;ii++) 
     free(f[ii]);
-  }
   free(f);
 }
 
@@ -41,13 +39,15 @@ void free_fftw_real_3d(fftw_real ***f, int N1, int N2, int N3) {
  */
 fftw_real  ***allocate_fftw_real_3d(int N1,int N2,int N3) {
   int ii,jj;
-  fftw_real ***phia;
+  fftw_real ***phia,*phi;
  
   phia=(fftw_real ***)malloc(N1 *  sizeof(fftw_real **));
+  phi = (fftw_real *) calloc(N1 * N2 * N3,sizeof(fftw_real));
+
   for(ii=0;ii<N1;ii++) {
       phia[ii]=(fftw_real **)malloc(N2 *  sizeof(fftw_real*));
       for(jj=0;jj<N2;jj++)
-	phia[ii][jj] = (fftw_real *) calloc(N3,sizeof(fftw_real));
+	phia[ii][jj]=phi+ (N2*N3)*ii + N3*jj;
   }
   return(phia);
 }
