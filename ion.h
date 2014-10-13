@@ -23,6 +23,7 @@
 #define  min(x,y)  ((x)<(y) ?(x):(y))
 #define  max(x,y)  ((x)>(y) ?(x):(y))
 
+#define debug_checkpoint() (printf("Fuction:%s Line:%d File:%s\n",__func__,__LINE__,__FILE__))
 
 /// Global variables
 typedef struct CONSTANTS {

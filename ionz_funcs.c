@@ -50,7 +50,7 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   rfftwnd_plan p_ro; // for FFT
   rfftwnd_plan q_ro; // for FFT
   
-  printf("sub1\n");
+  debug_checkpoint();
   rosp = allocate_fftw_real_3d(N1,N2,N3+2);
   /****************************************************/	
   /* Creating the plans for forward and reverse FFT's */
