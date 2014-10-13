@@ -97,12 +97,6 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
       }
   rfftwnd_one_complex_to_real(q_ro,(fftw_complex *) &ro_dum[0][0][0], NULL);
  
-  for(i=0;i<N1;i++)
-    for(j=0;j<N2;j++)
-      for(k=0;k<=N3;k++) { 
-	printf("%d %d %d\n",i,j,k);
-	ro_dum[i][j][k]=ro_dum[i][j][k]/(N1*N2*N3);
-      }
   debug_checkpoint();
   free_fftw_real_3d(rosp,N1,N2,N3+2);
   debug_checkpoint();
