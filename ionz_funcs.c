@@ -143,17 +143,17 @@ void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nx
  * Do subgrid semi-numnerical reionization estimation
  * 
  * @param Radii Radius 
- * @param nh Pointer to baryon density field
- * @param ngamma Pointer to photon density field
- * @param nxion Pointer to Xfrac field
- * @param xfrac Pointer to old Xfrac field
- * @param nion nion arrays
- * @param Nnion Total element of nion
+ * @param nh_p Pointer to baryon density field
+ * @param ngamma_p Pointer to photon density field
+ * @param xfrac_p Pointer to old Xfrac field
+ * @param nxion_p Pointer to Xfrac field
+ * @param nion_p nion arrays
+ * @param Nnion_p Total element of nion
  * @param N1 1st dimension grid
  * @param N2 2nd dimension grid
  * @param N3 3rd dimension grid
  */
-void subgrid_reionization_with_xfrac(fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****xfrac_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3) {
+void subgrid_reionization_with_xfrac(fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****xfrac_p, fftw_real ****nxion_p, double robar, float *nion_p, int Nnion, int N1, int N2, int N3) {
   int ii,jj,kk,jk;
   double vion[Nnion],roion[Nnion];
   fftw_real ***nhs;
