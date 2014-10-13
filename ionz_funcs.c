@@ -111,6 +111,8 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
   // fftw_free(A);
   // fftw_free(B);
 }
+
+
 void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nxion, double robar, float *nion, int Nnion, int N1, int N2, int N3) {
   int ii,jj,kk,jk;
   double vion[Nnion],roion[Nnion];
@@ -120,23 +122,71 @@ void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nx
     vion[jk]=0.0;
     roion[jk]=0.0;
 
+
     for(kk=0;kk<N3;kk++)
       for(jj=0;jj<N2;jj++)
 	for(ii=0;ii<N1;ii++) {
-	  if(nh[ii][jj][kk]>nion[jk]*ngamma[ii][jj][kk]) {
+	  if(nh[ii][jj][kk]>nion[jk]*ngamma[ii][jj][kk]) 
 	    nxion[jk][ii][jj][kk]=nion[jk]*ngamma[ii][jj][kk]/nh[ii][jj][kk];
-	  }    
-	  else {
-	    nxion[jk][ii][jj][kk]=1.;
-	  }
-	  vion[jk]+=nxion[jk][ii][jj][kk];
-	  roion[jk]+=nxion[jk][ii][jj][kk]*nh[ii][jj][kk];	  
+	  else 
+	    nxion[jk][ii][jj][kk]=1.0;
+   
+	  vion[jk] += nxion[jk][ii][jj][kk];
+	  roion[jk] += nxion[jk][ii][jj][kk]*nh[ii][jj][kk];	  
 	}
     vion[jk]/=(1.*N1*N2*N3);
     roion[jk]/=(float)(robar*N1*N2*N3);
-    if(mympi.ThisTask == 0)
-      printf("Subgrid: obtained vol. avg. x_ion=%e mass avg. x_ion=%e\n",vion[jk],roion[jk]);
- }
+  }
+}
+
+/** 
+ * Do subgrid semi-numnerical reionization estimation
+ * 
+ * @param Radii Radius 
+ * @param nh Pointer to baryon density field
+ * @param ngamma Pointer to photon density field
+ * @param nxion Pointer to Xfrac field
+ * @param xfrac Pointer to old Xfrac field
+ * @param nion nion arrays
+ * @param Nnion Total element of nion
+ * @param N1 1st dimension grid
+ * @param N2 2nd dimension grid
+ * @param N3 3rd dimension grid
+ */
+void subgrid_reionization_with_xfrac(fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****xfrac_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3) {
+  int ii,jj,kk,jk;
+  double vion[Nnion],roion[Nnion];
+  fftw_real ***nhs;
+  nhs=allocate_fftw_real_3d(N1,N2,N3+2);
+
+  for(ii=0;ii<N1;ii++)
+    for(jj=0;jj<N2;jj++)
+      for(kk=0;kk<N3;kk++) {
+	//Filling smoothing arrays with the dark matter and source density data
+	nhs[ii][jj][kk]=nh_p[ii][jj][kk]*(1.-xfrac_p[jk][ii][jj][kk]);
+      }
+  
+  for(jk=0;jk<Nnion;jk++) {
+    //calculating avg. ionization frction
+    vion[jk]=0.0;
+    roion[jk]=0.0;
+
+
+    for(kk=0;kk<N3;kk++)
+      for(jj=0;jj<N2;jj++)
+	for(ii=0;ii<N1;ii++) {
+	  if(nhs[ii][jj][kk]>nion_p[jk]*ngamma_p[ii][jj][kk]) 
+	    nxion_p[jk][ii][jj][kk]=nion_p[jk]*ngamma_p[ii][jj][kk]/(							       nhs[ii][jj][kk]);
+	  else 
+	    nxion_p[jk][ii][jj][kk]=1.0;
+   
+	  vion[jk] += nxion_p[jk][ii][jj][kk];
+	  roion[jk] += nxion_p[jk][ii][jj][kk]*nh[ii][jj][kk];	  
+	}
+    vion[jk]/=(1.*N1*N2*N3);
+    roion[jk]/=(float)(robar*N1*N2*N3);
+  }
+  fftw_free(nhs);
 }
 
 
@@ -146,6 +196,7 @@ void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nx
  * @param Radii Radius 
  * @param nh_p Pointer to baryon density field
  * @param ngamma_p Pointer to photon density field
+ * @param xfrac_p Pointer to old Xfrac field
  * @param nxion_p Pointer to Xfrac field
  * @param nion_p nion arrays
  * @param Nnion Total element of nion
@@ -153,7 +204,7 @@ void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nx
  * @param N2 2nd dimension grid
  * @param N3 3rd dimension grid
  */
-void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3) {
+void reionization_with_xfrac(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****xfrac_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3) {
   fftw_real ***nhs,***ngammas;
   int ii,jj,kk,jk;
 
@@ -163,7 +214,7 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
     for(jj=0;jj<N2;jj++)
       for(kk=0;kk<N3;kk++) {
 	//Filling smoothing arrays with the dark matter and source density data
-	nhs[ii][jj][kk]=nh_p[ii][jj][kk];
+	nhs[ii][jj][kk]=nh_p[ii][jj][kk]*(1.-xfrac_p[jk][ii][jj][kk]);
 	ngammas[ii][jj][kk]=ngamma_p[ii][jj][kk];	     
       }
       
@@ -187,6 +238,55 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
   fftw_free(nhs);
   fftw_free(ngammas);
 }
+
+/** 
+ * Core function to do semi-numnerical reionization estimation (with Xfrac)
+ * 
+ * @param Radii Radius 
+ * @param nh_p Pointer to baryon density field
+ * @param ngamma_p Pointer to photon density field
+ * @param nxion_p Pointer to Xfrac field
+ * @param nion_p nion arrays
+ * @param Nnion Total element of nion
+ * @param N1 1st dimension grid
+ * @param N2 2nd dimension grid
+ * @param N3 3rd dimension grid
+ */
+void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3) {
+  fftw_real ***nhs,***ngammas;
+  int ii,jj,kk,jk;
+
+  nhs=allocate_fftw_real_3d(N1,N2,N3+2);
+  ngammas=allocate_fftw_real_3d(N1,N2,N3+2);
+  for(ii=0;ii<N1;ii++)
+    for(jj=0;jj<N2;jj++)
+      for(kk=0;kk<N3;kk++) {
+	//Filling smoothing arrays with the dark matter and source density data
+	nhs[ii][jj][kk]=nh_p[ii][jj][kk]*(1.-xfrac[jk][i][j][k]);
+	ngammas[ii][jj][kk]=ngamma_p[ii][jj][kk];	     
+      }
+      
+  // printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
+
+  //Smoothing with real space spherical filter
+  
+  smooth(nhs,Radii,N1,N2,N3);
+  smooth(ngammas,Radii,N1,N2,N3); 
+
+  for(jk=0;jk<Nnion;++jk) {	 
+    for(ii=0;ii<N1;ii++)
+      for(jj=0;jj<N2;jj++)
+	for(kk=0;kk<N3;kk++) {
+	  //Checking the ionization condition
+	  if(nhs[ii][jj][kk]<nion_p[jk]*ngammas[ii][jj][kk]) {
+	    nxion_p[jk][ii][jj][kk]=1.;
+	  }
+	}
+  }
+  fftw_free(nhs);
+  fftw_free(ngammas);
+}
+
 
 
 
