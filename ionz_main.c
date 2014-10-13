@@ -177,7 +177,7 @@ int main(int argc, char **argv) {
   for(ii=0;ii<NjobsperTask[mympi.ThisTask];ii++) 
     reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
   
-  free_fftw_real_3d(ngamma);
+  free_fftw_real_3d(ngamma,N1,N2,N3+2);
 
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
