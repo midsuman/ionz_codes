@@ -262,7 +262,7 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
     for(jj=0;jj<N2;jj++)
       for(kk=0;kk<N3;kk++) {
 	//Filling smoothing arrays with the dark matter and source density data
-	nhs[ii][jj][kk]=nh_p[ii][jj][kk]*(1.-xfrac_p[jk][ii][jj][kk]);
+	nhs[ii][jj][kk]=nh_p[ii][jj][kk];
 	ngammas[ii][jj][kk]=ngamma_p[ii][jj][kk];	     
       }
       
