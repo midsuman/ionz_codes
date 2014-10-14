@@ -95,9 +95,6 @@ int main(int argc, char **argv) {
     nxion[jk]=allocate_fftw_real_3d(N1,N2,N3+2);
   }
 
-
-  printf("test in main\n");
-  printf("%f \n",ngamma[34][2][34]);
   t_start =Get_Current_time();
 
   /* Allocate buffer to store 3D array */
