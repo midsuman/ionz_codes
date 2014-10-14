@@ -19,7 +19,7 @@ struct_const constvars = {3.14159265359,1024,0.1,2.0};
  */
 int main(int argc, char **argv) {
   FILE  *inp;
-  int ii, jj, kk,jk;
+  int ii, jj, kk,jk,ll,start_ll;
   float r_min,r_max;
   char file2[300];
   int Nnion,N1,N2,N3;
@@ -111,11 +111,8 @@ int main(int argc, char **argv) {
   MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
-  
-  printf("start unpack\n");
-  unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
-  printf("finish unpack\n");
-  
+  unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);  
+
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
@@ -195,7 +192,7 @@ int main(int argc, char **argv) {
     reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
   
   free_fftw_real_3d(ngamma,N1,N2,N3+2);
-
+  
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
@@ -227,14 +224,12 @@ int main(int argc, char **argv) {
     MPI_Reduce(&buffer[ii*mpi_buffer],&buffer_final[ii*mpi_buffer],cur_len,MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);      
     ii++;
   }
-
   MPI_Barrier(MPI_COMM_WORLD);
-
   t_stop = Get_Current_time();
   if(mympi.ThisTask == 0)
     printf("Finish finding max:split %lf s\n",t_stop-t_start); 
   MPI_Barrier(MPI_COMM_WORLD);
-#else
+#else // ~CHUNKTRANSFER
   t_start = Get_Current_time();
   MPI_Reduce(buffer, buffer_final, Nnion*N1*N2*N3, MPI_FLOAT,MPI_MAX,0,MPI_COMM_WORLD);      
   MPI_Barrier(MPI_COMM_WORLD);
@@ -242,11 +237,12 @@ int main(int argc, char **argv) {
   if(mympi.ThisTask == 0)
     printf("Finish finding max:whole %lf s\n",t_stop-t_start); 
   MPI_Barrier(MPI_COMM_WORLD);
-#endif
+#endif // CHUNKTRANSFER
 #endif // PARALLEL
-  exit(1);
+  
   if(mympi.ThisTask == 0) {
     for(jk=0;jk<Nnion;jk++) {
+      t_start = Get_Current_time();
       //calculating avg. ionization frction
       vion[jk]=0.0;
       roion[jk]=0.0;
@@ -257,34 +253,41 @@ int main(int argc, char **argv) {
       // Writing the x_HI map in binary
       // In the begining 3 integers are written which defines the size
       // of the x_HI array
-
-      inp=fopen(file2,"w");
+      ii=0; jj=0; kk=0;
+      start_ll = jk*N1*N2*N3;
+      for(ll=start_ll; ll<(jk+1)*N1*N2*N3;ll++) {
+#ifdef PARALLEL
+	xh1 = 1.-buffer_final[ll];
+	xh1 = max(xh1,0.0);
+	buffer_final[ll] = xh1;
+#else 
+	xh1 = 1.-buffer[ll];
+	xh1 = max(xh1,0.0);
+	buffer[ll] = xh1;
+#endif	
+	vion[jk] += xh1;
+	roion[jk] += xh1*nh[ii][jj][kk];
+	ii = (ll-start_ll) % N1;
+	jj = ((ll-start_ll)/N1) % N2;
+	kk = ((ll-start_ll)/(N1*N2)) % N3;
+      }
+      inp=fopen(file2,"wb+");
       fwrite(&N1,sizeof(int),1,inp);
       fwrite(&N2,sizeof(int),1,inp);
       fwrite(&N3,sizeof(int),1,inp);
-      
       
 #ifdef PARALLEL
       fwrite(&buffer_final[jk*N1*N2*N3],sizeof(float),N1*N2*N3,inp);
 #else
       fwrite(&buffer[jk*N1*N2*N3],sizeof(float),N1*N2*N3,inp);	
-#endif
-      for(ii=0;ii<N1*N2*N3;ii++) {
-	    xh1 = (1.-nxion[jk][ii][jj][kk]);
-	    xh1 = max(xh1,0.0);
-	    vion[jk]+=xh1;
-	    nxion[jk][ii][jj][kk]=xh1; // store x_HI instead of x_ion
-	    //  nhs[ii][jj][kk]=xh1*nh[ii][jj][kk]; // ro_HI on grid
-	    //  roion[jk]+=nhs[ii][jj][kk];	
-      }
-	    
+#endif	    
       fclose(inp);
       roion[jk]/=(N1*N2*N3); // mean HI density in grid units
       
       vion[jk]/=(1.*N1*N2*N3); // volume avg xHI
       roion[jk]/=(float)robar; // divide by H density to get mass avg. xHI
-      printf("nion = %f obtained vol. avg. x_HI=%e mass avg. x_HI=%e\n",nion[jk],vion[jk],roion[jk]);
-      system("date");
+      t_stop = Get_Current_time();
+      printf("nion = %f obtained vol. avg. x_HI=%e mass avg. x_HI=%e : %lf\n",nion[jk],vion[jk],roion[jk],t_stop-t_start);
     }
   }
   MPI_Finalize();
