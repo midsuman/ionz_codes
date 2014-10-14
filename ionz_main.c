@@ -61,7 +61,8 @@ int main(int argc, char **argv) {
     if(argc == 2) {
       sprintf(inputfile, "%s", argv[1]);
       printf("Read all parameters from input file: %s\n",inputfile);
-      printf("I still don't have time to this option....Boyd\n")
+      printf("I still don't have time to this option....Boyd\n");
+      exit(1);
     }
     else if(argc > 2 ) {
       printf("Arguments:\n");
