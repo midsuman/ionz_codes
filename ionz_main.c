@@ -38,7 +38,17 @@ int main(int argc, char **argv) {
   int mpi_buffer=1000000;
   int cur_len;
 #endif
-  char densfilename[2000], sourcefilename[2000],z_out[1000];
+  char inputfile[2000];
+  char densfilename[2000], sourcefilename[2000];
+  char z_prev[1000],z_out[1000];
+  char outputdir[2000];
+
+#ifdef READ_XFRAC
+  int use_prev_xfrac = 1;
+#else
+  int use_prev_xfrac = 0;
+#END
+
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &mympi.ThisTask);
@@ -47,22 +57,37 @@ int main(int argc, char **argv) {
   mympi.NTask = 1;
   mympi.ThisTask = 0;
 #endif //PARALLEL
-
-  if(argc != 4) {
-    printf("Need 3 inputs\n");
-    exit(0);
-  }
-  sprintf(densfilename,"%s",argv[1]);
-  sprintf(sourcefilename,"%s",argv[2]);
-  sprintf(z_out,"%s",argv[3]);
   if(mympi.ThisTask == 0) {
-    system("date");
-    printf("Start semi-numerical reionization process\n");
-  }
+    if(argc == 2) {
+      sprintf(inputfile, "%s", argv[1]);
+      printf("Read all parameters from input file: %s\n",inputfile);
+    }
+    else if(argc > 2 ) {
+      printf("Arguments:\n");
+      printf("nion_file:\t%s\n",argv[1]);
+      printf("cosmo_paramfile:\t%s\n",argv[2]);
+      printf("densityfile:\t%s\n",argv[3]);
+      printf("sourcesfile:\t%s\n",argv[4]);
+      printf("Current redshift:\t%s\n",argv[5]);
+      printf("Previous redshift:\t%s\n",argv[6]);
+      printf("Output folder:\t%s\n",argv[7]);
+    }
+    else {
+      printf("Usage[1]: ./exec inputfile\n");
+      printf("Usage[2]: ./exec nion_file cosmo_paramfile densityfile sourcefile curr_z prev_z outputfolder (very useful for submitting batch MPI tasks)\n");
+    }
+    exit(1);
+    sprintf(densfilename,"%s",argv[1]);
+    sprintf(sourcefilename,"%s",argv[2]);
+    sprintf(z_out,"%s",argv[3]);
+    if(mympi.ThisTask == 0) {
+      system("date");
+      printf("Start semi-numerical reionization process\n");
+    }
   
-  // Read input file
-  read_params("input.ionz");
-
+    // Read input file
+    read_params("input.ionz");
+  }
   Nnion = input_param.Nnion;
   nion=(float*)calloc(Nnion,sizeof(float));
   for(ii=0;ii<Nnion;ii++) {
@@ -91,8 +116,12 @@ int main(int argc, char **argv) {
   nh = allocate_fftw_real_3d(N1,N2,N3+2);
   ngamma =allocate_fftw_real_3d(N1,N2,N3+2);
   nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
+  if(use_prev_xfrac == 1)
+    xfrac=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
   for(jk=0;jk<Nnion;++jk) {
-    nxion[jk]=allocate_fftw_real_3d(N1,N2,N3+2);
+    nxion[jk] = allocate_fftw_real_3d(N1,N2,N3+2);
+    if(use_prev_xfrac == 1)
+      xfrac[jk] = allocate_fftw_real_3d(N1,N2,N3+2); 
   }
 
   t_start =Get_Current_time();
@@ -131,10 +160,18 @@ int main(int argc, char **argv) {
 
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
+
+#endif
+  if(use_prev_xfrac == 1) {
+    if(mympi.ThisTask == 0)
+      read_xfrac(output, buffer, nion_list, Nnion, N1, N2, N3);
+
+#ifdef PARALLEL
+    MPI_Barrier(MPI_COMM_WORLD);
 #endif
 
+  }
   t_stop = Get_Current_time();
-
   /* Sanity MPI check */
 #ifdef PARALLEL
   if(mympi.ThisTask == 1)
@@ -192,7 +229,11 @@ int main(int argc, char **argv) {
     reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
   
   free_fftw_real_3d(ngamma,N1,N2,N3+2);
-  
+  if(use_prev_xfrac == 1) {
+    for(ii=0;ii<Nnion;ii++)
+      free_fftw_real_3d(xfrac[ii],N1,N2,N3+2);
+    free(xfrac);
+  }
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
@@ -282,10 +323,9 @@ int main(int argc, char **argv) {
       fwrite(&buffer[jk*N1*N2*N3],sizeof(float),N1*N2*N3,inp);	
 #endif	    
       fclose(inp);
-      roion[jk]/=(N1*N2*N3); // mean HI density in grid units
-      
+      roion[jk]/=robar*(N1*N2*N3); // mass avg xHI
       vion[jk]/=(1.*N1*N2*N3); // volume avg xHI
-      roion[jk]/=(float)robar; // divide by H density to get mass avg. xHI
+      // roion[jk]/=(float)robar; // divide by H density to get mass avg. xHI
       t_stop = Get_Current_time();
       printf("nion = %f obtained vol. avg. x_HI=%e mass avg. x_HI=%e : %lf\n",nion[jk],vion[jk],roion[jk],t_stop-t_start);
     }

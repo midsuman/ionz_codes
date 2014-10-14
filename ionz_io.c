@@ -143,7 +143,12 @@ void read_xfrac(char *dirname, float *buffer_4d, float *nion_list, int Nnion, in
   int ii,jk;
   int n1,n2,n3;
   char filename[2048];
-  inp=fopen(filename,"rb");
+  sprintf(filename,"%s",dirname);
+  if((inp=fopen(filename,"rb") == NULL) {
+      debug_checkpoint();
+      printf("Cannot open %s\nTerminate...\n",filename);
+      exit(1);
+    }
   fread(&n1,sizeof(int),1,inp);
   fread(&n2,sizeof(int),1,inp);
   fread(&n3,sizeof(int),1,inp);
