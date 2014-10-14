@@ -164,7 +164,7 @@ int main(int argc, char **argv) {
 #endif
   if(use_prev_xfrac == 1) {
     if(mympi.ThisTask == 0)
-      read_xfrac(output, buffer, nion_list, Nnion, N1, N2, N3);
+      read_xfrac(output, buffer, nion, Nnion, N1, N2, N3);
 
 #ifdef PARALLEL
     MPI_Barrier(MPI_COMM_WORLD);
