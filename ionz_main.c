@@ -61,20 +61,26 @@ int main(int argc, char **argv) {
     if(argc == 2) {
       sprintf(inputfile, "%s", argv[1]);
       printf("Read all parameters from input file: %s\n",inputfile);
+      printf("I still don't have time to this option....Boyd\n")
     }
     else if(argc > 2 ) {
       printf("Arguments:\n");
       printf("nion_file:\t%s\n",argv[1]);
-      printf("cosmo_paramfile:\t%s\n",argv[2]);
-      printf("densityfile:\t%s\n",argv[3]);
-      printf("sourcesfile:\t%s\n",argv[4]);
-      printf("Current redshift:\t%s\n",argv[5]);
-      printf("Previous redshift:\t%s\n",argv[6]);
-      printf("Output folder:\t%s\n",argv[7]);
+      printf("Omega_matter:\t%s\n",argv[2]);
+      printf("Omega_baryon:\t%s\n",argv[3]);
+      printf("Omega_Lambda:\t%s\n",argv[4]);
+      printf("Hubble_h:\t%s\n",argv[5]);
+      printf("N_grid:\t%s\n",argv[6]);
+      printf("Boxsize:\t%s\n",argv[7]);
+      printf("densityfile:\t%s\n",argv[8]);
+      printf("sourcesfile:\t%s\n",argv[9]);
+      printf("Current redshift:\t%s\n",argv[10]);
+      printf("Previous redshift:\t%s\n",argv[11]);
+      printf("Output folder:\t%s\n",argv[12]);
     }
     else {
       printf("Usage[1]: ./exec inputfile\n");
-      printf("Usage[2]: ./exec nion_file cosmo_paramfile densityfile sourcefile curr_z prev_z outputfolder (very useful for submitting batch MPI tasks)\n");
+      printf("Usage[2]: ./exec nion_file omegam omegab omegalam hubble_h n_grid boxsize densityfile sourcefile curr_z prev_z outputfolder (very useful for submitting batch MPI tasks)\n");
     }
     exit(1);
     sprintf(densfilename,"%s",argv[1]);

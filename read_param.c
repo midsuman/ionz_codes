@@ -10,6 +10,16 @@
 
 #include "ion.h"
 
+void read_nion(char *filename) {
+  FILE *inp;
+  int i;
+  inp = fopen(filename,"r");
+  fscanf(inp,"%d",&input_param.Nnion);
+  for(i=0;i<input_param.Nnion;i++) {
+    fscanf(inp,"%f",&(input_param.nion[i]));
+  }
+}
+
 /** 
  * Read parameter file
  * 
