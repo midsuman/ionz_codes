@@ -150,21 +150,15 @@ void subgrid_reionization_with_xfrac(fftw_real ***nh_p, fftw_real ***ngamma_p, f
   double vion[Nnion],roion[Nnion];
   double nh;
   for(jk=0;jk<Nnion;jk++) {
-    for(ii=0;ii<N1;ii++)
-      for(jj=0;jj<N2;jj++)
-	for(kk=0;kk<N3;kk++) {
-	  //Filling smoothing arrays with the dark matter and source density data
-	  nhs[ii][jj][kk]=nh_p[ii][jj][kk]*(1.-xfrac_p[jk][ii][jj][kk]);
-	}
   
     //calculating avg. ionization frction
     vion[jk]=0.0;
     roion[jk]=0.0;
 
 
-    for(kk=0;kk<N3;kk++)
+    for(ii=0;ii<N1;ii++)
       for(jj=0;jj<N2;jj++)
-	for(ii=0;ii<N1;ii++) {
+	for(kk=0;kk<N3;kk++) {
 	  nh = nh_p[ii][jj][kk]*(1.-xfrac_p[jk][ii][jj][kk]);
 	  if(nh >nion_p[jk]*ngamma_p[ii][jj][kk]) 
 	    nxion_p[jk][ii][jj][kk]=nion_p[jk]*ngamma_p[ii][jj][kk]/nh;
