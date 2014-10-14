@@ -19,14 +19,14 @@
  * @param N3 3rd dimension grid
  */
 void Setting_Up_Memory_For_ionz(int Nnion, int N1, int N2, int N3) {
-  int jk;
+  //  int jk;
 
-  nh = allocate_fftw_real_3d(N1,N2,N3+2);
-  ngamma =allocate_fftw_real_3d(N1,N2,N3+2);
-  nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
-  for(jk=0;jk<Nnion;++jk) {
-    nxion[jk]=allocate_fftw_real_3d(N1,N2,N3+2);
-  }
+  /* nh = allocate_fftw_real_3d(N1,N2,N3+2); */
+  /* ngamma =allocate_fftw_real_3d(N1,N2,N3+2); */
+  /* nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion); */
+  /* for(jk=0;jk<Nnion;++jk) { */
+  /*   nxion[jk]=allocate_fftw_real_3d(N1,N2,N3+2); */
+  /* } */
   // allocate area for storing densities  DONE
   /* The last dimension gets padded because of using REAL FFT */
 }
@@ -96,10 +96,7 @@ void smooth(fftw_real ***ro_dum,float Radii,int N1,int N2, int N3) {
 	A[index].im=tempim;
       }
   rfftwnd_one_complex_to_real(q_ro,(fftw_complex *) &ro_dum[0][0][0], NULL);
- 
-  debug_checkpoint();
   free_fftw_real_3d(rosp,N1,N2,N3+2);
-  debug_checkpoint();
   rfftwnd_destroy_plan(p_ro);
   rfftwnd_destroy_plan(q_ro);
   /* A and B are aliases so there is no need to free them... Boyd */

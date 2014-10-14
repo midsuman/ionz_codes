@@ -9,7 +9,6 @@
 
 #include "ion.h"
 struct_const constvars = {3.14159265359,1024,0.1,2.0};
-fftw_real ***nh, ***ngamma, ****nxion;
 /** 
  * Main program
  * 
@@ -33,6 +32,8 @@ int main(int argc, char **argv) {
   double t_start, t_stop;
   float *buffer, *buffer_final;
   float vomegam,vomegab,vomegalam;
+  fftw_real ***nh, ***ngamma, ****nxion;
+  fftw_real ****xfrac;
 #ifdef CHUNKTRANSFER
   int mpi_buffer=1000000;
   int cur_len;
@@ -85,7 +86,16 @@ int main(int argc, char **argv) {
   }
 
   /* Allocating memory to different arrays */
-  Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3);
+  // Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3);
+
+  nh = allocate_fftw_real_3d(N1,N2,N3+2);
+  ngamma =allocate_fftw_real_3d(N1,N2,N3+2);
+  nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
+  for(jk=0;jk<Nnion;++jk) {
+    nxion[jk]=allocate_fftw_real_3d(N1,N2,N3+2);
+  }
+
+
   printf("test in main\n");
   printf("%f \n",ngamma[34][2][34]);
   t_start =Get_Current_time();
