@@ -79,9 +79,20 @@ struct params
   float boxsize;
   /// Gridsize (Mpc/h)
   float gridsize;
+  /// Density file
+  char densityfile[2000];
+  /// sources file
+  char sourcesfile[2000];
+  /// current redshift
+  char cur_z[100];
+  /// previous redshift
+  char prev_z[100];
+  /// Output folder
+  char outpudir[2000];
 } input_param;
 
 // in read_param.c
+extern void read_nion(char *filename);
 extern void read_params(char *filename);
 
 /* in ionz_misc.c */

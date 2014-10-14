@@ -61,34 +61,55 @@ int main(int argc, char **argv) {
     if(argc == 2) {
       sprintf(inputfile, "%s", argv[1]);
       printf("Read all parameters from input file: %s\n",inputfile);
-      printf("I still don't have time to this option....Boyd\n");
+      printf("I still don't have time to do this option....Boyd\n");
       exit(1);
     }
     else if(argc > 2 ) {
       printf("Arguments:\n");
       printf("nion_file:\t%s\n",argv[1]);
+      read_nion(argv[1]);
       printf("Omega_matter:\t%s\n",argv[2]);
+      sscanf(argv[2],"%f",&input_param.omegam);
       printf("Omega_baryon:\t%s\n",argv[3]);
+      sscanf(argv[3],"%f",&input_param.omegab);
       printf("Omega_Lambda:\t%s\n",argv[4]);
+      sscanf(argv[4],"%f",&input_param.omegalam);
       printf("Hubble_h:\t%s\n",argv[5]);
+      sscanf(argv[5],"%f",&input_param.Hubble_h);
       printf("N_grid:\t%s\n",argv[6]);
+      sscanf(argv[6],"%d",&input_param.N1);
+      input_param.N2 = input_param.N1;
+      input_param.N3 = input_param.N1;
       printf("Boxsize:\t%s\n",argv[7]);
+      sscanf(argv[7],"%f",&input_param.boxsize);
+      input_param.gridsize = input_param.boxsize/(float)input_param.N1;
       printf("densityfile:\t%s\n",argv[8]);
+      sprintf(input_param.densityfile,"%s",argv[8]);
       printf("sourcesfile:\t%s\n",argv[9]);
+      sprintf(input_param.sourcesfile,"%s",argv[9]);
       printf("Current redshift:\t%s\n",argv[10]);
+      sprintf(input_param.cur_z,"%s",argv[10]);
       printf("Previous redshift:\t%s\n",argv[11]);
+      sprintf(input_param.prev_z,"%s",argv[11]);
       printf("Output folder:\t%s\n",argv[12]);
+      sprintf(input_param.outputdir,"%s",argv[12]);
     }
     else {
       printf("Usage[1]: ./exec inputfile\n");
       printf("Usage[2]: ./exec nion_file omegam omegab omegalam hubble_h n_grid boxsize densityfile sourcefile curr_z prev_z outputfolder (very useful for submitting batch MPI tasks)\n");
+      exit(1);
     }
-    exit(1);
-    sprintf(densfilename,"%s",argv[1]);
-    sprintf(sourcefilename,"%s",argv[2]);
-    sprintf(z_out,"%s",argv[3]);
+#ifdef PARALLEL
+    MPI_Barrier(MPI_COMM_WORLD);
+    MPI_Bcast(&input_param, sizeof(struct params), MPI_BYTE, 0, MPI_COMM_WORLD);
+    if(mympi.ThisTask == 1)
+      printf("%d %f\n",input_param.N1,input_param.omegam);
+#endif
+    
+    sprintf(densfilename,"%s",input_param.densityfile);
+    sprintf(sourcefilename,"%s",input_param.sourcesfile);
+    sprintf(z_out,"%s",input_param.cur_z);
     if(mympi.ThisTask == 0) {
-      system("date");
       printf("Start semi-numerical reionization process\n");
     }
   
