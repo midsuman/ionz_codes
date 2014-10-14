@@ -148,17 +148,15 @@ void subgrid_reionization(fftw_real ***nh, fftw_real ***ngamma, fftw_real ****nx
 void subgrid_reionization_with_xfrac(fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****xfrac_p, fftw_real ****nxion_p, double robar, float *nion_p, int Nnion, int N1, int N2, int N3) {
   int ii,jj,kk,jk;
   double vion[Nnion],roion[Nnion];
-  fftw_real ***nhs;
-  nhs=allocate_fftw_real_3d(N1,N2,N3+2);
-
-  for(ii=0;ii<N1;ii++)
-    for(jj=0;jj<N2;jj++)
-      for(kk=0;kk<N3;kk++) {
-	//Filling smoothing arrays with the dark matter and source density data
-	nhs[ii][jj][kk]=nh_p[ii][jj][kk]*(1.-xfrac_p[jk][ii][jj][kk]);
-      }
-  
+  double nh;
   for(jk=0;jk<Nnion;jk++) {
+    for(ii=0;ii<N1;ii++)
+      for(jj=0;jj<N2;jj++)
+	for(kk=0;kk<N3;kk++) {
+	  //Filling smoothing arrays with the dark matter and source density data
+	  nhs[ii][jj][kk]=nh_p[ii][jj][kk]*(1.-xfrac_p[jk][ii][jj][kk]);
+	}
+  
     //calculating avg. ionization frction
     vion[jk]=0.0;
     roion[jk]=0.0;
@@ -167,18 +165,18 @@ void subgrid_reionization_with_xfrac(fftw_real ***nh_p, fftw_real ***ngamma_p, f
     for(kk=0;kk<N3;kk++)
       for(jj=0;jj<N2;jj++)
 	for(ii=0;ii<N1;ii++) {
-	  if(nhs[ii][jj][kk]>nion_p[jk]*ngamma_p[ii][jj][kk]) 
-	    nxion_p[jk][ii][jj][kk]=nion_p[jk]*ngamma_p[ii][jj][kk]/(							       nhs[ii][jj][kk]);
+	  nh = nh_p[ii][jj][kk]*(1.-xfrac_p[jk][ii][jj][kk]);
+	  if(nh >nion_p[jk]*ngamma_p[ii][jj][kk]) 
+	    nxion_p[jk][ii][jj][kk]=nion_p[jk]*ngamma_p[ii][jj][kk]/nh;
 	  else 
 	    nxion_p[jk][ii][jj][kk]=1.0;
-   
+	  
 	  vion[jk] += nxion_p[jk][ii][jj][kk];
 	  roion[jk] += nxion_p[jk][ii][jj][kk]*nh_p[ii][jj][kk];	  
 	}
     vion[jk]/=(1.*N1*N2*N3);
     roion[jk]/=(float)(robar*N1*N2*N3);
   }
-  free_fftw_real_3d(nhs,N1,N2,N3+2);
 }
 
 
@@ -259,11 +257,8 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
   // printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
 
   //Smoothing with real space spherical filter
-  printf("smooth nhs\n");
   smooth(nhs,Radii,N1,N2,N3);
-  printf("smooth ngammas\n");
   smooth(ngammas,Radii,N1,N2,N3); 
-  printf("start loop\n");
   for(jk=0;jk<Nnion;++jk) {	 
     for(ii=0;ii<N1;ii++)
       for(jj=0;jj<N2;jj++)
