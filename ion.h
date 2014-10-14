@@ -25,6 +25,8 @@
 
 #define debug_checkpoint() (printf("CHECKPOINT: Fuction:%s Line:%d File:%s\n",__func__,__LINE__,__FILE__))
 
+#define PREFIX "xHI_map_"
+
 /// Global variables
 typedef struct CONSTANTS {
   /// PI
