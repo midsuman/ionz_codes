@@ -105,7 +105,7 @@ int main(int argc, char **argv) {
     if(mympi.ThisTask == 1)
       printf("%d %f\n",input_param.N1,input_param.omegam);
 #endif
-    
+    exit(1);
     sprintf(densfilename,"%s",input_param.densityfile);
     sprintf(sourcefilename,"%s",input_param.sourcesfile);
     sprintf(z_out,"%s",input_param.cur_z);
