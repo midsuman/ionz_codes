@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
   int use_prev_xfrac = 1;
 #else
   int use_prev_xfrac = 0;
-#END
+#endif
 
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
