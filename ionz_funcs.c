@@ -173,7 +173,7 @@ void subgrid_reionization_with_xfrac(fftw_real ***nh_p, fftw_real ***ngamma_p, f
 	    nxion_p[jk][ii][jj][kk]=1.0;
    
 	  vion[jk] += nxion_p[jk][ii][jj][kk];
-	  roion[jk] += nxion_p[jk][ii][jj][kk]*nh[ii][jj][kk];	  
+	  roion[jk] += nxion_p[jk][ii][jj][kk]*nh_p[ii][jj][kk];	  
 	}
     vion[jk]/=(1.*N1*N2*N3);
     roion[jk]/=(float)(robar*N1*N2*N3);
