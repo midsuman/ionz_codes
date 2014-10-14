@@ -244,7 +244,7 @@ int main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
 #endif // PARALLEL
-
+  exit(1);
   if(mympi.ThisTask == 0) {
     for(jk=0;jk<Nnion;jk++) {
       //calculating avg. ionization frction
