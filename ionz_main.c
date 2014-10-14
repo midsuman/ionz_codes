@@ -101,7 +101,8 @@ int main(int argc, char **argv) {
     }
 #ifdef PARALLEL
     MPI_Barrier(MPI_COMM_WORLD);
-    MPI_Bcast(&(input_param.Nnion), sizeof(struct params), MPI_BYTE, 0, MPI_COMM_WORLD);
+    printf("struct parame = %d\n",(int)sizeof(struct params));
+    MPI_Bcast(&input_param, sizeof(struct params), MPI_BYTE, 0, MPI_COMM_WORLD);
     if(mympi.ThisTask == 1)
       printf("%d %f\n",input_param.N1,input_param.omegam);
 #endif
