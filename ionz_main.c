@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
     
     MPI_Bcast(&input_param.Nnion, 1, MPI_INT, 0, MPI_COMM_WORLD);
     debug_checkpoint();
-    MPI_Bcast(&(input_param.nion[0]), 100, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.nion[0]), 100, MPI_FLOAT, 0, MPI_COMM_WORLD);
     debug_checkpoint();
     MPI_Bcast(&input_param.a_expansion, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
     MPI_Bcast(&input_param.z, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
@@ -117,11 +117,11 @@ int main(int argc, char **argv) {
     MPI_Bcast(&input_param.N3, 1, MPI_INT, 0, MPI_COMM_WORLD);
     MPI_Bcast(&input_param.boxsize, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
     MPI_Bcast(&input_param.gridsize, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.densityfile,2000, MPI_CHAR, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.sourcesfile,2000, MPI_CHAR, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.cur_z,100, MPI_CHAR, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.prev_z,100, MPI_CHAR, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.outputdir,2000, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.densityfile[0],2000, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.sourcesfile[0],2000, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.cur_z[0],100, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.prev_z[0],100, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.outputdir[0],2000, MPI_CHAR, 0, MPI_COMM_WORLD);
     
     if(mympi.ThisTask == 1)
       printf("%d %f\n",input_param.N1,input_param.omegam);
