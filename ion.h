@@ -23,7 +23,7 @@
 #define  min(x,y)  ((x)<(y) ?(x):(y))
 #define  max(x,y)  ((x)>(y) ?(x):(y))
 
-#define debug_checkpoint() (if(mympi.ThisTask == 0) printf("CHECKPOINT: Fuction:%s Line:%d File:%s\n",__func__,__LINE__,__FILE__))
+#define debug_checkpoint() (printf("CHECKPOINT: Fuction:%s Line:%d File:%s\n",__func__,__LINE__,__FILE__))
 
 #define PREFIX "xHI_map_"
 
