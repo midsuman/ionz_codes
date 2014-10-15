@@ -45,7 +45,7 @@ void unpack_3d_array_mpi_transfer(float *input, fftw_real ***output, int N1, int
       for(ii=0;ii<N1;ii++) { 
 	debug_checkpoint();
 	output[ii][jj][kk]=input[kk*N2*N1 + jj*N1 + ii];
-	printf("%d %d %d %f\n",ii,jj,kk,output[ii][jj][kk]);
+	if(mympi.ThisTask) printf("%d %d %d %f\n",ii,jj,kk,output[ii][jj][kk]);
       }
 }
 
