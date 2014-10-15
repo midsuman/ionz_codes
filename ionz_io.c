@@ -43,14 +43,14 @@ void unpack_3d_array_mpi_transfer(float *input, fftw_real ***output, int N1, int
   for(kk=0;kk<N3;kk++)
     for(jj=0;jj<N2;jj++)
       for(ii=0;ii<N1;ii++) { 
-	if(mympi.ThisTask == 0) printf("%d %d %d %f\n",ii,jj,kk,output[ii][jj][kk]);
-	// if(mympi.ThisTask == 0) printf("%d %f\n",kk*N2*N1 + jj*N1 + ii,input[kk*N2*N1 + jj*N1 + ii]);
+	// if(mympi.ThisTask == 0) printf("%d %d %d %f\n",ii,jj,kk,output[ii][jj][kk]);
+	/if(mympi.ThisTask == 0) printf("%d %f\n",kk*N2*N1 + jj*N1 + ii,input[kk*N2*N1 + jj*N1 + ii]);
 	// output[ii][jj][kk]=input[kk*N2*N1 + jj*N1 + ii];
 	// if(mympi.ThisTask == 0) printf("%d %d %d %f\n",ii,jj,kk,output[ii][jj][kk]);
       }
 }
 
-/** 
+/**
  * Convert 3D-fftw_real array to 1D-float array. This is used
  * to simplify MPI transfer process. 
  *
@@ -147,7 +147,6 @@ void read_density(char *filename, float *buffer_3d, double *robar_p, int N1, int
  */
 void read_xfrac(char *dirname, float *buffer_4d, float *nion_list, int Nnion, int N1, int N2, int N3) {
   FILE *inp;
-  int ii,jk;
   int n1,n2,n3;
   char filename[2048];
   sprintf(filename,"%s",dirname);

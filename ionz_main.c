@@ -127,7 +127,6 @@ int main(int argc, char **argv) {
       printf("%d %f\n",input_param.N1,input_param.omegam);
     }
 #endif
-    debug_checkpoint();
     sprintf(densfilename,"%s",input_param.densityfile);
     sprintf(sourcefilename,"%s",input_param.sourcesfile);
     sprintf(z_out,"%s",input_param.cur_z);
@@ -189,7 +188,7 @@ int main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
   if(mympi.ThisTask == 0) debug_checkpoint();
-  unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
+  if(mympi.ThisTask == 0) unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
   if(mympi.ThisTask == 0) debug_checkpoint();
 
 #ifdef PARALLEL
