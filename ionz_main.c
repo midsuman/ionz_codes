@@ -340,7 +340,7 @@ int main(int argc, char **argv) {
       ii=0; jj=0; kk=0;
       start_ll = jk*N1*N2*N3;
       for(ll=start_ll; ll<(jk+1)*N1*N2*N3;ll++) {
-	printf("%d %d %d\n",ii,jj,kk);
+	printf("%d %d %d\n",ii,jj,kk,buffer_final[ll]);
 #ifdef PARALLEL
 	xh1 = 1.-buffer_final[ll];
 	xh1 = max(xh1,0.0);
