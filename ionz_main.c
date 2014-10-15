@@ -122,11 +122,12 @@ int main(int argc, char **argv) {
     MPI_Bcast(&input_param.outputdir[0],2000, MPI_CHAR, 0, MPI_COMM_WORLD);
     MPI_Barrier(MPI_COMM_WORLD);
     debug_checkpoint();
-    if(mympi.ThisTask == 1) {
+    if(mympi.ThisTask == 0) {
       debug_checkpoint();
       printf("%d %f\n",input_param.N1,input_param.omegam);
     }
 #endif
+    debug_checkpoint();
     exit(1);
     sprintf(densfilename,"%s",input_param.densityfile);
     sprintf(sourcefilename,"%s",input_param.sourcesfile);
