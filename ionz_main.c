@@ -133,8 +133,6 @@ int main(int argc, char **argv) {
     if(mympi.ThisTask == 0) {
       printf("Start semi-numerical reionization process\n");
     }  
-    // Read input file
-    read_params("input.ionz");
   }
   Nnion = input_param.Nnion;
   nion=(float*)calloc(Nnion,sizeof(float));
