@@ -11,9 +11,8 @@
 struct_const constvars = {3.14159265359,1024,0.1,2.0};
 
 fftw_real ***nh, ***ngamma, ****nxion;
-#ifdef READ_XFRAC
-fftw_real ****xfrac;
-#endif
+
+
 
 /** 
  * Main program
