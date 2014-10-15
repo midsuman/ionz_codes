@@ -9,6 +9,7 @@
 #include "ion.h"
 
 struct_const constvars = {3.14159265359,1024,0.1,2.0};
+
 fftw_real ***nh, ***ngamma, ****nxion;
 #ifdef READ_XFRAC
 fftw_real ****xfrac;
@@ -46,12 +47,6 @@ int main(int argc, char **argv) {
   char densfilename[2000], sourcefilename[2000];
   char z_prev[1000],z_out[1000];
   char outputdir[2000];
-
-#ifdef READ_XFRAC
-  int use_prev_xfrac = 1;
-#else
-  int use_prev_xfrac = 0;
-#endif
 
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
@@ -169,14 +164,18 @@ int main(int argc, char **argv) {
   if(mympi.ThisTask == 0) printf("nh %f\n",nh[300][300][300]);
   ngamma = allocate_fftw_real_3d(N1,N2,N3+2);
   if(mympi.ThisTask == 0) printf(" gamma %f\n",ngamma[1][2][2]);
+ 
   nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
-  if(use_prev_xfrac == 1)
-    xfrac=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
   for(jk=0;jk<Nnion;++jk) {
     nxion[jk] = allocate_fftw_real_3d(N1,N2,N3+2);
-    if(use_prev_xfrac == 1)
-      xfrac[jk] = allocate_fftw_real_3d(N1,N2,N3+2);
   }
+
+#ifdef READ_XFRAC
+  xfrac=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
+  for(jk=0;jk<Nnion;++jk) {
+    xfrac[jk] = allocate_fftw_real_3d(N1,N2,N3+2);
+  }
+#endif
   if(mympi.ThisTask == 0) printf("xion %f\n",nxion[0][1][2][2]);
   t_start =Get_Current_time();
 
