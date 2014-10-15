@@ -103,7 +103,9 @@ int main(int argc, char **argv) {
     MPI_Barrier(MPI_COMM_WORLD);
     
     MPI_Bcast(&input_param.Nnion, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    debug_checkpoint();
     MPI_Bcast(&(input_param.nion[0]), 100, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    debug_checkpoint();
     MPI_Bcast(&input_param.a_expansion, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
     MPI_Bcast(&input_param.z, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
     MPI_Bcast(&input_param.Hubble_h, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
