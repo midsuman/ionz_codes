@@ -6,14 +6,9 @@
  * @brief  Main program
  * 
  */
+
 #include "ion.h"
-
 struct_const constvars = {3.14159265359,1024,0.1,2.0};
-
-fftw_real ***nh, ***ngamma, ****nxion;
-
-
-
 /** 
  * Main program
  * 
@@ -37,7 +32,8 @@ int main(int argc, char **argv) {
   double t_start, t_stop;
   float *buffer, *buffer_final;
   float vomegam,vomegab,vomegalam;
-
+  fftw_real ***nh, ***ngamma, ****nxion;
+  fftw_real ****xfrac;
 #ifdef CHUNKTRANSFER
   int mpi_buffer=1000000;
   int cur_len;
@@ -46,6 +42,12 @@ int main(int argc, char **argv) {
   char densfilename[2000], sourcefilename[2000];
   char z_prev[1000],z_out[1000];
   char outputdir[2000];
+
+#ifdef READ_XFRAC
+  int use_prev_xfrac = 1;
+#else
+  int use_prev_xfrac = 0;
+#endif
 
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
@@ -160,22 +162,17 @@ int main(int argc, char **argv) {
   /* Allocating memory to different arrays */
   // Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3
   nh = allocate_fftw_real_3d(N1,N2,N3+2);
-  if(mympi.ThisTask == 0) printf("nh %f\n",nh[300][300][300]);
+  if(mympi.ThisTask == 0) printf("nh %f\n",nh[1][2][2]);
   ngamma = allocate_fftw_real_3d(N1,N2,N3+2);
   if(mympi.ThisTask == 0) printf(" gamma %f\n",ngamma[1][2][2]);
- 
   nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
+  if(use_prev_xfrac == 1)
+    xfrac=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
   for(jk=0;jk<Nnion;++jk) {
     nxion[jk] = allocate_fftw_real_3d(N1,N2,N3+2);
+    if(use_prev_xfrac == 1)
+      xfrac[jk] = allocate_fftw_real_3d(N1,N2,N3+2);
   }
-
-#ifdef READ_XFRAC
-  xfrac=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
-  for(jk=0;jk<Nnion;++jk) {
-    xfrac[jk] = allocate_fftw_real_3d(N1,N2,N3+2);
-  }
-#endif
-
   if(mympi.ThisTask == 0) printf("xion %f\n",nxion[0][1][2][2]);
   t_start =Get_Current_time();
 
@@ -208,22 +205,21 @@ int main(int argc, char **argv) {
   MPI_Bcast(&robarhalo, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 #endif
   if(mympi.ThisTask == 0) debug_checkpoint();
-  if(mympi.ThisTask == 0) unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3);
+  unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3);
   free(buffer);
 
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 
 #endif
-
-#ifdef READ_XFRAC
-  if(mympi.ThisTask == 0)
-    read_xfrac(outputdir, buffer, nion, Nnion, N1, N2, N3);
-#endif
+  if(use_prev_xfrac == 1) {
+    if(mympi.ThisTask == 0)
+      read_xfrac(outputdir, buffer, nion, Nnion, N1, N2, N3);
 
 #ifdef PARALLEL
     MPI_Barrier(MPI_COMM_WORLD);
 #endif
+
   }
   t_stop = Get_Current_time();
   /* Sanity MPI check */
