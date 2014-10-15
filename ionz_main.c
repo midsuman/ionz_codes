@@ -128,7 +128,6 @@ int main(int argc, char **argv) {
     }
 #endif
     debug_checkpoint();
-    exit(1);
     sprintf(densfilename,"%s",input_param.densityfile);
     sprintf(sourcefilename,"%s",input_param.sourcesfile);
     sprintf(z_out,"%s",input_param.cur_z);
