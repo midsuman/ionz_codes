@@ -161,9 +161,7 @@ int main(int argc, char **argv) {
   /* Allocating memory to different arrays */
   // Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3
   nh = allocate_fftw_real_3d(N1,N2,N3+2);
-  if(mympi.ThisTask == 0) printf("nh %f\n",nh[300][300][300]);
   ngamma = allocate_fftw_real_3d(N1,N2,N3+2);
-  if(mympi.ThisTask == 0) printf(" gamma %f\n",ngamma[1][2][2]);
   nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
   if(use_prev_xfrac == 1)
     xfrac=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
@@ -172,7 +170,6 @@ int main(int argc, char **argv) {
     if(use_prev_xfrac == 1)
       xfrac[jk] = allocate_fftw_real_3d(N1,N2,N3+2);
   }
-  if(mympi.ThisTask == 0) printf("xion %f\n",nxion[0][1][2][2]);
   t_start =Get_Current_time();
   
   /* Allocate buffer to store 3D array */
@@ -181,30 +178,21 @@ int main(int argc, char **argv) {
   if(mympi.ThisTask == 0) {
     read_density(densfilename,buffer,&robar,N1,N2,N3,vomegam,vomegab);
   }
-  if(mympi.ThisTask == 0) 
-    debug_checkpoint();
+
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
-  printf("Task:%d Bcasting nh_buffer[%d] with total %d bytes\n",mympi.ThisTask,N1*N2*N3,sizeof(float)*N1*N2*N3);
-  MPI_Barrier(MPI_COMM_WORLD);
-  if(mympi.ThisTask == 0) 
-    debug_checkpoint();
   MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
-  if(mympi.ThisTask == 0) 
-    debug_checkpoint();
   MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  if(mympi.ThisTask == 0) 
-    debug_checkpoint();
   MPI_Barrier(MPI_COMM_WORLD);
-  if(mympi.ThisTask == 0) 
-    debug_checkpoint();
+
 #endif
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
-#endif
-  if(mympi.ThisTask == 0) debug_checkpoint();
-  if(mympi.ThisTask == 0) unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
-  if(mympi.ThisTask == 0) debug_checkpoint();
+#endif 
+
+
+  unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
+
 
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
@@ -218,7 +206,6 @@ int main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(&robarhalo, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 #endif
-  if(mympi.ThisTask == 0) debug_checkpoint();
   unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3);
   free(buffer);
 
