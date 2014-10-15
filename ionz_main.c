@@ -189,7 +189,7 @@ int main(int argc, char **argv) {
 #endif
    for(kk=0;kk<N3;kk++)
     for(jj=0;jj<N2;jj++)
-      for(ii=0;ii<N1;ii++) { 
+      for(ii=0;ii<N1;ii++) 
 	if(mympi.ThisTask == 0) printf("%d %d %d %f\n",ii,jj,kk,nh[ii][jj][kk]);
   if(mympi.ThisTask == 0) debug_checkpoint();
   if(mympi.ThisTask == 0) unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
