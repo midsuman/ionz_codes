@@ -199,17 +199,7 @@ int main(int argc, char **argv) {
   if(mympi.ThisTask == 0) 
     debug_checkpoint();
 #endif
-  if(mympi.ThisTask == 0) 
-    debug_checkpoint();
-  if(mympi.ThisTask == 1) {
-    debug_checkpoint();
-    
-    for(kk=0;kk<N3;kk++)
-      for(jj=0;jj<N2;jj++)
-	for(ii=0;ii<N1;ii++) 
-	  printf("%d %d %d %f\n",ii,jj,kk,nh[ii][jj][kk]);
-    debug_checkpoint();
-  }
+
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
