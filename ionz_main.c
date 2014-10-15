@@ -133,8 +133,7 @@ int main(int argc, char **argv) {
     sprintf(z_out,"%s",input_param.cur_z);
     if(mympi.ThisTask == 0) {
       printf("Start semi-numerical reionization process\n");
-    }
-  
+    }  
     // Read input file
     read_params("input.ionz");
   }
@@ -153,18 +152,18 @@ int main(int argc, char **argv) {
   vomegab = input_param.omegab;
   
   if(mympi.ThisTask == 0) {
-    printf("Using Cosmological parameters: ");
+    printf("Using Cosmological parameters:\t");
     printf("Omega_m:%f\t",vomegam);
     printf("Omega_b:%f\t",vomegab);
     printf("Omega_lambda:%f\n",vomegalam);
-    printf("Grid: %dx%dx%d\n",N1,N2,N3);
+    printf("Grid:\t%dx%dx%d\n",N1,N2,N3);
   }
 
   /* Allocating memory to different arrays */
   // Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3);
 
   nh = allocate_fftw_real_3d(N1,N2,N3+2);
-  ngamma =allocate_fftw_real_3d(N1,N2,N3+2);
+  ngamma = allocate_fftw_real_3d(N1,N2,N3+2);
   nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
   if(use_prev_xfrac == 1)
     xfrac=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
