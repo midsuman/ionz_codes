@@ -180,8 +180,6 @@ int main(int argc, char **argv) {
   /* Use Task:0 to read density */
   if(mympi.ThisTask == 0) {
     read_density(densfilename,buffer,&robar,N1,N2,N3,vomegam,vomegab);
-  
-    debug_checkpoint();
   }
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
@@ -189,8 +187,9 @@ int main(int argc, char **argv) {
   MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
+  debug_checkpoint();
   unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);  
-
+  
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
