@@ -183,9 +183,17 @@ int main(int argc, char **argv) {
     debug_checkpoint();
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
+  if(mympi.ThisTask == 0) 
+    debug_checkpoint();
   MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  if(mympi.ThisTask == 0) 
+    debug_checkpoint();
   MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  if(mympi.ThisTask == 0) 
+    debug_checkpoint();
   MPI_Barrier(MPI_COMM_WORLD);
+  if(mympi.ThisTask == 0) 
+    debug_checkpoint();
 #endif
   if(mympi.ThisTask == 0) 
     debug_checkpoint();
