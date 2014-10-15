@@ -179,6 +179,8 @@ int main(int argc, char **argv) {
   if(mympi.ThisTask == 0) {
     read_density(densfilename,buffer,&robar,N1,N2,N3,vomegam,vomegab);
   }
+  if(mympi.ThisTask == 0) 
+    debug_checkpoint();
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
