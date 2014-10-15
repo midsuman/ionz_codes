@@ -185,12 +185,15 @@ int main(int argc, char **argv) {
   MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
-  if(mympi.ThisTask == 0) debug_checkpoint();
-  for(kk=0;kk<N3;kk++)
-    for(jj=0;jj<N2;jj++)
-      for(ii=0;ii<N1;ii++) 
-	if(mympi.ThisTask == 0) printf("%d %d %d %f\n",ii,jj,kk,nh[ii][jj][kk]);
-
+  if(mympi.ThisTask == 0) {
+    debug_checkpoint();
+    
+    for(kk=0;kk<N3;kk++)
+      for(jj=0;jj<N2;jj++)
+	for(ii=0;ii<N1;ii++) 
+	  printf("%d %d %d %f\n",ii,jj,kk,nh[ii][jj][kk]);
+    debug_checkpoint();
+  }
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
