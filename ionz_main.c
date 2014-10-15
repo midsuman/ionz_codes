@@ -162,7 +162,7 @@ int main(int argc, char **argv) {
   /* Allocating memory to different arrays */
   // Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3
   nh = allocate_fftw_real_3d(N1,N2,N3+2);
-  if(mympi.ThisTask == 0) printf("nh %f\n",nh[1][2][2]);
+  if(mympi.ThisTask == 0) printf("nh %f\n",nh[300][300][300]);
   ngamma = allocate_fftw_real_3d(N1,N2,N3+2);
   if(mympi.ThisTask == 0) printf(" gamma %f\n",ngamma[1][2][2]);
   nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
