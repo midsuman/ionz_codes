@@ -189,9 +189,9 @@ int main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
   if(mympi.ThisTask == 0) debug_checkpoint();
-  if(mympi.ThisTask == 0) printf("%f\n",nh[1][2][2]);
   unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
   if(mympi.ThisTask == 0) debug_checkpoint();
+
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
