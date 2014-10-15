@@ -6,9 +6,14 @@
  * @brief  Main program
  * 
  */
-
 #include "ion.h"
+
 struct_const constvars = {3.14159265359,1024,0.1,2.0};
+fftw_real ***nh, ***ngamma, ****nxion;
+#ifdef READ_XFRAC
+fftw_real ****xfrac;
+#endif
+
 /** 
  * Main program
  * 
@@ -32,8 +37,7 @@ int main(int argc, char **argv) {
   double t_start, t_stop;
   float *buffer, *buffer_final;
   float vomegam,vomegab,vomegalam;
-  fftw_real ***nh, ***ngamma, ****nxion;
-  fftw_real ****xfrac;
+
 #ifdef CHUNKTRANSFER
   int mpi_buffer=1000000;
   int cur_len;

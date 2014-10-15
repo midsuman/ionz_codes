@@ -122,7 +122,10 @@ extern void subgrid_reionization_with_xfrac(fftw_real ***nh_p, fftw_real ***ngam
 extern void reionization_with_xfrac(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****xfrac_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3);
 /// Global arrays
 
-
+extern fftw_real ***nh, ***ngamma, ****nxion;
+#ifdef READ_XFRAC
+extern fftw_real ****xfrac;
+#endif
 #define ION_H_
 #endif
 
