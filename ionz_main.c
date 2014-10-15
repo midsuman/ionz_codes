@@ -182,6 +182,7 @@ int main(int argc, char **argv) {
   if(mympi.ThisTask == 0) 
     debug_checkpoint();
 #ifdef PARALLEL
+  MPI_Barrier(MPI_COMM_WORLD);
   printf("Task:%d Bcasting nh_buffer[%d] with total %d bytes\n",mympi.ThisTask,N1*N2*N3,sizeof(float)*N1*N2*N3);
   MPI_Barrier(MPI_COMM_WORLD);
   if(mympi.ThisTask == 0) 
