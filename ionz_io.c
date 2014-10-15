@@ -105,7 +105,11 @@ void read_density(char *filename, float *buffer_3d, double *robar_p, int N1, int
   int n1,n2,n3;
   FILE *inp;
   // printf("start read_density\n");
-  inp=fopen(filename,"rb");
+  if((inp=fopen(filename,"rb")) == NULL) {
+    debug_checkpoint();
+    printf("Cannot open density file: %s\nTerminating....\n",filename);
+    exit(1);
+  }
   *robar_p=0.;
   fread(&n1,sizeof(int),1,inp);
   fread(&n2,sizeof(int),1,inp);
