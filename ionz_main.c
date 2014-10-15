@@ -172,7 +172,7 @@ int main(int argc, char **argv) {
   }
   if(mympi.ThisTask == 0) printf("xion %f\n",nxion[0][1][2][2]);
   t_start =Get_Current_time();
-
+  
   /* Allocate buffer to store 3D array */
   buffer = malloc(sizeof(float)*N1*N2*N3);
   /* Use Task:0 to read density */
@@ -185,7 +185,7 @@ int main(int argc, char **argv) {
   MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
-  if(mympi.ThisTask == 0) {
+  if(mympi.ThisTask == 1) {
     debug_checkpoint();
     
     for(kk=0;kk<N3;kk++)
