@@ -43,11 +43,9 @@ int main(int argc, char **argv) {
   char z_prev[1000],z_out[1000];
   char outputdir[2000];
 
-#ifdef READ_XFRAC
-  int use_prev_xfrac = 1;
-#else
-  int use_prev_xfrac = 0;
-#endif
+
+  int use_prev_xfrac;
+
 
 #ifdef PARALLEL
   MPI_Init(&argc, &argv);
@@ -97,13 +95,8 @@ int main(int argc, char **argv) {
     }
     else {
       printf("Usage[1]: ./exec inputfile\n");
-      printf("Usage[2]: ./exec nion_file omegam omegab omegalam hubble_h n_grid boxsize densityfile sourcefile curr_z prev_z outputfolder (very useful for submitting batch MPI tasks)\n");
+      printf("Usage[2]: ./exec option nion_file omegam omegab omegalam hubble_h n_grid boxsize densityfile sourcefile curr_z prev_z outputfolder (very useful for submitting batch MPI tasks)\n");
       exit(1);
-    }
-    debug_checkpoint();
-    if(mympi.ThisTask == 0) {
-      debug_checkpoint();
-      printf("%d %f\n",input_param.N1,input_param.omegam);
     }
     sprintf(densfilename,"%s",input_param.densityfile);
     sprintf(sourcefilename,"%s",input_param.sourcesfile);
@@ -113,8 +106,7 @@ int main(int argc, char **argv) {
     }  
   }
 #ifdef PARALLEL
-  MPI_Barrier(MPI_COMM_WORLD);
-    
+  MPI_Barrier(MPI_COMM_WORLD);    
   MPI_Bcast(&input_param.Nnion, 1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Bcast(&input_param.nion[0], 100, MPI_FLOAT, 0, MPI_COMM_WORLD);
   MPI_Bcast(&input_param.a_expansion, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
@@ -197,7 +189,6 @@ int main(int argc, char **argv) {
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
-  if(mympi.ThisTask == 0) debug_checkpoint();
   if(mympi.ThisTask == 0)  {
     read_sources(sourcefilename,buffer,&robarhalo,N1,N2,N3);  
   } 
@@ -331,6 +322,7 @@ int main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 #endif // CHUNKTRANSFER
 #endif // PARALLEL
+
   
   if(mympi.ThisTask == 0) {
     for(jk=0;jk<Nnion;jk++) {
@@ -348,6 +340,7 @@ int main(int argc, char **argv) {
       ii=0; jj=0; kk=0;
       start_ll = jk*N1*N2*N3;
       for(ll=start_ll; ll<(jk+1)*N1*N2*N3;ll++) {
+	printf("%d %d %d\n",ii,jj,kk);
 #ifdef PARALLEL
 	xh1 = 1.-buffer_final[ll];
 	xh1 = max(xh1,0.0);
