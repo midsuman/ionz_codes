@@ -175,6 +175,7 @@ int main(int argc, char **argv) {
     xfrac[jk] = allocate_fftw_real_3d(N1,N2,N3+2);
   }
 #endif
+
   if(mympi.ThisTask == 0) printf("xion %f\n",nxion[0][1][2][2]);
   t_start =Get_Current_time();
 
@@ -223,7 +224,6 @@ int main(int argc, char **argv) {
 #ifdef PARALLEL
     MPI_Barrier(MPI_COMM_WORLD);
 #endif
-
   }
   t_stop = Get_Current_time();
   /* Sanity MPI check */

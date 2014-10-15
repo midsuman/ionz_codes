@@ -124,9 +124,6 @@ extern void reionization_with_xfrac(float Radii,fftw_real ***nh_p, fftw_real ***
 
 extern fftw_real ***nh, ***ngamma, ****nxion;
 
-#ifdef READ_XFRAC
-extern fftw_real ****xfrac;
-#endif
 
 #define ION_H_
 #endif
