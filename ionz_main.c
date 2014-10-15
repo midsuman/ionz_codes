@@ -178,6 +178,8 @@ int main(int argc, char **argv) {
   /* Use Task:0 to read density */
   if(mympi.ThisTask == 0) {
     read_density(densfilename,buffer,&robar,N1,N2,N3,vomegam,vomegab);
+    for(kk=0;kk<N3*N2*N1;kk++)
+	  printf("%d %f\n",ii,buffer[ii]]);
   }
   if(mympi.ThisTask == 0) 
     debug_checkpoint();
