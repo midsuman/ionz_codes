@@ -187,8 +187,9 @@ int main(int argc, char **argv) {
   MPI_Bcast(&robar, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
+  if(mympi.ThisTask == 0) debug_checkpoint();
   unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);
-  
+  if(mympi.ThisTask == 0) debug_checkpoint();
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
