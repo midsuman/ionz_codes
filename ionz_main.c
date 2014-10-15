@@ -215,9 +215,11 @@ int main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 
 #endif
-  if(use_prev_xfrac == 1) {
-    if(mympi.ThisTask == 0)
-      read_xfrac(outputdir, buffer, nion, Nnion, N1, N2, N3);
+
+#ifdef READ_XFRAC
+  if(mympi.ThisTask == 0)
+    read_xfrac(outputdir, buffer, nion, Nnion, N1, N2, N3);
+#endif
 
 #ifdef PARALLEL
     MPI_Barrier(MPI_COMM_WORLD);
