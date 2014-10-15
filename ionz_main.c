@@ -101,8 +101,26 @@ int main(int argc, char **argv) {
     }
 #ifdef PARALLEL
     MPI_Barrier(MPI_COMM_WORLD);
-    printf("struct parame = %d\n",(int)sizeof(struct params));
-    MPI_Bcast(&input_param, sizeof(struct params), MPI_BYTE, 0, MPI_COMM_WORLD);
+    
+    MPI_Bcast(&input_param.Nnion, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&(input_param.nion[0]), 100, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.a_expansion, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.z, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.Hubble_h, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.omegam, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.omegalam, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.omegab, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.N1, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.N2, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.N3, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.boxsize, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.gridsize, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.densityfile,2000, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.sourcesfile,2000, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.cur_z,100, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.prev_z,100, MPI_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&input_param.outputdir,2000, MPI_CHAR, 0, MPI_COMM_WORLD);
+    
     if(mympi.ThisTask == 1)
       printf("%d %f\n",input_param.N1,input_param.omegam);
 #endif
