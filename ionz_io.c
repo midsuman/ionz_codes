@@ -163,7 +163,6 @@ void read_xfrac(char *dirname, float *buffer_4d, float *nion_list, int Nnion, in
     exit(1);
   }
   fread(buffer_4d,sizeof(float),n1*n2*n3,inp);
-  
   fclose(inp);
 }
 
@@ -184,7 +183,11 @@ void read_sources(char *filename, float *buffer_3d, double *robarhalo_p, int N1,
   int n1,n2,n3;
   float dt = 11.6e6;
   
-  inp=fopen(filename,"rb");
+  if((inp=fopen(filename,"rb")) == NULL) {
+    debug_checkpoint();
+    printf("Cannot open sources file: %s\nTerminating....\n",filename);
+    exit(1);
+  }
   *robarhalo_p=0.;
   fread(&n1,sizeof(int),1,inp);
   fread(&n2,sizeof(int),1,inp);
