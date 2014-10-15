@@ -57,6 +57,7 @@ int main(int argc, char **argv) {
   mympi.NTask = 1;
   mympi.ThisTask = 0;
 #endif //PARALLEL
+
   if(mympi.ThisTask == 0) {
     if(argc == 2) {
       sprintf(inputfile, "%s", argv[1]);
@@ -104,7 +105,6 @@ int main(int argc, char **argv) {
       debug_checkpoint();
       printf("%d %f\n",input_param.N1,input_param.omegam);
     }
-#endif
     sprintf(densfilename,"%s",input_param.densityfile);
     sprintf(sourcefilename,"%s",input_param.sourcesfile);
     sprintf(z_out,"%s",input_param.cur_z);
