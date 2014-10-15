@@ -160,27 +160,23 @@ int main(int argc, char **argv) {
   }
 
   /* Allocating memory to different arrays */
-  // Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3);
-  debug_checkpoint();
+  // Setting_Up_Memory_For_ionz(Nnion, N1, N2, N3
   nh = allocate_fftw_real_3d(N1,N2,N3+2);
-  debug_checkpoint();
   ngamma = allocate_fftw_real_3d(N1,N2,N3+2);
-  debug_checkpoint();
   nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
-  debug_checkpoint();
   if(use_prev_xfrac == 1)
     xfrac=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
-  debug_checkpoint();
   for(jk=0;jk<Nnion;++jk) {
     nxion[jk] = allocate_fftw_real_3d(N1,N2,N3+2);
-    debug_checkpoint();
     if(use_prev_xfrac == 1)
       xfrac[jk] = allocate_fftw_real_3d(N1,N2,N3+2);
-    debug_checkpoint();
+    
   }
 
   t_start =Get_Current_time();
 
+
+  if(mympi.ThisTask == 0) debug_checkpoint();
   /* Allocate buffer to store 3D array */
   buffer = malloc(sizeof(float)*N1*N2*N3);
 
