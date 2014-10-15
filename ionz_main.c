@@ -195,6 +195,7 @@ int main(int argc, char **argv) {
 
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Bcast(buffer, N1*N2*N3, MPI_FLOAT, 0, MPI_COMM_WORLD);
   MPI_Bcast(&robarhalo, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 #endif
   unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3);
@@ -207,11 +208,9 @@ int main(int argc, char **argv) {
   if(use_prev_xfrac == 1) {
     if(mympi.ThisTask == 0)
       read_xfrac(outputdir, buffer, nion, Nnion, N1, N2, N3);
-
 #ifdef PARALLEL
     MPI_Barrier(MPI_COMM_WORLD);
 #endif
-
   }
   t_stop = Get_Current_time();
   /* Sanity MPI check */
