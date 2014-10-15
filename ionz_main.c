@@ -200,7 +200,7 @@ int main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(&robarhalo, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 #endif
-
+  if(mympi.ThisTask == 0) debug_checkpoint();
   unpack_3d_array_mpi_transfer(buffer,ngamma,N1,N2,N3);
   free(buffer);
 
