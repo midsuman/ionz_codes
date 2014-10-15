@@ -188,7 +188,6 @@ int main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
   unpack_3d_array_mpi_transfer(buffer,nh,N1,N2,N3);  
-  debug_checkpoint();
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
