@@ -99,28 +99,6 @@ int main(int argc, char **argv) {
       printf("Usage[2]: ./exec nion_file omegam omegab omegalam hubble_h n_grid boxsize densityfile sourcefile curr_z prev_z outputfolder (very useful for submitting batch MPI tasks)\n");
       exit(1);
     }
-#ifdef PARALLEL
-    MPI_Barrier(MPI_COMM_WORLD);
-    
-    MPI_Bcast(&input_param.Nnion, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.nion[0], 100, MPI_FLOAT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.a_expansion, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.z, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.Hubble_h, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.omegam, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.omegalam, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.omegab, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.N1, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.N2, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.N3, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.boxsize, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.gridsize, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.densityfile[0],2000, MPI_CHAR, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.sourcesfile[0],2000, MPI_CHAR, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.cur_z[0],100, MPI_CHAR, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.prev_z[0],100, MPI_CHAR, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&input_param.outputdir[0],2000, MPI_CHAR, 0, MPI_COMM_WORLD);
-    MPI_Barrier(MPI_COMM_WORLD);
     debug_checkpoint();
     if(mympi.ThisTask == 0) {
       debug_checkpoint();
@@ -134,6 +112,30 @@ int main(int argc, char **argv) {
       printf("Start semi-numerical reionization process\n");
     }  
   }
+#ifdef PARALLEL
+  MPI_Barrier(MPI_COMM_WORLD);
+    
+  MPI_Bcast(&input_param.Nnion, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.nion[0], 100, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.a_expansion, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.z, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.Hubble_h, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.omegam, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.omegalam, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.omegab, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.N1, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.N2, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.N3, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.boxsize, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.gridsize, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.densityfile[0],2000, MPI_CHAR, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.sourcesfile[0],2000, MPI_CHAR, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.cur_z[0],100, MPI_CHAR, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.prev_z[0],100, MPI_CHAR, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&input_param.outputdir[0],2000, MPI_CHAR, 0, MPI_COMM_WORLD);
+  MPI_Barrier(MPI_COMM_WORLD);
+#endif
+
   Nnion = input_param.Nnion;
   nion=(float*)calloc(Nnion,sizeof(float));
   for(ii=0;ii<Nnion;ii++) {
