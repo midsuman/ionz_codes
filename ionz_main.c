@@ -325,7 +325,7 @@ int main(int argc, char **argv) {
 #endif // CHUNKTRANSFER
 #endif // PARALLEL  
   if(mympi.ThisTask == 0) {
-    unpack_3d_array_mpi_transfer(buffer_final,nxion,N1,N2,N3);
+    unpack_4d_array_mpi_transfer(buffer_final,nxion,Nnion,N1,N2,N3);
     for(jk=0;jk<Nnion;jk++) {
       t_start = Get_Current_time();
       //calculating avg. ionization frction
