@@ -204,7 +204,8 @@ int main(int argc, char **argv) {
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
-  printf("roHIbar = %lf, roUV = %lf\n",robar,robarhalo);
+  if(mympi.ThisTask == 0) 
+    printf("roHIbar = %lf, roUV = %lf\n",robar,robarhalo);
   if(use_prev_xfrac == 1) {
     if(mympi.ThisTask == 0)
       read_xfrac(outputdir, buffer, nion, Nnion, N1, N2, N3);
