@@ -68,7 +68,6 @@ void pack_4d_array_mpi_transfer(fftw_real ****input, float *output, int Nnion, i
       for(jj=0;jj<N2;jj++)
 	for(ii=0;ii<N1;ii++) {
 	  output[jk*N1*N2*N3 + ii*N1*N2 + jj*N1 + ii] = input[jk][ii][jj][kk];
-	  if(mympi.ThisTask == 0) printf("%f\n", output[jk*N1*N2*N3 + ii*N1*N2 + jj*N1 + ii]);
 	}
 }
 /** 
