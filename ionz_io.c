@@ -66,8 +66,10 @@ void pack_4d_array_mpi_transfer(fftw_real ****input, float *output, int Nnion, i
   for(jk=0;jk<Nnion;jk++)
     for(kk=0;kk<N3;kk++)
       for(jj=0;jj<N2;jj++)
-	for(ii=0;ii<N1;ii++)
+	for(ii=0;ii<N1;ii++) {
 	  output[jk*N1*N2*N3 + ii*N1*N2 + jj*N1 + ii] = input[jk][ii][jj][kk];
+	  if(mympi.ThisTask == 0) printf("%f\n", output[jk*N1*N2*N3 + ii*N1*N2 + jj*N1 + ii]);
+	}
 }
 /** 
  * Convert 1D-float array to 3D-fftw_real array. This is used

@@ -203,8 +203,8 @@ int main(int argc, char **argv) {
 
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
-
 #endif
+
   if(use_prev_xfrac == 1) {
     if(mympi.ThisTask == 0)
       read_xfrac(outputdir, buffer, nion, Nnion, N1, N2, N3);
@@ -250,8 +250,8 @@ int main(int argc, char **argv) {
   // Do subgrid seminumerical simulation
   if(mympi.ThisTask == 0)
     printf("Start subgrid semi-numerical reionization\n");
-
   subgrid_reionization(nh, ngamma, nxion, robar, nion, Nnion, N1, N2, N3 );  
+
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
@@ -261,14 +261,12 @@ int main(int argc, char **argv) {
   if(mympi.ThisTask == 0)
     printf("Start semi-numerical reionization process\n");
 
-
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
   t_start = Get_Current_time();
   for(ii=0;ii<NjobsperTask[mympi.ThisTask];ii++) 
     reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
-  
   free_fftw_real_3d(ngamma,N1,N2,N3+2);
   if(use_prev_xfrac == 1) {
     for(ii=0;ii<Nnion;ii++)
@@ -284,10 +282,12 @@ int main(int argc, char **argv) {
     printf("Finish reionizing process %lf s\n",t_stop-t_start);
 
   t_start = Get_Current_time();
-#ifdef PARALLEL
   pack_4d_array_mpi_transfer(nxion,buffer,Nnion, N1, N2, N3);
+
+#ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
+  
   t_stop = Get_Current_time();
   if(mympi.ThisTask == 0) {
     printf("Finish packing data %lf s\n",t_stop-t_start);
@@ -295,6 +295,7 @@ int main(int argc, char **argv) {
     buffer_final = malloc(sizeof(float)*Nnion*N1*N2*N3);
 #endif
   }
+
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #ifdef CHUNKTRANSFER
@@ -320,9 +321,7 @@ int main(int argc, char **argv) {
     printf("Finish finding max:whole %lf s\n",t_stop-t_start); 
   MPI_Barrier(MPI_COMM_WORLD);
 #endif // CHUNKTRANSFER
-#endif // PARALLEL
-
-  
+#endif // PARALLEL  
   if(mympi.ThisTask == 0) {
     for(jk=0;jk<Nnion;jk++) {
       t_start = Get_Current_time();
@@ -338,7 +337,7 @@ int main(int argc, char **argv) {
       // of the x_HI array
       ii=0; jj=0; kk=0;
       start_ll = jk*N1*N2*N3;
-      for(ll=start_ll; ll<(jk+1)*N1*N2*N3;ll++) {
+      for(ll=start_ll; ll<(jk+1)*N1*N2*N3; ll++) {
 	printf("%d %d %d %d %f %f\n",ii,jj,kk,ll,buffer[ll],buffer_final[ll]);
 #ifdef PARALLEL
 	xh1 = 1.-buffer_final[ll];
