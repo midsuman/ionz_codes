@@ -1,35 +1,7 @@
-/**
- * @file   read_param.c
- * @author Chaichalit Srisawat < boyd.srisawat@gmail.com>
- * @date   Sat Oct 11 22:28:50 2014
- * 
- * @brief  Read parameter file
- * 
- * 
- */
-
 #include "ion.h"
 
-void read_nion(char *filename) {
-  FILE *inp;
-  int i;
-  if((inp = fopen(filename,"r")) == NULL) {
-    debug_checkpoint();
-    printf("Cannot open nion list: %s\nTerminating....\n",filename);
-    exit(1);
-  }
-  fscanf(inp,"%d",&input_param.Nnion);
-  for(i=0;i<input_param.Nnion;i++) {
-    fscanf(inp,"%f",&(input_param.nion[i]));
-  }
-}
-
-/** 
- * Read parameter file
- * 
- * @param filename Parameter file
- */
-void read_params(char *filename)
+struct params input_param;
+void read_params(char filename[2048])
   {
     FILE *inp;
     int ii;
@@ -37,6 +9,7 @@ void read_params(char *filename)
     inp=fopen(filename,"r");
     /* get parameters for reion simulation */
     fscanf(inp,"%d",&input_param.Nnion);
+    input_param.nion = malloc(sizeof(int)*input_param.Nnion);
     //Nnion is the number of nion values for which we will run the simulation
     //You will get a x_HI map for each value of nion
     //Allocating memory for some variables

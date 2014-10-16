@@ -1,9 +1,0 @@
-var searchData=
-[
-  ['read_5fdensity',['read_density',['../ion_8h.html#ad6241f690f16f77c1f942a96cb4e9e9c',1,'read_density(char *filename, float *buffer_3d, double *robar_p, int N1, int N2, int N3, float vomegam, float vomegab):&#160;ionz_io.c'],['../ionz__io_8c.html#ad6241f690f16f77c1f942a96cb4e9e9c',1,'read_density(char *filename, float *buffer_3d, double *robar_p, int N1, int N2, int N3, float vomegam, float vomegab):&#160;ionz_io.c']]],
-  ['read_5fparam',['read_param',['../ion_8h.html#ab69d716af1dbf6ef48002cb900f32615',1,'ion.h']]],
-  ['read_5fparams',['read_params',['../read__param_8c.html#a16cce69f4d67abe8bf62b88bd1b512ea',1,'read_param.c']]],
-  ['read_5fsources',['read_sources',['../ion_8h.html#af0be7fa625cefb590988fcd6088eba60',1,'read_sources(char *filename, float *buffer_3d, double *robarhalo_p, int N1, int N2, int N3):&#160;ionz_io.c'],['../ionz__io_8c.html#af0be7fa625cefb590988fcd6088eba60',1,'read_sources(char *filename, float *buffer_3d, double *robarhalo_p, int N1, int N2, int N3):&#160;ionz_io.c']]],
-  ['read_5fxfrac',['read_xfrac',['../ion_8h.html#ad2f727cabe5ba3e264757f33d2d20fdc',1,'read_xfrac(char *dirname, float *buffer_4d, float *nion_list, int Nnion, int N1, int N2, int N3):&#160;ionz_io.c'],['../ionz__io_8c.html#ad2f727cabe5ba3e264757f33d2d20fdc',1,'read_xfrac(char *dirname, float *buffer_4d, float *nion_list, int Nnion, int N1, int N2, int N3):&#160;ionz_io.c']]],
-  ['reionization',['reionization',['../ion_8h.html#aa174d816f11484078e55fe5af64c211b',1,'reionization(float Radii, fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3):&#160;ionz_funcs.c'],['../ionz__funcs_8c.html#aa174d816f11484078e55fe5af64c211b',1,'reionization(float Radii, fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3):&#160;ionz_funcs.c']]]
-];

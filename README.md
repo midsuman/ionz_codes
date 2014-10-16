@@ -1,16 +1,3 @@
-MPI version of ionz_codes
-=========================
-This code was adapted from https://github.com/midsuman/ionz_codes.
-
-This is the parallelized version of the old one.
-
-
-
-
-
-------------------------
-Original README.md 
-------------------------
 ionz_codes
 ==========
 
