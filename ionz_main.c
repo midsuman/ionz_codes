@@ -338,9 +338,9 @@ int main(int argc, char **argv) {
       // Writing the x_HI map in binary
       // In the begining 3 integers are written which defines the size
       // of the x_HI array
-      ii=0; jj=0; kk=0;
-      start_ll = jk*N1*N2*N3;
-      for(ll=start_ll; ll<(jk+1)*N1*N2*N3; ll++) {
+      /* ii=0; jj=0; kk=0; */
+      /* start_ll = jk*N1*N2*N3; */
+      /* for(ll=start_ll; ll<(jk+1)*N1*N2*N3; ll++) { */
 /* #ifdef PARALLEL */
 /* 	xh1 = 1.-buffer_final[ll]; */
 /* 	xh1 = max(xh1,0.0); */
