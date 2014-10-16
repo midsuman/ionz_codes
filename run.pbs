@@ -1,0 +1,18 @@
+#!/bin/sh
+#$ -N custom
+#$ -cwd
+#$ -pe openmpi 128
+#$ -q mps.q
+#$ -S /bin/bash
+# source modules environment:
+
+module add sge
+module add gcc/4.8.1
+module add intel-mpi/64/4.1.1/036
+#module add openmpi/gcc/64/1.7.3
+module add gsl/gcc/1.15
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/c/cs/cs390/local/fftw-2.1.5/install/lib
+
+time mpirun -np $NSLOTS ./ionz_main > log 
+

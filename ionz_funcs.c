@@ -3,6 +3,7 @@
 #include<math.h>
 #include<srfftw.h>
 #include"ion.h"
+
 /*  GLOBAL VARIABLES  */
 
 // cosmological parameters read from input file  "input.ionz"
@@ -45,10 +46,8 @@ void Setting_Up_Memory_For_ionz(int Nnion)
   rosp = allocate_fftw_real_3d(N1,N2,N3+2);
   nxion=(fftw_real****)malloc(sizeof(fftw_real***)*Nnion);
     
-    
   for(jk=0;jk<Nnion;++jk)
     {
-      
       nxion[jk]=allocate_fftw_real_3d(N1,N2,N3+2);
     }
   // allocate area for storing densities  DONE
