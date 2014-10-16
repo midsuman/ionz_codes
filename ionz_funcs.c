@@ -237,7 +237,11 @@ void reionization_with_xfrac(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_
 void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_real ****nxion_p, float *nion_p, int Nnion, int N1, int N2, int N3) {
   fftw_real ***nhs,***ngammas;
   int ii,jj,kk,jk;
+  double hi_bar,gamma_bar;
+  float max_nion;
 
+  hi_bar = 0.0;
+  gamma_bar = 0.0;
   nhs=allocate_fftw_real_3d(N1,N2,N3+2);
   ngammas=allocate_fftw_real_3d(N1,N2,N3+2);
   for(ii=0;ii<N1;ii++)
@@ -245,15 +249,22 @@ void reionization(float Radii,fftw_real ***nh_p, fftw_real ***ngamma_p, fftw_rea
       for(kk=0;kk<N3;kk++) {
 	//Filling smoothing arrays with the dark matter and source density data
 	nhs[ii][jj][kk]=nh_p[ii][jj][kk];
-	ngammas[ii][jj][kk]=ngamma_p[ii][jj][kk];	     
+	ngammas[ii][jj][kk]=ngamma_p[ii][jj][kk];
+	hi_bar += nhs[ii][jj][kk];
+	gamma_bar += ngammas[ii][jj][kk];
       }
-      
-  // printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
+  max_nion = 0.0;
+  for(jk=0;jk<Nnion;jk++) {
+    max_nion = max(nion_p[jk],max_nion);
+  }
 
+  // printf("starting smoothing for radius of size %e (in units of grid size)\n",Radii);
+  
   //Smoothing with real space spherical filter
+  
   smooth(nhs,Radii,N1,N2,N3);
   smooth(ngammas,Radii,N1,N2,N3); 
-  for(jk=0;jk<Nnion;jk) {	 
+  for(jk=0;jk<Nnion;jk++) {
     for(ii=0;ii<N1;ii++)
       for(jj=0;jj<N2;jj++)
 	for(kk=0;kk<N3;kk++) {
