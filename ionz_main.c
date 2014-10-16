@@ -325,6 +325,7 @@ int main(int argc, char **argv) {
 #endif // CHUNKTRANSFER
 #endif // PARALLEL  
   if(mympi.ThisTask == 0) {
+    unpack_3d_array_mpi_transfer(buffer_final,nxion,N1,N2,N3);
     for(jk=0;jk<Nnion;jk++) {
       t_start = Get_Current_time();
       //calculating avg. ionization frction
@@ -340,21 +341,31 @@ int main(int argc, char **argv) {
       ii=0; jj=0; kk=0;
       start_ll = jk*N1*N2*N3;
       for(ll=start_ll; ll<(jk+1)*N1*N2*N3; ll++) {
-#ifdef PARALLEL
-	xh1 = 1.-buffer_final[ll];
-	xh1 = max(xh1,0.0);
-	buffer_final[ll] = xh1;
-#else 
-	xh1 = 1.-buffer[ll];
-	xh1 = max(xh1,0.0);
-	buffer[ll] = xh1;
-#endif	
-	vion[jk] += xh1;
-	roion[jk] += xh1*nh[ii][jj][kk];
-	ii = (ll-start_ll) % N1;
-	jj = ((ll-start_ll)/N1) % N2;
-	kk = ((ll-start_ll)/(N1*N2)) % N3;
-      }
+/* #ifdef PARALLEL */
+/* 	xh1 = 1.-buffer_final[ll]; */
+/* 	xh1 = max(xh1,0.0); */
+/* 	buffer_final[ll] = xh1; */
+/* #else  */
+/* 	xh1 = 1.-buffer[ll]; */
+/* 	xh1 = max(xh1,0.0); */
+/* 	buffer[ll] = xh1; */
+/* #endif	 */
+/* 	vion[jk] += xh1; */
+/* 	roion[jk] += xh1*nh[ii][jj][kk]; */
+/* 	ii = (ll-start_ll) % N1; */
+/* 	jj = ((ll-start_ll)/N1) % N2; */
+/* 	kk = ((ll-start_ll)/(N1*N2)) % N3; */
+/*       } */
+      vion[jk]=0.0;
+      roion[jk]=0.0;
+      for(ii=0;ii<N1;ii++)
+	for(jj=0;jj<N2;jj++)
+	  for(kk=0;kk<N3;jj++) {
+	    xh1 = 1.-nxion[jk][ii][jj][kk];
+	    xh1 = max(0.,xh1);
+	    vion[jk] += xh1; 
+	    roion[jk] += xh1*nh[ii][jj][kk];
+	  }
       inp=fopen(file2,"wb+");
       fwrite(&N1,sizeof(int),1,inp);
       fwrite(&N2,sizeof(int),1,inp);
@@ -370,7 +381,7 @@ int main(int argc, char **argv) {
       vion[jk]/=(1.*N1*N2*N3); // volume avg xHI
       // roion[jk]/=(float)robar; // divide by H density to get mass avg. xHI
       t_stop = Get_Current_time();
-      printf("nion = %f obtained vol. avg. x_HI=%e mass avg. x_HI=%e : %lf\n",nion[jk],vion[jk],roion[jk],t_stop-t_start);
+      printf("nion = %f obtained vol. avg. x_HI=%e mass avg. x_HI=%e : %lf s\n",nion[jk],vion[jk],roion[jk],t_stop-t_start);
     }
   }
   MPI_Finalize();
