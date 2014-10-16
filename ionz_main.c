@@ -360,7 +360,7 @@ int main(int argc, char **argv) {
       roion[jk]=0.0;
       for(ii=0;ii<N1;ii++)
 	for(jj=0;jj<N2;jj++)
-	  for(kk=0;kk<N3;jj++) {
+	  for(kk=0;kk<N3;kk++) {
 	    xh1 = 1.-nxion[jk][ii][jj][kk];
 	    xh1 = max(0.,xh1);
 	    vion[jk] += xh1; 
