@@ -267,6 +267,7 @@ int main(int argc, char **argv) {
   t_start = Get_Current_time();
   for(ii=0;ii<NjobsperTask[mympi.ThisTask];ii++) 
     reionization(Radii_list[JobsTask[ii]], nh, ngamma, nxion, nion, Nnion, N1, N2, N3 );    
+  
   free_fftw_real_3d(ngamma,N1,N2,N3+2);
   if(use_prev_xfrac == 1) {
     for(ii=0;ii<Nnion;ii++)
@@ -338,7 +339,6 @@ int main(int argc, char **argv) {
       ii=0; jj=0; kk=0;
       start_ll = jk*N1*N2*N3;
       for(ll=start_ll; ll<(jk+1)*N1*N2*N3; ll++) {
-	printf("%d %d %d %d %f %f\n",ii,jj,kk,ll,buffer[ll],buffer_final[ll]);
 #ifdef PARALLEL
 	xh1 = 1.-buffer_final[ll];
 	xh1 = max(xh1,0.0);
